@@ -1,0 +1,36 @@
+﻿@model JobListViewModel
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h2>Danh sách việc làm</h2>
+        </div>
+        @if (User.IsInRole("Employer"))
+        {
+            <div class="col-md-6 text-right">
+                <a asp-action="Create" class="btn btn-primary">Đăng tin mới</a>
+            </div>
+        }
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <partial name="_JobFilter" model="Model.FilterParams" />
+        </div>
+        <div class="col-md-9">
+            @foreach (var job in Model.Jobs)
+            {
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">@job.Title</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@job.EmployerCompany - @job.Location</h6>
+                        <p class="card-text">@job.Description.Truncate(200)</p>
+                        <span class="badge bg-primary">@job.JobType</span>
+                        <span class="badge bg-success ms-2">@job.SalaryDescription</span>
+                        <a asp-action="Details" asp-route-id="@job.JobId" class="btn btn-sm btn-outline-primary float-end">Xem chi tiết</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
