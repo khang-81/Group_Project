@@ -1,0 +1,445 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|c:\\users\\asus\\source\\repos\\hanoistudentgigs\\hanoistudentgigs.apphost\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|solutionrelative:hanoistudentgigs.apphost\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|c:\\users\\asus\\source\\repos\\hanoistudentgigs\\hanoistudentgigs.apphost\\application\\dtos\\jobdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|solutionrelative:hanoistudentgigs.apphost\\application\\dtos\\jobdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|c:\\users\\asus\\source\\repos\\hanoistudentgigs\\hanoistudentgigs.apphost\\controllers\\profilescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|solutionrelative:hanoistudentgigs.apphost\\controllers\\profilescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|c:\\users\\asus\\source\\repos\\hanoistudentgigs\\hanoistudentgigs.apphost\\controllers\\jobscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|solutionrelative:hanoistudentgigs.apphost\\controllers\\jobscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|c:\\users\\asus\\source\\repos\\hanoistudentgigs\\hanoistudentgigs.apphost\\controllers\\categoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|solutionrelative:hanoistudentgigs.apphost\\controllers\\categoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|c:\\users\\asus\\source\\repos\\hanoistudentgigs\\hanoistudentgigs.apphost\\controllers\\applicationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|solutionrelative:hanoistudentgigs.apphost\\controllers\\applicationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|c:\\users\\asus\\source\\repos\\hanoistudentgigs\\hanoistudentgigs.apphost\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|solutionrelative:hanoistudentgigs.apphost\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|c:\\users\\asus\\source\\repos\\hanoistudentgigs\\hanoistudentgigs.apphost\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|solutionrelative:hanoistudentgigs.apphost\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|c:\\users\\asus\\source\\repos\\hanoistudentgigs\\hanoistudentgigs.apphost\\infrastructure\\data\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|solutionrelative:hanoistudentgigs.apphost\\infrastructure\\data\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|c:\\users\\asus\\source\\repos\\hanoistudentgigs\\hanoistudentgigs.apphost\\infrastructure\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|solutionrelative:hanoistudentgigs.apphost\\infrastructure\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|c:\\users\\asus\\source\\repos\\hanoistudentgigs\\hanoistudentgigs.apphost\\core\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|solutionrelative:hanoistudentgigs.apphost\\core\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|c:\\users\\asus\\source\\repos\\hanoistudentgigs\\hanoistudentgigs.apphost\\core\\entities\\jobapplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|solutionrelative:hanoistudentgigs.apphost\\core\\entities\\jobapplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|c:\\users\\asus\\source\\repos\\hanoistudentgigs\\hanoistudentgigs.apphost\\core\\entities\\job.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|solutionrelative:hanoistudentgigs.apphost\\core\\entities\\job.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|c:\\users\\asus\\source\\repos\\hanoistudentgigs\\hanoistudentgigs.apphost\\application\\features\\jobapproval\\approve.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|solutionrelative:hanoistudentgigs.apphost\\application\\features\\jobapproval\\approve.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|c:\\users\\asus\\source\\repos\\hanoistudentgigs\\hanoistudentgigs.apphost\\application\\features\\employerverification\\verify.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|solutionrelative:hanoistudentgigs.apphost\\application\\features\\employerverification\\verify.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|c:\\users\\asus\\source\\repos\\hanoistudentgigs\\hanoistudentgigs.apphost\\infrastructure\\services\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|solutionrelative:hanoistudentgigs.apphost\\infrastructure\\services\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|c:\\users\\asus\\source\\repos\\hanoistudentgigs\\hanoistudentgigs.apphost\\core\\specifications\\jobswithemployerandcategoryspecification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|solutionrelative:hanoistudentgigs.apphost\\core\\specifications\\jobswithemployerandcategoryspecification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|c:\\users\\asus\\source\\repos\\hanoistudentgigs\\hanoistudentgigs.apphost\\application\\services\\adminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|solutionrelative:hanoistudentgigs.apphost\\application\\services\\adminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|c:\\users\\asus\\source\\repos\\hanoistudentgigs\\hanoistudentgigs.apphost\\application\\services\\applicationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|solutionrelative:hanoistudentgigs.apphost\\application\\services\\applicationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|c:\\users\\asus\\source\\repos\\hanoistudentgigs\\hanoistudentgigs.apphost\\application\\services\\jobservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|solutionrelative:hanoistudentgigs.apphost\\application\\services\\jobservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|c:\\users\\asus\\source\\repos\\hanoistudentgigs\\hanoistudentgigs.apphost\\application\\mappings\\mappingprofiles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|solutionrelative:hanoistudentgigs.apphost\\application\\mappings\\mappingprofiles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|c:\\users\\asus\\source\\repos\\hanoistudentgigs\\hanoistudentgigs.apphost\\infrastructure\\identity\\identityserviceextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|solutionrelative:hanoistudentgigs.apphost\\infrastructure\\identity\\identityserviceextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|c:\\users\\asus\\source\\repos\\hanoistudentgigs\\hanoistudentgigs.apphost\\core\\interfaces\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|solutionrelative:hanoistudentgigs.apphost\\core\\interfaces\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|c:\\users\\asus\\source\\repos\\hanoistudentgigs\\hanoistudentgigs.apphost\\core\\interfaces\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|solutionrelative:hanoistudentgigs.apphost\\core\\interfaces\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|c:\\users\\asus\\source\\repos\\hanoistudentgigs\\hanoistudentgigs.apphost\\hanoistudentgigs.apphost.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{A49DF9B0-B584-4287-A810-2EE415AC04EE}|HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj|solutionrelative:hanoistudentgigs.apphost\\hanoistudentgigs.apphost.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ApplicationsController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Controllers\\ApplicationsController.cs",
+              "RelativeDocumentMoniker": "HanoiStudentGigs.AppHost\\Controllers\\ApplicationsController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Controllers\\ApplicationsController.cs",
+              "RelativeToolTip": "HanoiStudentGigs.AppHost\\Controllers\\ApplicationsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T18:18:24.595Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CategoriesController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Controllers\\CategoriesController.cs",
+              "RelativeDocumentMoniker": "HanoiStudentGigs.AppHost\\Controllers\\CategoriesController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Controllers\\CategoriesController.cs",
+              "RelativeToolTip": "HanoiStudentGigs.AppHost\\Controllers\\CategoriesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T18:19:08.826Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "JobsController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Controllers\\JobsController.cs",
+              "RelativeDocumentMoniker": "HanoiStudentGigs.AppHost\\Controllers\\JobsController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Controllers\\JobsController.cs*",
+              "RelativeToolTip": "HanoiStudentGigs.AppHost\\Controllers\\JobsController.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T18:18:10.085Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ProfilesController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Controllers\\ProfilesController.cs",
+              "RelativeDocumentMoniker": "HanoiStudentGigs.AppHost\\Controllers\\ProfilesController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Controllers\\ProfilesController.cs*",
+              "RelativeToolTip": "HanoiStudentGigs.AppHost\\Controllers\\ProfilesController.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T18:18:41.487Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "HanoiStudentGigs.AppHost\\Controllers\\AdminController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Controllers\\AdminController.cs*",
+              "RelativeToolTip": "HanoiStudentGigs.AppHost\\Controllers\\AdminController.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T18:18:55.466Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "JobDto.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Application\\DTOs\\JobDto.cs",
+              "RelativeDocumentMoniker": "HanoiStudentGigs.AppHost\\Application\\DTOs\\JobDto.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Application\\DTOs\\JobDto.cs*",
+              "RelativeToolTip": "HanoiStudentGigs.AppHost\\Application\\DTOs\\JobDto.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T18:36:25.901Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Program.cs",
+              "RelativeDocumentMoniker": "HanoiStudentGigs.AppHost\\Program.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Program.cs*",
+              "RelativeToolTip": "HanoiStudentGigs.AppHost\\Program.cs*",
+              "ViewState": "AgIAAGYAAAAAAAAAAAAiwHIAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T18:41:07.354Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "HanoiStudentGigs.AppHost\\Controllers\\AccountController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Controllers\\AccountController.cs*",
+              "RelativeToolTip": "HanoiStudentGigs.AppHost\\Controllers\\AccountController.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T18:17:48.56Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "UnitOfWork.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Infrastructure\\Data\\UnitOfWork.cs",
+              "RelativeDocumentMoniker": "HanoiStudentGigs.AppHost\\Infrastructure\\Data\\UnitOfWork.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Infrastructure\\Data\\UnitOfWork.cs*",
+              "RelativeToolTip": "HanoiStudentGigs.AppHost\\Infrastructure\\Data\\UnitOfWork.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T18:33:27.966Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Infrastructure\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "HanoiStudentGigs.AppHost\\Infrastructure\\Data\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Infrastructure\\Data\\ApplicationDbContext.cs*",
+              "RelativeToolTip": "HanoiStudentGigs.AppHost\\Infrastructure\\Data\\ApplicationDbContext.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T18:40:28.159Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Core\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "HanoiStudentGigs.AppHost\\Core\\Entities\\User.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Core\\Entities\\User.cs*",
+              "RelativeToolTip": "HanoiStudentGigs.AppHost\\Core\\Entities\\User.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T18:28:11.346Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "JobApplication.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Core\\Entities\\JobApplication.cs",
+              "RelativeDocumentMoniker": "HanoiStudentGigs.AppHost\\Core\\Entities\\JobApplication.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Core\\Entities\\JobApplication.cs*",
+              "RelativeToolTip": "HanoiStudentGigs.AppHost\\Core\\Entities\\JobApplication.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T18:30:33.964Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Job.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Core\\Entities\\Job.cs",
+              "RelativeDocumentMoniker": "HanoiStudentGigs.AppHost\\Core\\Entities\\Job.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Core\\Entities\\Job.cs*",
+              "RelativeToolTip": "HanoiStudentGigs.AppHost\\Core\\Entities\\Job.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T18:29:39.333Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Approve.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Application\\Features\\JobApproval\\Approve.cs",
+              "RelativeDocumentMoniker": "HanoiStudentGigs.AppHost\\Application\\Features\\JobApproval\\Approve.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Application\\Features\\JobApproval\\Approve.cs",
+              "RelativeToolTip": "HanoiStudentGigs.AppHost\\Application\\Features\\JobApproval\\Approve.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAvwAgAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T18:42:56.003Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Verify.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Application\\Features\\EmployerVerification\\Verify.cs",
+              "RelativeDocumentMoniker": "HanoiStudentGigs.AppHost\\Application\\Features\\EmployerVerification\\Verify.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Application\\Features\\EmployerVerification\\Verify.cs",
+              "RelativeToolTip": "HanoiStudentGigs.AppHost\\Application\\Features\\EmployerVerification\\Verify.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAEwBwAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T18:42:10.25Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "EmailService.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Infrastructure\\Services\\EmailService.cs",
+              "RelativeDocumentMoniker": "HanoiStudentGigs.AppHost\\Infrastructure\\Services\\EmailService.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Infrastructure\\Services\\EmailService.cs",
+              "RelativeToolTip": "HanoiStudentGigs.AppHost\\Infrastructure\\Services\\EmailService.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAAcwDIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T18:47:12.004Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "JobsWithEmployerAndCategorySpecification.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Core\\Specifications\\JobsWithEmployerAndCategorySpecification.cs",
+              "RelativeDocumentMoniker": "HanoiStudentGigs.AppHost\\Core\\Specifications\\JobsWithEmployerAndCategorySpecification.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Core\\Specifications\\JobsWithEmployerAndCategorySpecification.cs",
+              "RelativeToolTip": "HanoiStudentGigs.AppHost\\Core\\Specifications\\JobsWithEmployerAndCategorySpecification.cs",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAiwDMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T18:46:39.429Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "AdminService.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Application\\Services\\AdminService.cs",
+              "RelativeDocumentMoniker": "HanoiStudentGigs.AppHost\\Application\\Services\\AdminService.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Application\\Services\\AdminService.cs",
+              "RelativeToolTip": "HanoiStudentGigs.AppHost\\Application\\Services\\AdminService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T18:39:28.594Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "ApplicationService.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Application\\Services\\ApplicationService.cs",
+              "RelativeDocumentMoniker": "HanoiStudentGigs.AppHost\\Application\\Services\\ApplicationService.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Application\\Services\\ApplicationService.cs",
+              "RelativeToolTip": "HanoiStudentGigs.AppHost\\Application\\Services\\ApplicationService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T18:38:26.389Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "JobService.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Application\\Services\\JobService.cs",
+              "RelativeDocumentMoniker": "HanoiStudentGigs.AppHost\\Application\\Services\\JobService.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Application\\Services\\JobService.cs",
+              "RelativeToolTip": "HanoiStudentGigs.AppHost\\Application\\Services\\JobService.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAiwDUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T18:37:45.96Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "MappingProfiles.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Application\\Mappings\\MappingProfiles.cs",
+              "RelativeDocumentMoniker": "HanoiStudentGigs.AppHost\\Application\\Mappings\\MappingProfiles.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Application\\Mappings\\MappingProfiles.cs",
+              "RelativeToolTip": "HanoiStudentGigs.AppHost\\Application\\Mappings\\MappingProfiles.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwBMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T18:37:02.698Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "IdentityServiceExtensions.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Infrastructure\\Identity\\IdentityServiceExtensions.cs",
+              "RelativeDocumentMoniker": "HanoiStudentGigs.AppHost\\Infrastructure\\Identity\\IdentityServiceExtensions.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Infrastructure\\Identity\\IdentityServiceExtensions.cs",
+              "RelativeToolTip": "HanoiStudentGigs.AppHost\\Infrastructure\\Identity\\IdentityServiceExtensions.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAiwDUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T18:35:34.108Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "IGenericRepository.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Core\\Interfaces\\IGenericRepository.cs",
+              "RelativeDocumentMoniker": "HanoiStudentGigs.AppHost\\Core\\Interfaces\\IGenericRepository.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Core\\Interfaces\\IGenericRepository.cs",
+              "RelativeToolTip": "HanoiStudentGigs.AppHost\\Core\\Interfaces\\IGenericRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T18:32:42.911Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "IUnitOfWork.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Core\\Interfaces\\IUnitOfWork.cs",
+              "RelativeDocumentMoniker": "HanoiStudentGigs.AppHost\\Core\\Interfaces\\IUnitOfWork.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\Core\\Interfaces\\IUnitOfWork.cs",
+              "RelativeToolTip": "HanoiStudentGigs.AppHost\\Core\\Interfaces\\IUnitOfWork.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T18:31:53.824Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "HanoiStudentGigs.AppHost",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj",
+              "RelativeDocumentMoniker": "HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\HanoiStudentGigs\\HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj",
+              "RelativeToolTip": "HanoiStudentGigs.AppHost\\HanoiStudentGigs.AppHost.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-05-15T17:57:32.326Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
