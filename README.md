@@ -1,77 +1,57 @@
-📱 Hanoi Student Gigs – Việc Làm Sinh Viên Hà Nội
-Hanoi Student Gigs là một nền tảng việc làm trực tuyến kết nối sinh viên tại Hà Nội với các cơ hội việc làm bán thời gian và freelance. Ứng dụng giúp sinh viên dễ dàng tìm kiếm công việc phù hợp với kỹ năng và lịch trình, đồng thời hỗ trợ nhà tuyển dụng tiếp cận nguồn nhân lực trẻ trung, năng động.
+🎓 Hanoi Student Gigs – Việc Làm Sinh Viên Hà Nội
+
+Nền tảng kết nối sinh viên Hà Nội với các cơ hội việc làm bán thời gian và freelance.
+
+🚀 Tính Năng Nổi Bật
+🧑‍🎓 Sinh viên: Tạo hồ sơ, tìm kiếm và ứng tuyển công việc linh hoạt.
+
+🧑‍💼 Nhà tuyển dụng: Đăng tin tuyển dụng, quản lý ứng viên dễ dàng.
+
+🛡️ Quản trị viên: Duyệt tin, quản lý người dùng và danh mục hệ thống.
+
+🔎 Tìm kiếm thông minh: Lọc theo ngành nghề, địa điểm, mức lương, loại hình công việc.
+
+📄 Hồ sơ trực tuyến: Tạo và cập nhật CV, kỹ năng, kinh nghiệm làm việc.
 
 🧰 Công Nghệ Sử Dụng
-Thành phần	Công nghệ sử dụng
-Back-end	Java Spring Boot
-Front-end	React
-Cơ sở dữ liệu	Microsoft SQL Server
-Ngôn ngữ	Java (Back-end), JavaScript (Front-end)
 
-🎯 Mục Tiêu Dự Án
-Cung cấp nền tảng tin cậy, tiện lợi cho sinh viên Hà Nội tìm việc làm thêm hoặc dự án freelance.
-Tạo kênh tuyển dụng hiệu quả, nhanh chóng cho nhà tuyển dụng.
-Tích hợp nhiều chức năng tiện ích như đăng tin tuyển dụng, ứng tuyển, quản lý hồ sơ, lọc tìm việc thông minh...
+Back-end: Java Spring Boot.
 
-🧩 Tính Năng Chính
-1. Quản lý Tài Khoản
-Đăng ký/Đăng nhập cho:
-Sinh viên (Student)
-Nhà tuyển dụng (Employer)
-Quản trị viên (Admin)
-Thông tin hồ sơ:
-Sinh viên có thể tạo và cập nhật CV, kỹ năng, học vấn...
-Nhà tuyển dụng có thể chỉnh sửa thông tin doanh nghiệp/cá nhân.
-Phân quyền người dùng: Student, Employer, Admin.
+Front-end: React.
 
-2. Nhà Tuyển Dụng
-Đăng tin tuyển dụng (Part-time, Freelance, Internship)
-Quản lý tin đăng: sửa, xóa, đóng/mở trạng thái tuyển dụng
-(Tùy chọn) Xem danh sách ứng viên đã ứng tuyển
-
-3. Sinh Viên
-Tìm kiếm và lọc việc làm theo:
-Ngành nghề, loại công việc, địa điểm, mức lương...
-
-Ứng tuyển bằng:
-Cách 1: Tự liên hệ nhà tuyển dụng
-Cách 2: Ứng tuyển trực tiếp trên hệ thống (CV + Lời giới thiệu)
-
-4. Quản trị Hệ thống (Admin)
-Quản lý người dùng
-Duyệt tin tuyển dụng
-Quản lý danh mục ngành nghề, kỹ năng, địa điểm
-Xem thống kê tổng quan
+Cơ sở dữ liệu: Microsoft SQL Server
 
 🗃️ Cấu Trúc Cơ Sở Dữ Liệu (Gợi ý)
-Users: Thông tin người dùng (SV, Employer, Admin)
-Jobs: Tin tuyển dụng
-JobCategories, Locations, Skills: Danh mục
-UserProfiles: Hồ sơ sinh viên
-JobApplications: Lịch sử ứng tuyển
-JobSkills: Kỹ năng yêu cầu của mỗi công việc
+Users: Thông tin người dùng (sinh viên, nhà tuyển dụng, quản trị viên).
 
-⚠️ Lưu Ý Bảo Mật & Kiểm Duyệt
-Xác thực Nhà Tuyển Dụng: Tránh đăng tin giả mạo/lừa đảo.
+Jobs: Tin tuyển dụng.
 
-Kiểm duyệt tin đăng: Mỗi tin phải được Admin kiểm tra trước khi hiển thị.
+JobApplications: Lịch sử ứng tuyển.
 
-Bảo vệ thông tin sinh viên: Sinh viên được kiểm soát thông tin chia sẻ khi ứng tuyển.
+UserProfiles: Hồ sơ chi tiết của sinh viên.
 
-Chức năng Báo cáo: Cho phép phản hồi/tố cáo các công việc không trung thực (mở rộng tương lai).
+JobCategories, Locations, Skills: Danh mục ngành nghề, địa điểm, kỹ năng.
 
-💡 Tính Ứng Dụng Thực Tiễn
-Dự án đáp ứng nhu cầu cấp thiết về việc làm cho sinh viên, đồng thời giúp doanh nghiệp tiếp cận nhanh chóng nhân lực chất lượng cao, linh hoạt – là một hướng triển khai khả thi và giàu tiềm năng.
+🔒 Bảo Mật & Kiểm Duyệt
+✅ Xác thực nhà tuyển dụng: Tránh tin giả mạo, lừa đảo.
 
-🔧 Cài Đặt Dự Án
+🔍 Kiểm duyệt tin đăng: Mỗi tin được kiểm tra trước khi hiển thị.
+
+🔐 Bảo vệ thông tin sinh viên: Sinh viên kiểm soát thông tin chia sẻ khi ứng tuyển.
+
+🚩 Báo cáo tin không phù hợp: Cho phép phản hồi/tố cáo công việc không trung thực.
+
+🛠️ Cài Đặt Dự Án
 Yêu Cầu
 Java 17+
+
 Node.js v16+
+
 Microsoft SQL Server
 
 Hướng Dẫn
 # Clone repository
-git clone https://github.com/khang-81/Group_Project.git
+git clone https://github.com/tennguoidung/hanoi-student-gigs.git
 
 # Cấu hình backend
 cd backend
@@ -84,5 +64,4 @@ cd backend
 cd frontend
 npm install
 npm start
-⚠ Đảm bảo bạn đã cài đặt Java 17+, Node.js, và SQL Server.
-
+⚠️ Đảm bảo bạn đã cài đặt Java 17+, Node.js, và SQL Server.
