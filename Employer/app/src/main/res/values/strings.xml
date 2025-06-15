@@ -1,0 +1,30 @@
+<resources>
+    <!-- Tên ứng dụng -->
+    <string name="app_name">Hanoi Student Gigs</string>
+
+    <!-- Hint và Label -->
+    <string name="job_title_hint">Tiêu đề công việc</string>
+    <string name="job_location_hint">Địa điểm làm việc</string>
+    <string name="job_type_hint">Loại hình công việc</string>
+    <string name="job_field_hint">Lĩnh vực</string>
+    <string name="job_skills_hint">Kỹ năng</string>
+    <string name="job_level_hint">Trình độ</string>
+    <string name="job_experience_hint">Kinh nghiệm</string>
+    <string name="job_salary_hint">Mức lương</string>
+    <string name="job_time_hint">Thời gian</string>
+    <string name="job_description_hint">Mô tả công việc</string>
+    <string name="job_deadline_hint">Hạn nộp hồ sơ</string>
+    <string name="job_contact_hint">Thông tin liên hệ</string>
+
+    <!-- Spinner prompts -->
+    <string name="choose_job_type">Chọn loại hình công việc</string>
+    <string name="choose_field">Chọn lĩnh vực</string>
+    <string name="choose_deadline">Chọn hạn nộp hồ sơ</string>
+
+    <!-- Nút -->
+    <string name="btn_post">Đăng tin</string>
+
+    <!-- Thông báo -->
+    <string name="success_post">Đăng tin thành công!</string>
+    <string name="error_fill_fields">Vui lòng điền đầy đủ thông tin!</string>
+</resources>

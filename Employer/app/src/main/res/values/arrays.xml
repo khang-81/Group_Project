@@ -1,0 +1,22 @@
+<resources>
+    <string-array name="job_type_array">
+        <item>Part-time</item>
+        <item>Full-time</item>
+        <item>Freelance</item>
+        <item>Remote</item>
+    </string-array>
+
+    <string-array name="job_field_array">
+        <item>Gia sư</item>
+        <item>Bán hàng</item>
+        <item>Marketing</item>
+        <item>Thiết kế</item>
+    </string-array>
+
+    <string-array name="deadline_array">
+        <item>3 ngày</item>
+        <item>7 ngày</item>
+        <item>30 ngày</item>
+        <item>Không giới hạn</item>
+    </string-array>
+</resources>
