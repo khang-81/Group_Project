@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_admin_dashboard"
+        android:icon="@drawable/ic_dashboard_24"
+        android:title="Trang chủ"/>
+    <item
+        android:id="@+id/nav_admin_approve_jobs"
+        android:icon="@drawable/ic_approval_24"
+        android:title="Duyệt tin"/>
+    <item
+        android:id="@+id/nav_admin_manage_users"
+        android:icon="@drawable/ic_manage_accounts_24"
+        android:title="Người dùng"/>
+</menu>

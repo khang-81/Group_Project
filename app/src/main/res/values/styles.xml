@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Các style khác của bạn -->
+
+    <style name="ShapeAppearanceOverlay.App.CornerSize12" parent="@style/ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerRadius">12dp</item>  <!-- Đảm bảo sử dụng cornerRadius -->
+    </style>
+</resources>

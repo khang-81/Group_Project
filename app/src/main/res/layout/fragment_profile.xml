@@ -1,0 +1,131 @@
+<!-- File: res/layout/fragment_profile.xml (ĐÃ FIX LỖI) -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Phần thông tin chung -->
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/ic_person_24"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@color/primaryColor"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/textViewProfileFullName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tên Người Dùng"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/textColorPrimary"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/textViewProfileEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="email@example.com"
+            android:textSize="16sp"
+            android:textColor="@color/textColorSecondary"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="4dp"/>
+
+        <!-- KHUNG DÀNH CHO SINH VIÊN -->
+        <LinearLayout
+            android:id="@+id/studentInfoLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"> <!-- Mặc định ẩn -->
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:cardCornerRadius="8dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Học vấn" android:textStyle="bold" android:textSize="18sp"/>
+                    <TextView android:id="@+id/textViewProfileSchool" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Trường học" android:layout_marginTop="8dp"/>
+                    <TextView android:id="@+id/textViewProfileMajor" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Chuyên ngành" android:layout_marginTop="4dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="8dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Kỹ năng" android:textStyle="bold" android:textSize="18sp"/>
+                    <TextView android:id="@+id/textViewProfileSkills" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Chưa cập nhật" android:layout_marginTop="8dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ... thêm các card khác cho Kinh nghiệm, CV ... -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="8dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hồ sơ CV" android:textStyle="bold" android:textSize="18sp"/>
+                    <TextView android:id="@+id/textViewCvStatus" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="Chưa có CV."/>
+                    <ProgressBar android:id="@+id/progressBarCv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:visibility="gone" android:layout_gravity="center" android:layout_marginTop="8dp"/>
+                    <Button android:id="@+id/buttonUploadCv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="Tải lên / Cập nhật CV"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <!-- KHUNG DÀNH CHO NHÀ TUYỂN DỤNG -->
+        <LinearLayout
+            android:id="@+id/employerInfoLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"> <!-- Mặc định ẩn -->
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:cardCornerRadius="8dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Thông tin công ty" android:textStyle="bold" android:textSize="18sp"/>
+                    <TextView android:id="@+id/textViewProfileCompanyName" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tên công ty" android:layout_marginTop="8dp"/>
+                    <TextView android:id="@+id/textViewProfileAddress" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Địa chỉ" android:layout_marginTop="4dp"/>
+                    <TextView android:id="@+id/textViewProfilePhone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Số điện thoại" android:layout_marginTop="4dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <!-- Các nút chức năng chung -->
+        <Button
+            android:id="@+id/buttonEditProfile"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Chỉnh sửa hồ sơ"/>
+
+        <Button
+            android:id="@+id/buttonLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Đăng xuất"
+            android:backgroundTint="@color/errorColor"/>
+
+    </LinearLayout>
+</ScrollView>
