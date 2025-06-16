@@ -1,0 +1,73 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quản Lý Hệ Thống"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/textColorPrimary"
+        android:layout_marginBottom="32dp"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/textViewTotalJobs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tổng số tin đăng: ..."
+                android:textSize="18sp"
+                android:drawableStart="@drawable/ic_work_24"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/textViewTotalApplications"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Số lượng ứng tuyển: ..."
+                android:textSize="18sp"
+                android:layout_marginTop="16dp"
+                android:drawableStart="@drawable/ic_applications_24"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/textViewTotalStudents"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tài khoản Student: ..."
+                android:textSize="18sp"
+                android:layout_marginTop="16dp"
+                android:drawableStart="@drawable/ic_person_24"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/textViewTotalEmployers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tài khoản Employer: ..."
+                android:textSize="18sp"
+                android:layout_marginTop="16dp"
+                android:drawableStart="@drawable/ic_business_24"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>
