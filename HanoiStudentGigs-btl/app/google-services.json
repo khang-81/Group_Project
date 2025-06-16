@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "37200030786",
+    "firebase_url": "https://khang-a3948-default-rtdb.firebaseio.com",
+    "project_id": "khang-a3948",
+    "storage_bucket": "khang-a3948.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:37200030786:android:791ef4715c6c7571eed1db",
+        "android_client_info": {
+          "package_name": "com.example.hanoistudentgigs"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2wcgO4698muHQyto0dOB0egnZmQXTit0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

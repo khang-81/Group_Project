@@ -1,0 +1,64 @@
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:strokeWidth="1dp"
+    app:strokeColor="@color/dividerColor"
+    android:layout_marginBottom="12dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/imageViewCompanyLogo"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_launcher_background"/>
+
+        <TextView
+            android:id="@+id/textViewJobTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/imageViewCompanyLogo"
+            android:layout_marginStart="16dp"
+            android:text="Jr Executive"
+            android:textColor="@color/textColorPrimary"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/textViewCompanyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewJobTitle"
+            android:layout_alignStart="@id/textViewJobTitle"
+            android:text="Burger King"
+            android:textColor="@color/textColorSecondary"/>
+
+        <TextView
+            android:id="@+id/textViewSalary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@id/textViewJobTitle"
+            android:text="$96,000/y"
+            android:textColor="@color/textColorPrimary"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/textViewLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@id/textViewCompanyName"
+            android:text="Los Angeles, US"
+            android:textColor="@color/textColorSecondary"/>
+
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

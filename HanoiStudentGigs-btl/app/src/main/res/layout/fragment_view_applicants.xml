@@ -1,0 +1,39 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/backgroundColor">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Danh sách ứng viên"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/textColorPrimary"
+        android:padding="16dp"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewApplicants"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:padding="8dp"/>
+
+        <!-- FIX: Thêm TextView này với đúng ID -->
+        <TextView
+            android:id="@+id/textViewNoApplicants"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chưa có ứng viên nào."
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/textColorSecondary"
+            android:visibility="gone"/>
+
+    </FrameLayout>
+</LinearLayout>

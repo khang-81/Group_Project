@@ -1,0 +1,206 @@
+<!--
+============================================================================================
+File: res/layout/activity_register.xml (ĐÃ FIX VÀ HOÀN THIỆN)
+Chức năng:
+-   Tách biệt rõ ràng các trường thông tin cho Sinh viên và Nhà tuyển dụng.
+-   Sử dụng LinearLayout để nhóm các trường, giúp dễ dàng ẩn/hiện bằng code Java.
+-   Bổ sung đầy đủ các trường còn thiếu theo yêu cầu (Chuyên ngành, Số điện thoại, Địa chỉ...).
+-   Sử dụng `TextInputLayout` và `TextInputEditText` cho giao diện Material Design hiện đại.
+============================================================================================
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="Đăng Ký Tài Khoản"
+            android:textColor="@color/primaryColor"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BẠN LÀ?"
+            android:textSize="16sp"
+            android:textColor="@color/textColorPrimary"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupRole"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="16dp">
+            <RadioButton
+                android:id="@+id/radioStudent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sinh viên"
+                android:checked="true"
+                android:layout_marginEnd="16dp"/>
+            <RadioButton
+                android:id="@+id/radioEmployer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nhà tuyển dụng"/>
+        </RadioGroup>
+
+        <!-- CÁC TRƯỜNG CHUNG -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Email (*)">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextEmailRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:passwordToggleEnabled="true"
+            android:hint="Mật khẩu (*)">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextPasswordRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <!-- KHUNG THÔNG TIN DÀNH CHO SINH VIÊN -->
+        <LinearLayout
+            android:id="@+id/studentFieldsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible"> <!-- Mặc định hiển thị -->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Họ và tên (*)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextStudentFullName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Trường đang học (*)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextSchool"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Năm học / Chuyên ngành (Tùy chọn)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextMajor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+
+        <!-- KHUNG THÔNG TIN DÀNH CHO NHÀ TUYỂN DỤNG -->
+        <LinearLayout
+            android:id="@+id/employerFieldsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"> <!-- Mặc định ẩn -->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Tên công ty / Cá nhân (*)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextCompanyName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Địa chỉ (*)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Số điện thoại (*)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Website (Tùy chọn)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextWebsite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textUri"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBarRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginTop="16dp"/>
+
+        <Button
+            android:id="@+id/buttonRegister"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="24dp"
+            android:text="Đăng ký"
+            android:textAllCaps="false"/>
+
+    </LinearLayout>
+</ScrollView>
