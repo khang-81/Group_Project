@@ -28,9 +28,11 @@ public class PopularJobAdapter extends FirestoreRecyclerAdapter<Job, PopularJobA
     protected void onBindViewHolder(@NonNull PopularJobViewHolder holder, int position, @NonNull Job model) {
         holder.bind(model);
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, JobDetailActivity.class);
-            intent.putExtra("JOB_ID", model.getId());
-            context.startActivity(intent);
+            if (context != null) {
+                Intent intent = new Intent(context, JobDetailActivity.class);
+                intent.putExtra("JOB_ID", model.getId());
+                context.startActivity(intent);
+            }
         });
     }
 
@@ -55,11 +57,25 @@ public class PopularJobAdapter extends FirestoreRecyclerAdapter<Job, PopularJobA
         }
 
         public void bind(Job job) {
+            android.util.Log.d("JobAdapter", "Binding job: " + (job != null ? job.getTitle() : "JOB IS NULL"));
+
             textViewJobTitle.setText(job.getTitle());
-            textViewCompanyName.setText(job.getCompanyName());
-            textViewSalary.setText(job.getSalary());
-            textViewLocation.setText(job.getLocation());
-            // Picasso.get().load(job.getLogoUrl()).into(imageViewCompanyLogo);
+            if (job == null) return;
+
+            textViewJobTitle.setText(job.getTitle() != null ? job.getTitle() : "Tên công việc");
+            textViewCompanyName.setText(job.getCompanyName() != null ? job.getCompanyName() : "Tên công ty");
+            textViewSalary.setText(job.getSalary() != null ? job.getSalary() : "Thỏa thuận");
+            textViewLocation.setText(job.getLocation() != null ? job.getLocation() : "Hà Nội");
+
+            if (job.getCompanyLogoUrl() != null && !job.getCompanyLogoUrl().isEmpty()) {
+                Picasso.get()
+                        .load(job.getCompanyLogoUrl())
+                        .placeholder(R.drawable.ic_work_placeholder)
+                        .error(R.drawable.ic_work_placeholder)
+                        .into(imageViewCompanyLogo);
+            } else {
+                imageViewCompanyLogo.setImageResource(R.drawable.ic_work_placeholder);
+            }
         }
     }
 }

@@ -21,10 +21,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-// FIX: Đổi tên class
 public class EmployerDashboardFragment extends Fragment {
     private RecyclerView recyclerViewActiveJobs, recyclerViewClosedJobs;
-    // FIX: Đổi tên adapter nếu muốn, nhưng không bắt buộc. Ở đây giữ nguyên để đơn giản.
     private EmployerJobAdapter activeJobsAdapter, closedJobsAdapter;
     private FloatingActionButton fabPostJob;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -33,7 +31,6 @@ public class EmployerDashboardFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // FIX: Đảm bảo nạp đúng file layout
         View view = inflater.inflate(R.layout.fragment_employer_dashboard, container, false);
 
         recyclerViewActiveJobs = view.findViewById(R.id.recyclerViewActiveJobs);
@@ -48,27 +45,34 @@ public class EmployerDashboardFragment extends Fragment {
         return view;
     }
 
-    // ... Các phương thức còn lại (setupRecyclerViews, onStart, onStop) giữ nguyên
     private void setupRecyclerViews() {
         if (mAuth.getCurrentUser() == null) return;
         String currentUserId = mAuth.getCurrentUser().getUid();
 
+        // Query cho các công việc đang tuyển (status == "Open")
         Query activeQuery = db.collection(Constants.JOBS_COLLECTION)
                 .whereEqualTo("employerUid", currentUserId)
                 .whereEqualTo("status", "Open")
                 .orderBy("createdAt", Query.Direction.DESCENDING);
+
         FirestoreRecyclerOptions<Job> activeOptions = new FirestoreRecyclerOptions.Builder<Job>()
-                .setQuery(activeQuery, Job.class).build();
+                .setQuery(activeQuery, Job.class)
+                .build();
+
         activeJobsAdapter = new EmployerJobAdapter(activeOptions, getContext());
         recyclerViewActiveJobs.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerViewActiveJobs.setAdapter(activeJobsAdapter);
 
+        // Query cho các công việc đã đóng (status == "Closed")
         Query closedQuery = db.collection(Constants.JOBS_COLLECTION)
                 .whereEqualTo("employerUid", currentUserId)
                 .whereEqualTo("status", "Closed")
                 .orderBy("createdAt", Query.Direction.DESCENDING);
+
         FirestoreRecyclerOptions<Job> closedOptions = new FirestoreRecyclerOptions.Builder<Job>()
-                .setQuery(closedQuery, Job.class).build();
+                .setQuery(closedQuery, Job.class)
+                .build();
+
         closedJobsAdapter = new EmployerJobAdapter(closedOptions, getContext());
         recyclerViewClosedJobs.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerViewClosedJobs.setAdapter(closedJobsAdapter);
