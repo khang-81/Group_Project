@@ -60,6 +60,7 @@ public class PopularJobAdapter extends FirestoreRecyclerAdapter<Job, PopularJobA
             android.util.Log.d("JobAdapter", "Binding job: " + (job != null ? job.getTitle() : "JOB IS NULL"));
 
             textViewJobTitle.setText(job.getTitle());
+<<<<<<< HEAD
             if (job == null) return;
 
             textViewJobTitle.setText(job.getTitle() != null ? job.getTitle() : "Tên công việc");
@@ -76,6 +77,12 @@ public class PopularJobAdapter extends FirestoreRecyclerAdapter<Job, PopularJobA
             } else {
                 imageViewCompanyLogo.setImageResource(R.drawable.ic_work_placeholder);
             }
+=======
+            textViewCompanyName.setText(job.getCompanyName());
+            textViewSalary.setText(job.getSalaryDescription());
+            textViewLocation.setText(job.getLocationName());
+            // Picasso.get().load(job.getLogoUrl()).into(imageViewCompanyLogo);
+>>>>>>> origin/main
         }
     }
 }
