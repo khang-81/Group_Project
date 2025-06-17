@@ -1,68 +1,54 @@
 [versions]
-activityVersion = "1.9.0"
-agp = "8.10.1"
-androidxJunit = "1.1.5"
-appcompatVersion = "1.6.1"
+# Android Core & UI
+activity = "1.10.1" # Phiên bản mới nhất bạn liệt kê
+appcompat = "1.7.1" # Phiên bản mới nhất bạn liệt kê
 cardview = "1.0.0"
-circleimageview = "3.1.0"
-constraintlayoutVersion = "2.1.4"
-espressoCoreVersion = "3.5.1"
-firebaseBom = "33.15.0"
-firebaseBomVersion = "33.1.1"
-firebaseUiFirestore = "8.0.2"
-junit = "4.13.2"
-junitVersion = "1.2.1"
-espressoCore = "3.6.1"
-appcompat = "1.7.1"
-material = "1.12.0"
-activity = "1.10.1"
-constraintlayout = "2.2.1"
-firebaseFirestore = "25.1.4"
-firebaseAuth = "23.2.1"
-materialVersion = "1.6.0"
-picasso = "2.71828"
-picassoVersion = "2.8"
+constraintlayout = "2.2.1" # Phiên bản mới nhất bạn liệt kê
+material = "1.12.0" # Phiên bản mới nhất bạn liệt kê
 viewpager2 = "1.1.0"
-firebaseDatabase = "21.0.0"
+
+# Thư viện tải ảnh & UI tiện ích
+circleimageview = "3.1.0"
+picasso = "2.71828" # Chỉ giữ một phiên bản Picasso duy nhất
+
+# Testing
+junit = "4.13.2" # JUnit chính
+junit-ext = "1.2.1" # androidx.test.ext:junit (phiên bản mới nhất bạn liệt kê)
+espresso-core = "3.6.1" # Phiên bản mới nhất bạn liệt kê
+
+# Firebase
+firebase-bom = "33.15.0" # Sử dụng phiên bản BOM mới nhất
+firebase-ui-firestore = "8.0.2" # firebase-ui cần phiên bản riêng
+
+# Gradle Plugin
+agp = "8.9.1"
 
 [libraries]
-activity-v190 = { module = "androidx.activity:activity", version.ref = "activityVersion" }
-appcompat-v161 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
-cardview = { module = "androidx.cardview:cardview", version.ref = "cardview" }
-circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }
-com-google-firebase-firebase-auth = { module = "com.google.firebase:firebase-auth" }
-com-google-firebase-firebase-auth2 = { module = "com.google.firebase:firebase-auth" }
-com-google-firebase-firebase-auth3 = { module = "com.google.firebase:firebase-auth" }
-com-google-firebase-firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
-com-google-firebase-firebase-firestore2 = { module = "com.google.firebase:firebase-firestore" }
-com-google-firebase-firebase-firestore3 = { module = "com.google.firebase:firebase-firestore" }
-com-google-firebase-firebase-storage = { module = "com.google.firebase:firebase-storage" }
-com-google-firebase-firebase-storage2 = { module = "com.google.firebase:firebase-storage" }
-constraintlayout-v214 = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayoutVersion" }
-espresso-core-v351 = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCoreVersion" }
-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
-firebase-bom-v3311 = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBomVersion" }
-firebase-storage = { module = "com.google.firebase:firebase-storage" }
-firebase-ui-firestore = { module = "com.firebaseui:firebase-ui-firestore", version.ref = "firebaseUiFirestore" }
-google-firebase-auth = { module = "com.google.firebase:firebase-auth" }
-google-firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
-google-firebase-storage = { module = "com.google.firebase:firebase-storage" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-junit-v115 = { module = "androidx.test.ext:junit", version.ref = "androidxJunit" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+# Android Core & UI
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
-firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
-material-v160 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
-picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
-picasso-v28 = { module = "com.squareup.picasso:picasso", version.ref = "picassoVersion" }
-viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewpager2" }
-firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version.ref = "viewpager2" }
+
+# Thư viện tải ảnh & UI tiện ích
+circleimageview = { group = "de.hdodenhof", name = "circleimageview", version.ref = "circleimageview" }
+picasso = { group = "com.squareup.picasso", name = "picasso", version.ref = "picasso" }
+
+# Firebase (các phiên bản được quản lý bởi BOM trừ khi được chỉ định khác)
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore" }
+firebase-storage = { group = "com.google.firebase", name = "firebase-storage" }
+firebase-database = { group = "com.google.firebase", name = "firebase-database" }
+firebase-ui-firestore = { group = "com.firebaseui", name = "firebase-ui-firestore", version.ref = "firebase-ui-firestore" } # Cần phiên bản cụ thể
+
+# Testing
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+junit-ext = { group = "androidx.test.ext", name = "junit", version.ref = "junit-ext" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-
