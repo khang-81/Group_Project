@@ -84,7 +84,8 @@ public class StudentHomeFragment extends Fragment {
     private void setupRecyclerViews() {
         // Query cho các công việc nổi bật (5 công việc mới nhất)
         Query featuredQuery = db.collection(Constants.JOBS_COLLECTION)
-                .whereEqualTo("approved", true)
+                .whereEqualTo("isApproved", true)
+                .whereEqualTo("status", "Open")
                 .orderBy("createdAt", Query.Direction.DESCENDING)
                 .limit(5);
 
@@ -98,7 +99,8 @@ public class StudentHomeFragment extends Fragment {
 
         // Query cho các công việc phổ biến (tất cả các công việc còn lại)
         Query popularQuery = db.collection(Constants.JOBS_COLLECTION)
-                .whereEqualTo("approved", true)
+                .whereEqualTo("isApproved", true)
+                .whereEqualTo("status", "Open")
                 .orderBy("createdAt", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<Job> popularOptions = new FirestoreRecyclerOptions.Builder<Job>()

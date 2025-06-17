@@ -1,17 +1,21 @@
 package com.example.hanoistudentgigs.models;
 
-import com.google.firebase.firestore.ServerTimestamp;
-import java.util.Date;
+
+
+
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class Job {
     private String id;
     private String title;
     private String companyName;
+    private Map<String, Object> createdAt;
     private String companyLogoUrl; // Link ảnh logo công ty
-    private String location;
-    private String salary;
+    private String locationName;
+    private String salaryDescription;
     private String description;
     private String requirements;
     private String employerUid;
@@ -24,8 +28,8 @@ public class Job {
     private List<String> searchKeywords; // Bổ sung: Mảng chứa các từ khóa để tìm kiếm
     private long minSalary; // Bổ sung: Số lương tối thiểu để lọc và sắp xếp
 
-    @ServerTimestamp
-    private Date createdAt;
+
+
 
     // Constructor rỗng
     public Job() {}
@@ -43,11 +47,11 @@ public class Job {
     public String getCompanyLogoUrl() { return companyLogoUrl; }
     public void setCompanyLogoUrl(String companyLogoUrl) { this.companyLogoUrl = companyLogoUrl; }
 
-    public String getLocation() { return location; }
-    public void setLocation(String location) { this.location = location; }
+    public String getLocationName() { return locationName; }
+    public void setLocationName(String locationName) { this.locationName = locationName; }
 
-    public String getSalary() { return salary; }
-    public void setSalary(String salary) { this.salary = salary; }
+    public String getSalaryDescription() { return salaryDescription; }
+    public void setSalaryDescription(String salaryDescription) { this.salaryDescription = salaryDescription; }
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
@@ -73,8 +77,9 @@ public class Job {
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
 
-    public Date getCreatedAt() { return createdAt; }
-    public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }
+
+    public Map<String, Object> getCreatedAt() { return createdAt; }
+    public void setCreatedAt(Map<String, Object> createdAt) { this.createdAt = createdAt; }
 
     public List<String> getSearchKeywords() { return searchKeywords; }
     public void setSearchKeywords(List<String> searchKeywords) { this.searchKeywords = searchKeywords; }
@@ -94,8 +99,8 @@ public class Job {
                 Objects.equals(title, job.title) &&
                 Objects.equals(companyName, job.companyName) &&
                 Objects.equals(companyLogoUrl, job.companyLogoUrl) &&
-                Objects.equals(location, job.location) &&
-                Objects.equals(salary, job.salary) &&
+                Objects.equals(locationName, job.locationName) &&
+                Objects.equals(salaryDescription, job.salaryDescription) &&
                 Objects.equals(description, job.description) &&
                 Objects.equals(requirements, job.requirements) &&
                 Objects.equals(employerUid, job.employerUid) &&
@@ -109,7 +114,7 @@ public class Job {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, companyName, companyLogoUrl, location, salary, description, requirements, employerUid, jobType, categoryName, requiredSkills, isApproved, status, searchKeywords, minSalary, createdAt);
+        return Objects.hash(id, title, companyName, companyLogoUrl, locationName, salaryDescription, description, requirements, employerUid, jobType, categoryName, requiredSkills, isApproved, status, searchKeywords, minSalary, createdAt);
     }
 
     // --- Override toString() ---
@@ -120,8 +125,8 @@ public class Job {
                 ", title='" + title + '\'' +
                 ", companyName='" + companyName + '\'' +
                 ", companyLogoUrl='" + companyLogoUrl + '\'' +
-                ", location='" + location + '\'' +
-                ", salary='" + salary + '\'' +
+                ", location='" + locationName + '\'' +
+                ", salary='" + salaryDescription + '\'' +
                 ", description='" + description + '\'' +
                 ", requirements='" + requirements + '\'' +
                 ", employerUid='" + employerUid + '\'' +

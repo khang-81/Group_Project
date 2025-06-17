@@ -26,6 +26,11 @@ public class FeaturedJobAdapter extends FirestoreRecyclerAdapter<Job, FeaturedJo
 
     @Override
     protected void onBindViewHolder(@NonNull FeaturedJobViewHolder holder, int position, @NonNull Job model) {
+        // Lấy ID của document từ snapshot
+        String jobId = getSnapshots().getSnapshot(position).getId();
+        // Gán ID vào model nếu Job class có setter cho ID
+        model.setId(jobId); // Đảm bảo Job model của bạn có setId(String id)
+
         holder.bind(model);
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, JobDetailActivity.class);
@@ -57,9 +62,15 @@ public class FeaturedJobAdapter extends FirestoreRecyclerAdapter<Job, FeaturedJo
         public void bind(Job job) {
             textViewJobTitle.setText(job.getTitle());
             textViewCompanyName.setText(job.getCompanyName());
-            textViewSalary.setText(job.getSalary());
-            textViewLocation.setText(job.getLocation());
-            // Picasso.get().load(job.getLogoUrl()).into(imageViewCompanyLogo);
+            textViewSalary.setText(job.getSalaryDescription());
+            textViewLocation.setText(job.getLocationName());
+            // Trong FeaturedJobViewHolder.bind(Job job)
+            if (job.getCompanyLogoUrl() != null && !job.getCompanyLogoUrl().isEmpty()) {
+                Picasso.get().load(job.getCompanyLogoUrl()).into(imageViewCompanyLogo);
+            } else {
+                // Cung cấp một ảnh mặc định nếu không có logo hoặc URL trống
+                imageViewCompanyLogo.setImageResource(R.drawable.ic_default_company_logo); // Bạn cần tạo drawable này
+            }
         }
     }
 }

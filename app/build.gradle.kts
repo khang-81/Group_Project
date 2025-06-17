@@ -1,11 +1,11 @@
 plugins {
     alias(libs.plugins.android.application)
-    id("com.google.gms.google-services")
+    id("com.google.gms.google-services") // Tên plugin Firestore
 }
 
 android {
     namespace = "com.example.hanoistudentgigs"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.hanoistudentgigs"
@@ -36,41 +36,36 @@ android {
 }
 
 dependencies {
-    // Firebase Bill of Materials (BOM)
+    // Firebase Bill of Materials (BOM) - LUÔN LUÔN ĐẶT ĐẦU TIÊN KHI SỬ DỤNG BOM
     implementation(platform(libs.firebase.bom))
 
-    // Firebase SDKs
-    implementation(libs.com.google.firebase.firebase.auth)
-    implementation(libs.com.google.firebase.firebase.firestore)
-    implementation(libs.com.google.firebase.firebase.storage)
+    // Firebase SDKs (không cần chỉ định version vì đã có BOM)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.storage)
+    implementation(libs.firebase.database) // Đã có rồi, không cần lặp lại
 
-    // FirebaseUI for Firestore (giúp làm việc với RecyclerView dễ dàng)
+    // FirebaseUI for Firestore (cần chỉ định version nếu không dùng BOM cho nó)
     implementation(libs.firebase.ui.firestore)
-    implementation (libs.firebase.firestore)
 
 
     // Thư viện AndroidX và Material Design
-    implementation(libs.appcompat.v161)
+    implementation(libs.appcompat) // Sử dụng tên alias ngắn gọn nếu đã khai báo trong libs.versions.toml
     implementation(libs.material)
-    implementation(libs.constraintlayout.v214)
-    implementation(libs.activity.v190)
-
-    // Thư viện cho ViewPager2 (dùng cho Tab Layout của Admin)
+    implementation(libs.constraintlayout)
+    implementation(libs.activity)
     implementation(libs.viewpager2)
-
-    implementation (libs.circleimageview)
-    implementation (libs.cardview)
-
-    implementation (libs.material.v160)
-    implementation (libs.circleimageview)
+    implementation(libs.cardview) // CardView thường là androidx.cardview:cardview:1.0.0
 
 
-    // Thư viện load ảnh (tùy chọn nhưng rất hữu ích)
-    implementation(libs.picasso.v28)
-    implementation(libs.firebase.database)
+    // Thư viện load ảnh (Picasso)
+    implementation(libs.picasso) // Chỉ dùng một lần, bỏ dòng 'com.squareup.picasso:picasso:2.71828'
+    implementation(libs.circleimageview) // CircleImageView
+
 
     // Thư viện Testing
     testImplementation(libs.junit)
-    androidTestImplementation(libs.junit.v115)
-    androidTestImplementation(libs.espresso.core.v351)
+    androidTestImplementation(libs.junit.ext) // Đổi từ libs.junit.v115 sang tên alias chính xác
+    androidTestImplementation(libs.espresso.core) // Đổi từ libs.espresso.core.v351 sang tên alias chính xác
+    implementation(libs.picasso)
 }
