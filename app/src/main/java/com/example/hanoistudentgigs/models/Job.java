@@ -1,17 +1,30 @@
 package com.example.hanoistudentgigs.models;
 
-import com.google.firebase.firestore.ServerTimestamp;
-import java.util.Date;
+
+
+
 import java.util.List;
+<<<<<<< HEAD
+
+public class Job {
+    // Các trường đã có từ JSON
+    private String id, title, companyName, location, salary, description, requirements, employerUid, status;
+    private boolean isApproved = false;
+    @ServerTimestamp
+    private Date createdAt;
+=======
+import java.util.Map;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class Job {
     private String id;
     private String title;
     private String companyName;
+    private Map<String, Object> createdAt;
     private String companyLogoUrl; // Link ảnh logo công ty
-    private String location;
-    private String salary;
+    private String locationName;
+    private String salaryDescription;
     private String description;
     private String requirements;
     private String employerUid;
@@ -24,13 +37,22 @@ public class Job {
     private List<String> searchKeywords; // Bổ sung: Mảng chứa các từ khóa để tìm kiếm
     private long minSalary; // Bổ sung: Số lương tối thiểu để lọc và sắp xếp
 
-    @ServerTimestamp
-    private Date createdAt;
 
-    // Constructor rỗng
+
+>>>>>>> origin/main
+
+    // Các trường bổ sung
+    private String companyLogoUrl;
+    private String jobType;
+    private String categoryName;
+    private List<String> searchKeywords;  // Từ khóa tìm kiếm
+    private int minSalary;  // Mức lương tối thiểu
+    private List<String> requiredSkills;  // Các kỹ năng yêu cầu
+
+    // Constructor rỗng cần thiết cho Firestore
     public Job() {}
 
-    // --- Getters và Setters ---
+    // --- Getters và Setters cho tất cả các trường ---
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
@@ -40,14 +62,19 @@ public class Job {
     public String getCompanyName() { return companyName; }
     public void setCompanyName(String companyName) { this.companyName = companyName; }
 
+<<<<<<< HEAD
+    public String getLocation() { return location; }
+    public void setLocation(String location) { this.location = location; }
+=======
     public String getCompanyLogoUrl() { return companyLogoUrl; }
     public void setCompanyLogoUrl(String companyLogoUrl) { this.companyLogoUrl = companyLogoUrl; }
 
-    public String getLocation() { return location; }
-    public void setLocation(String location) { this.location = location; }
+    public String getLocationName() { return locationName; }
+    public void setLocationName(String locationName) { this.locationName = locationName; }
+>>>>>>> origin/main
 
-    public String getSalary() { return salary; }
-    public void setSalary(String salary) { this.salary = salary; }
+    public String getSalaryDescription() { return salaryDescription; }
+    public void setSalaryDescription(String salaryDescription) { this.salaryDescription = salaryDescription; }
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
@@ -58,12 +85,23 @@ public class Job {
     public String getEmployerUid() { return employerUid; }
     public void setEmployerUid(String employerUid) { this.employerUid = employerUid; }
 
+    public boolean isApproved() { return isApproved; }
+    public void setApproved(boolean approved) { isApproved = approved; }
+
+    public Date getCreatedAt() { return createdAt; }
+    public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }
+
+    public String getCompanyLogoUrl() { return companyLogoUrl; }
+    public void setCompanyLogoUrl(String companyLogoUrl) { this.companyLogoUrl = companyLogoUrl; }
+
     public String getJobType() { return jobType; }
     public void setJobType(String jobType) { this.jobType = jobType; }
 
     public String getCategoryName() { return categoryName; }
     public void setCategoryName(String categoryName) { this.categoryName = categoryName; }
 
+<<<<<<< HEAD
+=======
     public List<String> getRequiredSkills() { return requiredSkills; }
     public void setRequiredSkills(List<String> requiredSkills) { this.requiredSkills = requiredSkills; }
 
@@ -73,15 +111,24 @@ public class Job {
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
 
-    public Date getCreatedAt() { return createdAt; }
-    public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }
 
+    public Map<String, Object> getCreatedAt() { return createdAt; }
+    public void setCreatedAt(Map<String, Object> createdAt) { this.createdAt = createdAt; }
+
+>>>>>>> origin/main
     public List<String> getSearchKeywords() { return searchKeywords; }
     public void setSearchKeywords(List<String> searchKeywords) { this.searchKeywords = searchKeywords; }
 
-    public long getMinSalary() { return minSalary; }
-    public void setMinSalary(long minSalary) { this.minSalary = minSalary; }
+    public int getMinSalary() { return minSalary; }
+    public void setMinSalary(int minSalary) { this.minSalary = minSalary; }
 
+<<<<<<< HEAD
+    public List<String> getRequiredSkills() { return requiredSkills; }
+    public void setRequiredSkills(List<String> requiredSkills) { this.requiredSkills = requiredSkills; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+=======
     // --- Override equals() và hashCode() ---
     @Override
     public boolean equals(Object o) {
@@ -94,8 +141,8 @@ public class Job {
                 Objects.equals(title, job.title) &&
                 Objects.equals(companyName, job.companyName) &&
                 Objects.equals(companyLogoUrl, job.companyLogoUrl) &&
-                Objects.equals(location, job.location) &&
-                Objects.equals(salary, job.salary) &&
+                Objects.equals(locationName, job.locationName) &&
+                Objects.equals(salaryDescription, job.salaryDescription) &&
                 Objects.equals(description, job.description) &&
                 Objects.equals(requirements, job.requirements) &&
                 Objects.equals(employerUid, job.employerUid) &&
@@ -109,7 +156,7 @@ public class Job {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, companyName, companyLogoUrl, location, salary, description, requirements, employerUid, jobType, categoryName, requiredSkills, isApproved, status, searchKeywords, minSalary, createdAt);
+        return Objects.hash(id, title, companyName, companyLogoUrl, locationName, salaryDescription, description, requirements, employerUid, jobType, categoryName, requiredSkills, isApproved, status, searchKeywords, minSalary, createdAt);
     }
 
     // --- Override toString() ---
@@ -120,8 +167,8 @@ public class Job {
                 ", title='" + title + '\'' +
                 ", companyName='" + companyName + '\'' +
                 ", companyLogoUrl='" + companyLogoUrl + '\'' +
-                ", location='" + location + '\'' +
-                ", salary='" + salary + '\'' +
+                ", location='" + locationName + '\'' +
+                ", salary='" + salaryDescription + '\'' +
                 ", description='" + description + '\'' +
                 ", requirements='" + requirements + '\'' +
                 ", employerUid='" + employerUid + '\'' +
@@ -135,4 +182,5 @@ public class Job {
                 ", createdAt=" + createdAt +
                 '}';
     }
+>>>>>>> origin/main
 }

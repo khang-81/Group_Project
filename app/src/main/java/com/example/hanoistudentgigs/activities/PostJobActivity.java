@@ -10,6 +10,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.example.hanoistudentgigs.R;
 import com.example.hanoistudentgigs.models.Job;
+import java.util.Date; // Vẫn cần nếu bạn muốn lấy thời gian hiện tại
+import java.util.HashMap; // Cần để tạo Map
+import java.util.Map; // Cần để tạo Map
+import java.util.concurrent.TimeUnit; // Cần để chuyển đổi Date sang seconds/nanoseconds
 
 public class PostJobActivity extends AppCompatActivity {
     private TextInputEditText editTextJobTitle, editTextCompanyName, editTextLocation, editTextSalary, editTextDescription;
@@ -56,11 +60,25 @@ public class PostJobActivity extends AppCompatActivity {
         job.setId(jobId);
         job.setTitle(title);
         job.setCompanyName(company);
-        job.setLocation(location);
-        job.setSalary(salary);
+        job.setLocationName(location);
+        job.setSalaryDescription(salary);
         job.setDescription(description);
         job.setEmployerUid(employerUid);
         job.setApproved(false); // Mặc định tin đăng cần được Admin duyệt
+
+        // --- ĐÂY LÀ PHẦN THAY ĐỔI QUAN TRỌNG ĐỂ XỬ LÝ createdAt DƯỚI DẠNG MAP ---
+        // Lấy thời gian hiện tại
+        Date now = new Date();
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(now.getTime());
+        int nanoseconds = (int) (TimeUnit.MILLISECONDS.toNanos(now.getTime() % 1000)); // Lấy phần nano giây còn lại từ milliseconds
+
+        // Tạo Map cho createdAt
+        Map<String, Object> createdAtMap = new HashMap<>();
+        createdAtMap.put("_seconds", seconds); // Lưu ý tên trường _seconds
+        createdAtMap.put("_nanoseconds", nanoseconds); // Lưu ý tên trường _nanoseconds
+
+        job.setCreatedAt(createdAtMap); // Gán Map vào trường createdAt của Job
+        // --- KẾT THÚC PHẦN THAY ĐỔI QUAN TRỌNG ---
 
         db.collection("jobs").document(jobId).set(job)
                 .addOnSuccessListener(aVoid -> {

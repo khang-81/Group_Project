@@ -7,6 +7,8 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.hanoistudentgigs.R;
 import com.example.hanoistudentgigs.activities.LoginActivity;
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
             sendToLogin();
             return;
         }
+
         setupUserInterface(savedInstanceState);
     }
 
@@ -48,13 +51,17 @@ public class MainActivity extends AppCompatActivity {
         String uid = mAuth.getCurrentUser().getUid();
         db.collection(Constants.USERS_COLLECTION).document(uid).get()
                 .addOnSuccessListener(documentSnapshot -> {
+                    // FIX: Kiểm tra xem Activity có còn tồn tại không trước khi làm bất cứ điều gì
                     if (isFinishing() || isDestroyed() || !documentSnapshot.exists()) {
                         mAuth.signOut();
                         sendToLogin();
                         return;
                     }
+
                     userRole = documentSnapshot.getString("role");
                     setupBottomNavigation();
+
+                    // Chỉ load Fragment mặc định nếu đây là lần đầu tiên Activity được tạo.
                     if (savedInstanceState == null) {
                         loadFragment(getDefaultFragmentForRole());
                     }
@@ -68,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupBottomNavigation() {
         bottomNav.getMenu().clear();
         if (userRole == null) return;
+
         switch (userRole) {
             case Constants.ROLE_STUDENT:
                 getMenuInflater().inflate(R.menu.student_bottom_navigation_menu, bottomNav.getMenu());
@@ -82,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setOnItemSelectedListener(navListener);
     }
 
-    // FIX: Thay đổi kiểu trả về thành Fragment để tương thích với tất cả các loại Fragment
     private Fragment getDefaultFragmentForRole() {
         if (userRole == null) return null;
         switch (userRole) {
@@ -102,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 Fragment selectedFragment = null;
                 int itemId = item.getItemId();
 
+                // Logic điều hướng giữ nguyên
                 // --- Student Navigation ---
                 if (itemId == R.id.nav_student_home) {
                     selectedFragment = new StudentHomeFragment();
@@ -110,15 +118,15 @@ public class MainActivity extends AppCompatActivity {
                 } else if (itemId == R.id.nav_student_profile) {
                     selectedFragment = new ProfileFragment();
                 }
-                // --- Employer (Recruiter) Navigation ---
-                // FIX: Sử dụng đúng ID từ file menu (recruiter_bottom_navigation_menu.xml)
+
+                // --- Recruiter (Employer) Navigation ---
                 else if (itemId == R.id.nav_recruiter_dashboard) {
                     selectedFragment = new EmployerDashboardFragment();
                 } else if (itemId == R.id.nav_recruiter_profile) {
                     selectedFragment = new ProfileFragment();
                 }
+
                 // --- Admin Navigation ---
-                // FIX: Sử dụng đúng ID từ file menu (admin_bottom_navigation_menu.xml)
                 else if (itemId == R.id.nav_admin_dashboard) {
                     selectedFragment = new AdminDashboardFragment();
                 } else if (itemId == R.id.nav_admin_approve_jobs) {
@@ -131,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
             };
 
     private boolean loadFragment(Fragment fragment) {
+        // FIX: Thêm kiểm tra an toàn toàn diện trước khi thực hiện FragmentTransaction
         if (fragment != null && !isFinishing() && !getSupportFragmentManager().isStateSaved()) {
             try {
                 getSupportFragmentManager().beginTransaction()
@@ -138,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
                         .commit();
                 return true;
             } catch (IllegalStateException e) {
+                // Ghi log lỗi nếu vẫn xảy ra để điều tra thêm
                 Log.e("MainActivity", "Error committing fragment transaction", e);
             }
         }
@@ -145,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sendToLogin() {
+        // FIX: Thêm kiểm tra an toàn trước khi chuyển Activity
         if (!isFinishing()) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
