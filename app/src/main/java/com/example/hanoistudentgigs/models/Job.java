@@ -4,15 +4,6 @@ package com.example.hanoistudentgigs.models;
 
 
 import java.util.List;
-<<<<<<< HEAD
-
-public class Job {
-    // Các trường đã có từ JSON
-    private String id, title, companyName, location, salary, description, requirements, employerUid, status;
-    private boolean isApproved = false;
-    @ServerTimestamp
-    private Date createdAt;
-=======
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Objects;
@@ -39,20 +30,11 @@ public class Job {
 
 
 
->>>>>>> origin/main
 
-    // Các trường bổ sung
-    private String companyLogoUrl;
-    private String jobType;
-    private String categoryName;
-    private List<String> searchKeywords;  // Từ khóa tìm kiếm
-    private int minSalary;  // Mức lương tối thiểu
-    private List<String> requiredSkills;  // Các kỹ năng yêu cầu
-
-    // Constructor rỗng cần thiết cho Firestore
+    // Constructor rỗng
     public Job() {}
 
-    // --- Getters và Setters cho tất cả các trường ---
+    // --- Getters và Setters ---
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
@@ -62,16 +44,11 @@ public class Job {
     public String getCompanyName() { return companyName; }
     public void setCompanyName(String companyName) { this.companyName = companyName; }
 
-<<<<<<< HEAD
-    public String getLocation() { return location; }
-    public void setLocation(String location) { this.location = location; }
-=======
     public String getCompanyLogoUrl() { return companyLogoUrl; }
     public void setCompanyLogoUrl(String companyLogoUrl) { this.companyLogoUrl = companyLogoUrl; }
 
     public String getLocationName() { return locationName; }
     public void setLocationName(String locationName) { this.locationName = locationName; }
->>>>>>> origin/main
 
     public String getSalaryDescription() { return salaryDescription; }
     public void setSalaryDescription(String salaryDescription) { this.salaryDescription = salaryDescription; }
@@ -85,23 +62,12 @@ public class Job {
     public String getEmployerUid() { return employerUid; }
     public void setEmployerUid(String employerUid) { this.employerUid = employerUid; }
 
-    public boolean isApproved() { return isApproved; }
-    public void setApproved(boolean approved) { isApproved = approved; }
-
-    public Date getCreatedAt() { return createdAt; }
-    public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }
-
-    public String getCompanyLogoUrl() { return companyLogoUrl; }
-    public void setCompanyLogoUrl(String companyLogoUrl) { this.companyLogoUrl = companyLogoUrl; }
-
     public String getJobType() { return jobType; }
     public void setJobType(String jobType) { this.jobType = jobType; }
 
     public String getCategoryName() { return categoryName; }
     public void setCategoryName(String categoryName) { this.categoryName = categoryName; }
 
-<<<<<<< HEAD
-=======
     public List<String> getRequiredSkills() { return requiredSkills; }
     public void setRequiredSkills(List<String> requiredSkills) { this.requiredSkills = requiredSkills; }
 
@@ -115,20 +81,12 @@ public class Job {
     public Map<String, Object> getCreatedAt() { return createdAt; }
     public void setCreatedAt(Map<String, Object> createdAt) { this.createdAt = createdAt; }
 
->>>>>>> origin/main
     public List<String> getSearchKeywords() { return searchKeywords; }
     public void setSearchKeywords(List<String> searchKeywords) { this.searchKeywords = searchKeywords; }
 
-    public int getMinSalary() { return minSalary; }
-    public void setMinSalary(int minSalary) { this.minSalary = minSalary; }
+    public long getMinSalary() { return minSalary; }
+    public void setMinSalary(long minSalary) { this.minSalary = minSalary; }
 
-<<<<<<< HEAD
-    public List<String> getRequiredSkills() { return requiredSkills; }
-    public void setRequiredSkills(List<String> requiredSkills) { this.requiredSkills = requiredSkills; }
-
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
-=======
     // --- Override equals() và hashCode() ---
     @Override
     public boolean equals(Object o) {
@@ -182,9 +140,4 @@ public class Job {
                 ", createdAt=" + createdAt +
                 '}';
     }
-<<<<<<< HEAD
->>>>>>> origin/main
 }
-=======
-}
->>>>>>> origin/main

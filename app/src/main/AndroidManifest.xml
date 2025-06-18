@@ -26,6 +26,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".activities.RoleSelectionActivity"
+            android:exported="false"
+            android:theme="@style/Theme.HanoiStudentGigs.NoActionBar" />
+
         <!-- FIX 1: Đảm bảo đường dẫn của MainActivity là chính xác -->
         <activity
             android:name=".MainActivity"
