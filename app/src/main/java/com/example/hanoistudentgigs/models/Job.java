@@ -182,5 +182,9 @@ public class Job {
                 ", createdAt=" + createdAt +
                 '}';
     }
+<<<<<<< HEAD
 >>>>>>> origin/main
 }
+=======
+}
+>>>>>>> origin/main

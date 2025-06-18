@@ -94,6 +94,7 @@ public class FeaturedJobAdapter extends FirestoreRecyclerAdapter<Job, FeaturedJo
             textViewCompanyName.setText(job.getCompanyName());
             textViewSalary.setText(job.getSalaryDescription());
             textViewLocation.setText(job.getLocationName());
+<<<<<<< HEAD
             // Trong FeaturedJobViewHolder.bind(Job job)
             if (job.getCompanyLogoUrl() != null && !job.getCompanyLogoUrl().isEmpty()) {
                 Picasso.get().load(job.getCompanyLogoUrl()).into(imageViewCompanyLogo);
@@ -102,6 +103,10 @@ public class FeaturedJobAdapter extends FirestoreRecyclerAdapter<Job, FeaturedJo
                 imageViewCompanyLogo.setImageResource(R.drawable.ic_default_company_logo); // Bạn cần tạo drawable này
 >>>>>>> origin/main
             }
+=======
+
+            Picasso.get().load(job.getCompanyLogoUrl()).into(imageViewCompanyLogo);
+>>>>>>> origin/main
         }
     }
 }

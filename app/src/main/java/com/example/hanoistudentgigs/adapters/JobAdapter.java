@@ -75,7 +75,7 @@ public class JobAdapter extends FirestoreRecyclerAdapter<Job, JobAdapter.JobView
             // Trong JobViewHolder.bind(Job job)
             // Kiểm tra xem URL có tồn tại và không rỗng không
             if (job.getCompanyLogoUrl() != null && !job.getCompanyLogoUrl().isEmpty()) {
-                        Picasso.get()
+                Picasso.get()
                         .load(job.getCompanyLogoUrl())
                         .placeholder(R.drawable.default_company_logo_placeholder) // Ảnh placeholder khi đang tải
                         .error(R.drawable.error_company_logo_placeholder) // Ảnh hiển thị nếu tải lỗi
