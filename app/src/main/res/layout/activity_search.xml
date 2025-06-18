@@ -1,54 +1,58 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white">
+    tools:context=".activities.SearchActivity">
 
-    <!-- Thanh tìm kiếm và bộ lọc -->
-    <com.google.android.material.appbar.AppBarLayout
+    <LinearLayout
+        android:id="@+id/searchBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:elevation="4dp">
+        android:orientation="horizontal"
+        android:padding="8dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <EditText
+            android:id="@+id/editTextSearchQuery"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp"
-            android:gravity="center_vertical">
+            android:layout_weight="1"
+            android:hint="Tìm kiếm công việc..."
+            android:drawableStart="@drawable/ic_search_24"
+            android:drawablePadding="8dp"
+            android:inputType="text"
+            android:maxLines="1"
+            android:minHeight="48dp"/>
 
-            <EditText
-                android:id="@+id/editTextSearchQuery"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/search_bar_background"
-                android:drawableStart="@drawable/ic_search_24"
-                android:drawablePadding="12dp"
-                android:hint="Tìm kiếm theo Tiêu đề, Kỹ năng..."
-                android:imeOptions="actionSearch"
-                android:inputType="text"
-                android:maxLines="1"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"/>
+        <ImageButton
+            android:id="@+id/buttonFilter"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_filter_list_24"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="12dp"
+            android:contentDescription="Lọc kết quả tìm kiếm" />
 
-            <ImageButton
-                android:id="@+id/buttonFilter"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="16dp"
-                android:background="@drawable/filter_button_background"
-                android:src="@drawable/ic_filter_list_24"
-                app:tint="@color/white"/>
-        </LinearLayout>
-    </com.google.android.material.appbar.AppBarLayout>
+    </LinearLayout> <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/recyclerViewSearchResults"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/searchBarLayout"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp"
+    android:clipToPadding="false"
+    android:paddingBottom="16dp"
+    android:contentDescription="Danh sách kết quả tìm kiếm công việc" />
 
-    <!-- RecyclerView để hiển thị kết quả -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewSearchResults"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="8dp"/>
-</LinearLayout>
+    <TextView
+        android:id="@+id/textViewNoResults"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Không tìm thấy kết quả phù hợp."
+        android:textSize="18sp"
+        android:textColor="@android:color/darker_gray"
+        android:visibility="gone"
+        android:padding="16dp"/>
+
+</RelativeLayout>
