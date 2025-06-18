@@ -3,12 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="4dp"
-    app:cardUseCompatPadding="true"
-    app:strokeWidth="1dp"
-    app:strokeColor="@color/dividerColor">
+    android:layout_marginBottom="12dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,6 +12,7 @@
         android:padding="16dp"
         android:gravity="center_vertical">
 
+        <!-- Hình ảnh biểu tượng công việc -->
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
@@ -24,6 +20,7 @@
             android:layout_marginEnd="16dp"
             app:tint="@color/primaryColor"/>
 
+        <!-- Tiêu đề công việc -->
         <TextView
             android:id="@+id/textViewJobTitle"
             android:layout_width="0dp"
@@ -33,10 +30,12 @@
             android:textColor="@color/textColorPrimary"
             android:textSize="16sp"/>
 
+        <!-- Biểu tượng mũi tên -->
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_chevron_right_24"
             app:tint="@color/textColorSecondary"/>
+
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
