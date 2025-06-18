@@ -1,51 +1,74 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="24dp"
+    android:background="#FFF">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/btnManageCategoriesTitle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Quản lý Danh mục"
-        android:textSize="24sp"
+        android:text="Quản Lý Danh Mục"
         android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
+        android:enabled="false"
+        android:backgroundTint="#3B5A7A"
+        android:textColor="#FFF"
         android:layout_marginBottom="16dp"/>
-
-    <RadioGroup
-        android:id="@+id/radioGroupCategoryType"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginBottom="16dp">
-        <RadioButton android:id="@+id/radioCategoryJob" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Ngành nghề" android:checked="true" android:layout_marginEnd="8dp"/>
-        <RadioButton android:id="@+id/radioCategorySkill" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Kỹ năng" android:layout_marginEnd="8dp"/>
-        <RadioButton android:id="@+id/radioCategoryLocation" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Địa điểm"/>
-    </RadioGroup>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewCategories"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="16dp">
-        <EditText
-            android:id="@+id/editTextNewCategory"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Nhập tên mới..."/>
+        android:gravity="center">
         <Button
-            android:id="@+id/buttonAddCategory"
+            android:id="@+id/btnTabIndustry"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Ngành nghề"/>
+        <Button
+            android:id="@+id/btnTabSkill"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Kỹ Năng"
+            android:layout_marginStart="8dp"/>
+        <Button
+            android:id="@+id/btnTabLocation"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Địa Điểm"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCategoryList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+        <EditText
+            android:id="@+id/etNewCategory"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="Nhập ..."
+            android:background="@drawable/edit_text_background"
+            android:padding="12dp"/>
+        <Button
+            android:id="@+id/btnAddCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Thêm"/>
+            android:text="Thêm mới"
+            android:layout_marginStart="8dp"/>
     </LinearLayout>
+
 </LinearLayout>
