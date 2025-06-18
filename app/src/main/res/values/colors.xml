@@ -13,4 +13,6 @@
     <color name="successColor">#4CAF50</color>
     <color name="errorColor">#F44336</color>
     <color name="lightGray">#D3D3D3</color>
+    <color name="chipBackground">#4A90E2</color>
+
 </resources>
