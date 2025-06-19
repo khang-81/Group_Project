@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.hanoistudentgigs.R;
 import com.example.hanoistudentgigs.activities.PostJobActivity;
 import com.example.hanoistudentgigs.adapters.EmployerJobAdapter;
+import com.example.hanoistudentgigs.adapters.EmployerJobAdapter;
 import com.example.hanoistudentgigs.models.Job;
 import com.example.hanoistudentgigs.utils.Constants;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -46,7 +47,7 @@ public class EmployerDashboardFragment extends Fragment {
     }
 
     private void setupRecyclerViews() {
-        if (mAuth.getCurrentUser() == null) return;
+        if (mAuth.getCurrentUser() == null || getContext() == null) return;
         String currentUserId = mAuth.getCurrentUser().getUid();
 
         // Query cho các công việc đang tuyển (status == "Open")
