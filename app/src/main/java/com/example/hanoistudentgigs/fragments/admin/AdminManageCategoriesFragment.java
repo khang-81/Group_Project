@@ -19,9 +19,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.hanoistudentgigs.R;
 import com.example.hanoistudentgigs.adapters.CategoryAdapter;
 import com.example.hanoistudentgigs.models.Category;
+import com.example.hanoistudentgigs.models.Rental;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.util.Log;
 
 public class AdminManageCategoriesFragment extends Fragment implements CategoryAdapter.OnCategoryActionListener {
     private Button btnTabIndustry, btnTabSkill, btnTabLocation, btnAddCategory;
@@ -30,9 +34,10 @@ public class AdminManageCategoriesFragment extends Fragment implements CategoryA
     private CategoryAdapter categoryAdapter;
     private List<Category> allIndustries = new ArrayList<>();
     private List<Category> allSkills = new ArrayList<>();
-    private List<Category> allLocations = new ArrayList<>();
+    private List<Rental> allRentals = new ArrayList<>();
     private List<Category> currentList = new ArrayList<>();
     private int currentTab = 0; // 0: Industry, 1: Skill, 2: Location
+    private FirebaseFirestore db;
 
     @Nullable
     @Override
@@ -45,6 +50,7 @@ public class AdminManageCategoriesFragment extends Fragment implements CategoryA
         etNewCategory = view.findViewById(R.id.etNewCategory);
         rvCategoryList = view.findViewById(R.id.rvCategoryList);
 
+        db = FirebaseFirestore.getInstance();
         categoryAdapter = new CategoryAdapter(currentList, this);
         rvCategoryList.setLayoutManager(new LinearLayoutManager(getContext()));
         rvCategoryList.setAdapter(categoryAdapter);
@@ -54,7 +60,6 @@ public class AdminManageCategoriesFragment extends Fragment implements CategoryA
         btnTabLocation.setOnClickListener(v -> switchTab(2));
         btnAddCategory.setOnClickListener(v -> addCategory());
 
-        loadDummyCategories();
         switchTab(0);
         return view;
     }
@@ -65,10 +70,10 @@ public class AdminManageCategoriesFragment extends Fragment implements CategoryA
         btnTabSkill.setEnabled(tab != 1);
         btnTabLocation.setEnabled(tab != 2);
         currentList.clear();
-        if (tab == 0) currentList.addAll(allIndustries);
-        else if (tab == 1) currentList.addAll(allSkills);
-        else currentList.addAll(allLocations);
         categoryAdapter.notifyDataSetChanged();
+        if (tab == 0) loadCategoriesFromFirestore();
+        else if (tab == 1) loadSkillsFromFirestore();
+        else loadRentalsFromFirestore();
         etNewCategory.setHint(tab == 0 ? "Nhập ngành nghề..." : tab == 1 ? "Nhập kỹ năng..." : "Nhập địa điểm...");
     }
 
@@ -78,27 +83,107 @@ public class AdminManageCategoriesFragment extends Fragment implements CategoryA
             Toast.makeText(getContext(), "Vui lòng nhập tên danh mục", Toast.LENGTH_SHORT).show();
             return;
         }
-        Category newCat = new Category(name);
-        if (currentTab == 0) allIndustries.add(newCat);
-        else if (currentTab == 1) allSkills.add(newCat);
-        else allLocations.add(newCat);
+        if (currentTab == 0) {
+            Category newCat = new Category(name);
+            allIndustries.add(newCat);
+        } else if (currentTab == 1) {
+            Category newCat = new Category(name);
+            allSkills.add(newCat);
+        } else {
+            Rental newRental = new Rental(name);
+            allRentals.add(newRental);
+        }
         switchTab(currentTab);
         etNewCategory.setText("");
     }
 
-    private void loadDummyCategories() {
+    private void loadCategoriesFromFirestore() {
         allIndustries.clear();
+        db.collection("categories")
+            .get()
+            .addOnSuccessListener(queryDocumentSnapshots -> {
+                allIndustries.clear();
+                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                    Category category = doc.toObject(Category.class);
+                    allIndustries.add(category);
+                }
+                if (currentTab == 0) {
+                    currentList.clear();
+                    currentList.addAll(allIndustries);
+                    categoryAdapter.notifyDataSetChanged();
+                }
+            });
+    }
+
+    private void loadSkillsFromFirestore() {
         allSkills.clear();
-        allLocations.clear();
-        allIndustries.add(new Category("Marketing"));
-        allIndustries.add(new Category("Sales"));
-        allIndustries.add(new Category("CSKH"));
-        allSkills.add(new Category("SEO"));
-        allSkills.add(new Category("Java"));
-        allSkills.add(new Category("Photoshop"));
-        allLocations.add(new Category("Quận 1"));
-        allLocations.add(new Category("Quận 2"));
-        allLocations.add(new Category("Quận Tân Bình"));
+        db.collection("skills")
+            .get()
+            .addOnSuccessListener(queryDocumentSnapshots -> {
+                allSkills.clear();
+                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                    Category skill = doc.toObject(Category.class);
+                    allSkills.add(skill);
+                }
+                if (currentTab == 1) {
+                    currentList.clear();
+                    currentList.addAll(allSkills);
+                    categoryAdapter.notifyDataSetChanged();
+                }
+            });
+    }
+
+    private void loadRentalsFromFirestore() {
+        allRentals.clear();
+        db.collection("rentals")
+            .get()
+            .addOnSuccessListener(queryDocumentSnapshots -> {
+                allRentals.clear();
+                int count = 0;
+                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                    String id = doc.getId();
+                    Rental rental = new Rental();
+                    rental.setId(id);
+                    rental.setName(formatRentalName(id));
+                    allRentals.add(rental);
+                    count++;
+                }
+                Log.d("FirestoreDebug", "Số lượng địa điểm (rental) lấy được: " + count);
+                if (currentTab == 2) {
+                    currentList.clear();
+                    for (Rental rental : allRentals) {
+                        Category cat = new Category();
+                        cat.setId(rental.getId());
+                        cat.setName(rental.getName());
+                        currentList.add(cat);
+                    }
+                    categoryAdapter.notifyDataSetChanged();
+                    if (allRentals.isEmpty()) {
+                        Toast.makeText(getContext(), "Không có địa điểm nào trong hệ thống!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            })
+            .addOnFailureListener(e -> {
+                if (currentTab == 2) {
+                    currentList.clear();
+                    categoryAdapter.notifyDataSetChanged();
+                    Toast.makeText(getContext(), "Lỗi tải địa điểm: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+    }
+
+    // Hiển thị đẹp hơn: "loc_dong_da" -> "Dong Da"
+    private String formatRentalName(String id) {
+        String name = id.replace("loc_", "").replace("_", " ");
+        String[] words = name.split(" ");
+        StringBuilder sb = new StringBuilder();
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                sb.append(Character.toUpperCase(word.charAt(0)))
+                  .append(word.substring(1)).append(" ");
+            }
+        }
+        return sb.toString().trim();
     }
 
     @Override
@@ -108,7 +193,7 @@ public class AdminManageCategoriesFragment extends Fragment implements CategoryA
                 .setPositiveButton("Có", (dialog, which) -> {
                     if (currentTab == 0) allIndustries.remove(category);
                     else if (currentTab == 1) allSkills.remove(category);
-                    else allLocations.remove(category);
+                    else allRentals.removeIf(r -> r.getId().equals(category.getId()));
                     switchTab(currentTab);
                 })
                 .setNegativeButton("Không", null)

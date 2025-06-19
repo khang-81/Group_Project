@@ -1,5 +1,6 @@
 package com.example.hanoistudentgigs.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -39,14 +40,20 @@ public class JobDetailActivity extends AppCompatActivity {
         // Nhận jobId từ Intent đã gửi từ JobAdapter
         jobId = getIntent().getStringExtra("JOB_ID");
 
+        // Ẩn nút Nộp đơn nếu là admin
+        boolean isAdmin = getIntent().getBooleanExtra("IS_ADMIN", false);
+        if (isAdmin) {
+            buttonApplyNow.setVisibility(Button.GONE);
+        } else {
+            buttonApplyNow.setOnClickListener(v -> applyForJob());
+        }
+
         if (jobId != null) {
             loadJobDetails();
         } else {
             Toast.makeText(this, "Không tìm thấy thông tin công việc.", Toast.LENGTH_SHORT).show();
             finish();
         }
-
-        buttonApplyNow.setOnClickListener(v -> applyForJob());
     }
 
     private void loadJobDetails() {
@@ -112,5 +119,19 @@ public class JobDetailActivity extends AppCompatActivity {
                     }
                 })
                 .addOnFailureListener(e -> Toast.makeText(this, "Lỗi khi lấy thông tin người dùng.", Toast.LENGTH_SHORT).show());
+    }
+
+    @Override
+    public void onBackPressed() {
+        boolean isAdmin = getIntent().getBooleanExtra("IS_ADMIN", false);
+        if (isAdmin) {
+            Intent intent = new Intent(this, com.example.hanoistudentgigs.MainActivity.class);
+            intent.putExtra("SELECT_ADMIN_APPROVE_TAB", true);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
+        } else {
+            super.onBackPressed();
+        }
     }
 }

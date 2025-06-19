@@ -16,9 +16,17 @@ import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
     private List<User> userList;
+    private OnUserActionListener listener;
 
-    public UserAdapter(List<User> userList) {
+    public interface OnUserActionListener {
+        void onDelete(User user);
+        void onView(User user);
+        void onVerify(User user);
+    }
+
+    public UserAdapter(List<User> userList, OnUserActionListener listener) {
         this.userList = userList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -31,14 +39,23 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         User user = userList.get(position);
-        String displayName = user.getRole().equals("student") ? user.getFullName() : user.getCompanyName();
+        String displayName = user.getRole().equalsIgnoreCase("student") ? user.getFullName() : user.getCompanyName();
         holder.tvName.setText(displayName + " (" + user.getEmail() + ")");
         // Ẩn/hiện nút xác thực tuỳ role, không xử lý callback
-        if (user.getRole().equals("employer")) {
+        if (user.getRole().equalsIgnoreCase("employer")) {
             holder.btnVerify.setVisibility(View.VISIBLE);
         } else {
             holder.btnVerify.setVisibility(View.GONE);
         }
+        holder.btnDelete.setOnClickListener(v -> {
+            if (listener != null) listener.onDelete(user);
+        });
+        holder.btnView.setOnClickListener(v -> {
+            if (listener != null) listener.onView(user);
+        });
+        holder.btnVerify.setOnClickListener(v -> {
+            if (listener != null) listener.onVerify(user);
+        });
     }
 
     @Override

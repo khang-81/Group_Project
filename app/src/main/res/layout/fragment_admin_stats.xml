@@ -18,37 +18,6 @@
         android:textColor="#FFF"
         android:layout_marginBottom="16dp"/>
 
-    <Button
-        android:id="@+id/btnTotalJobs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tổng số tin đăng: 245"
-        android:enabled="false"
-        android:layout_marginBottom="12dp"/>
-
-    <Button
-        android:id="@+id/btnTotalApplications"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Số lượng ứng tuyển: 789"
-        android:enabled="false"
-        android:layout_marginBottom="12dp"/>
-
-    <Button
-        android:id="@+id/btnTotalStudents"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tài khoản Student: 1340"
-        android:enabled="false"
-        android:layout_marginBottom="12dp"/>
-
-    <Button
-        android:id="@+id/btnTotalEmployers"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tài khoản Employer: 256"
-        android:enabled="false"/>
-
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

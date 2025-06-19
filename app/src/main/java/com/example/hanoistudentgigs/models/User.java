@@ -9,6 +9,13 @@ public class User {
     private String companyName;
     private String school;
     private String phone;
+    private String major;
+    private String year;
+    private String experience;
+    private String skillsDescription;
+    private String schoolName;
+    private String address;
+    private String website;
 
     private boolean verified = false;
 
@@ -101,4 +108,25 @@ public class User {
 
     public boolean isVerified() { return verified; }
     public void setVerified(boolean verified) { this.verified = verified; }
+
+    public String getMajor() { return major; }
+    public void setMajor(String major) { this.major = major; }
+
+    public String getYear() { return year; }
+    public void setYear(String year) { this.year = year; }
+
+    public String getExperience() { return experience; }
+    public void setExperience(String experience) { this.experience = experience; }
+
+    public String getSkillsDescription() { return skillsDescription; }
+    public void setSkillsDescription(String skillsDescription) { this.skillsDescription = skillsDescription; }
+
+    public String getSchoolName() { return schoolName; }
+    public void setSchoolName(String schoolName) { this.schoolName = schoolName; }
+
+    public String getAddress() { return address; }
+    public void setAddress(String address) { this.address = address; }
+
+    public String getWebsite() { return website; }
+    public void setWebsite(String website) { this.website = website; }
 }
