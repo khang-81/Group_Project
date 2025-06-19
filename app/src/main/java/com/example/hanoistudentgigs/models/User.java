@@ -27,6 +27,13 @@ public class User {
         this.phone = phone;
     }
 
+    // Constructor với 3 tham số (fullName, email, role) để tiện tạo user mẫu
+    public User(String fullName, String email, String role) {
+        this.fullName = fullName;
+        this.email = email;
+        this.role = role;
+    }
+
     // Getter và Setter cho từng trường
     public String getUid() {
         return uid;

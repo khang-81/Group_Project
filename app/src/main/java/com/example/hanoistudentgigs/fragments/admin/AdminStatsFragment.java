@@ -4,65 +4,30 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.hanoistudentgigs.R;
-import com.example.hanoistudentgigs.utils.Constants;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AdminStatsFragment extends Fragment {
-    private TextView textViewTotalJobs, textViewTotalApplications, textViewTotalStudents, textViewTotalEmployers;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_admin_stats, container, false);
+        Button btnTotalJobs = view.findViewById(R.id.btnTotalJobs);
+        Button btnTotalApplications = view.findViewById(R.id.btnTotalApplications);
+        Button btnTotalStudents = view.findViewById(R.id.btnTotalStudents);
+        Button btnTotalEmployers = view.findViewById(R.id.btnTotalEmployers);
 
-        // Ánh xạ các TextView từ layout
-        textViewTotalJobs = view.findViewById(R.id.textViewTotalJobs);
-        textViewTotalApplications = view.findViewById(R.id.textViewTotalApplications);
-        textViewTotalStudents = view.findViewById(R.id.textViewTotalStudents);
-        textViewTotalEmployers = view.findViewById(R.id.textViewTotalEmployers);
-
-        // Bắt đầu tải dữ liệu thống kê
-        loadStatistics();
+        // Dummy data
+        btnTotalJobs.setText("Tổng số tin đăng: 245");
+        btnTotalApplications.setText("Số lượng ứng tuyển: 789");
+        btnTotalStudents.setText("Tài khoản Student: 1340");
+        btnTotalEmployers.setText("Tài khoản Employer: 256");
 
         return view;
-    }
-
-    private void loadStatistics() {
-        // Đếm tổng số tin đăng
-        db.collection(Constants.JOBS_COLLECTION).get().addOnCompleteListener(task -> {
-            if (isAdded() && getContext() != null && task.isSuccessful()) {
-                textViewTotalJobs.setText("Tổng số tin đăng: " + task.getResult().size());
-            }
-        });
-
-        // Đếm tổng số đơn ứng tuyển
-        db.collectionGroup(Constants.APPLICATIONS_COLLECTION).get().addOnCompleteListener(task -> {
-            if (isAdded() && getContext() != null && task.isSuccessful()) {
-                textViewTotalApplications.setText("Số lượng ứng tuyển: " + task.getResult().size());
-            }
-        });
-
-        // Đếm tổng số sinh viên
-        db.collection(Constants.USERS_COLLECTION).whereEqualTo("role", Constants.ROLE_STUDENT).get().addOnCompleteListener(task -> {
-            if (isAdded() && getContext() != null && task.isSuccessful()) {
-                textViewTotalStudents.setText("Tài khoản Student: " + task.getResult().size());
-            }
-        });
-
-        // Đếm tổng số nhà tuyển dụng
-        db.collection(Constants.USERS_COLLECTION).whereEqualTo("role", Constants.ROLE_EMPLOYER).get().addOnCompleteListener(task -> {
-            if (isAdded() && getContext() != null && task.isSuccessful()) {
-                textViewTotalEmployers.setText("Tài khoản Employer: " + task.getResult().size());
-            }
-        });
     }
 }

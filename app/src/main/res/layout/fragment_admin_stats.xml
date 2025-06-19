@@ -4,16 +4,50 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="24dp"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:background="#FFF">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/btnStatsTitle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Quản Lý Hệ Thống"
-        android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="@color/textColorPrimary"
-        android:layout_marginBottom="32dp"/>
+        android:enabled="false"
+        android:backgroundTint="#3B5A7A"
+        android:textColor="#FFF"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/btnTotalJobs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tổng số tin đăng: 245"
+        android:enabled="false"
+        android:layout_marginBottom="12dp"/>
+
+    <Button
+        android:id="@+id/btnTotalApplications"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Số lượng ứng tuyển: 789"
+        android:enabled="false"
+        android:layout_marginBottom="12dp"/>
+
+    <Button
+        android:id="@+id/btnTotalStudents"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tài khoản Student: 1340"
+        android:enabled="false"
+        android:layout_marginBottom="12dp"/>
+
+    <Button
+        android:id="@+id/btnTotalEmployers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tài khoản Employer: 256"
+        android:enabled="false"/>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"

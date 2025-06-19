@@ -1,53 +1,43 @@
 <!-- File: res/layout/item_user.xml -->
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="16dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginBottom="8dp">
+    android:background="#FFF"
+    android:padding="12dp"
+    android:layout_marginBottom="8dp"
+    android:elevation="2dp"
+    android:clipToPadding="false">
+
+    <TextView
+        android:id="@+id/tvUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tên user (email)"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:gravity="center_vertical">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
-
-            <!-- FIX: Thêm ID cho TextView này -->
-            <TextView
-                android:id="@+id/textViewUserName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tên Người Dùng"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/textColorPrimary"/>
-
-            <!-- FIX: Thêm ID cho TextView này -->
-            <TextView
-                android:id="@+id/textViewUserEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="email@example.com"
-                android:textColor="@color/textColorSecondary"/>
-        </LinearLayout>
-
-        <!-- FIX: Thêm ID cho Button này -->
+        android:orientation="horizontal">
         <Button
-            android:id="@+id/buttonDeleteUser"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:id="@+id/btnViewUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Xóa"
-            android:textColor="@color/errorColor"/>
-
+            android:text="Xem"
+            android:layout_marginEnd="8dp"/>
+        <Button
+            android:id="@+id/btnVerifyUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Xác thực"
+            android:layout_marginEnd="8dp"/>
+        <Button
+            android:id="@+id/btnDeleteUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Xóa"/>
     </LinearLayout>
-</com.google.android.material.card.MaterialCardView>
+</LinearLayout>

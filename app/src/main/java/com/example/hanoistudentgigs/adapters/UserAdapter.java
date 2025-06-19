@@ -1,55 +1,24 @@
 package com.example.hanoistudentgigs.adapters;
 
-import android.app.AlertDialog;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
+
 import com.example.hanoistudentgigs.R;
 import com.example.hanoistudentgigs.models.User;
-import com.example.hanoistudentgigs.utils.Constants;
 
-public class UserAdapter extends FirestoreRecyclerAdapter<User, UserAdapter.UserViewHolder> {
-    private Context context;
+import java.util.List;
 
-    public UserAdapter(@NonNull FirestoreRecyclerOptions<User> options, Context context) {
-        super(options);
-        this.context = context;
-    }
+public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
+    private List<User> userList;
 
-    @Override
-    protected void onBindViewHolder(@NonNull UserViewHolder holder, int position, @NonNull User model) {
-        holder.bind(model);
-        holder.buttonDeleteUser.setOnClickListener(v -> {
-            new AlertDialog.Builder(context)
-                    .setTitle("Xác nhận xóa người dùng")
-                    .setMessage("Hành động này không thể hoàn tác. Bạn có chắc chắn muốn xóa " + model.getFullName() + "?")
-                    .setPositiveButton("Xóa", (dialog, which) -> deleteUser(model.getUid()))
-                    .setNegativeButton("Hủy", null)
-                    .show();
-        });
-    }
-
-    private void deleteUser(String uid) {
-        // Xóa khỏi Firestore trước
-        FirebaseFirestore.getInstance().collection(Constants.USERS_COLLECTION).document(uid)
-                .delete()
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(context, "Đã xóa người dùng khỏi CSDL.", Toast.LENGTH_SHORT).show();
-                    // Lưu ý: Xóa khỏi Authentication phức tạp hơn và cần xử lý lại xác thực
-                    // hoặc thực hiện qua Cloud Function để đảm bảo an toàn.
-                    // Đoạn code dưới đây chỉ mang tính minh họa.
-                })
-                .addOnFailureListener(e -> Toast.makeText(context, "Lỗi khi xóa khỏi CSDL.", Toast.LENGTH_SHORT).show());
+    public UserAdapter(List<User> userList) {
+        this.userList = userList;
     }
 
     @NonNull
@@ -59,20 +28,33 @@ public class UserAdapter extends FirestoreRecyclerAdapter<User, UserAdapter.User
         return new UserViewHolder(view);
     }
 
-    public static class UserViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewUserName, textViewUserEmail;
-        Button buttonDeleteUser;
+    @Override
+    public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
+        User user = userList.get(position);
+        String displayName = user.getRole().equals("student") ? user.getFullName() : user.getCompanyName();
+        holder.tvName.setText(displayName + " (" + user.getEmail() + ")");
+        // Ẩn/hiện nút xác thực tuỳ role, không xử lý callback
+        if (user.getRole().equals("employer")) {
+            holder.btnVerify.setVisibility(View.VISIBLE);
+        } else {
+            holder.btnVerify.setVisibility(View.GONE);
+        }
+    }
 
+    @Override
+    public int getItemCount() {
+        return userList.size();
+    }
+
+    public static class UserViewHolder extends RecyclerView.ViewHolder {
+        TextView tvName;
+        Button btnView, btnVerify, btnDelete;
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewUserName = itemView.findViewById(R.id.textViewUserName);
-            textViewUserEmail = itemView.findViewById(R.id.textViewUserEmail);
-            buttonDeleteUser = itemView.findViewById(R.id.buttonDeleteUser);
-        }
-
-        public void bind(User user) {
-            textViewUserName.setText(user.getFullName());
-            textViewUserEmail.setText(user.getEmail());
+            tvName = itemView.findViewById(R.id.tvUserName);
+            btnView = itemView.findViewById(R.id.btnViewUser);
+            btnVerify = itemView.findViewById(R.id.btnVerifyUser);
+            btnDelete = itemView.findViewById(R.id.btnDeleteUser);
         }
     }
 }

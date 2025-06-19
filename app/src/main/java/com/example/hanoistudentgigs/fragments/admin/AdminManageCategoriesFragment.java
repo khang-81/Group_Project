@@ -1,12 +1,13 @@
 package com.example.hanoistudentgigs.fragments.admin;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,98 +18,100 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hanoistudentgigs.R;
 import com.example.hanoistudentgigs.adapters.CategoryAdapter;
-import com.example.hanoistudentgigs.models.Category; // Bạn cần tạo model này
-import com.example.hanoistudentgigs.utils.Constants;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
+import com.example.hanoistudentgigs.models.Category;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-public class AdminManageCategoriesFragment extends Fragment {
-
-    private RecyclerView recyclerViewCategories;
-    private RadioGroup radioGroupCategoryType;
-    private EditText editTextNewCategory;
-    private Button buttonAddCategory;
-    private CategoryAdapter adapter;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private String currentCollection = Constants.CATEGORIES_COLLECTION; // Mặc định
+public class AdminManageCategoriesFragment extends Fragment implements CategoryAdapter.OnCategoryActionListener {
+    private Button btnTabIndustry, btnTabSkill, btnTabLocation, btnAddCategory;
+    private EditText etNewCategory;
+    private RecyclerView rvCategoryList;
+    private CategoryAdapter categoryAdapter;
+    private List<Category> allIndustries = new ArrayList<>();
+    private List<Category> allSkills = new ArrayList<>();
+    private List<Category> allLocations = new ArrayList<>();
+    private List<Category> currentList = new ArrayList<>();
+    private int currentTab = 0; // 0: Industry, 1: Skill, 2: Location
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_admin_manager_categories, container, false);
+        btnTabIndustry = view.findViewById(R.id.btnTabIndustry);
+        btnTabSkill = view.findViewById(R.id.btnTabSkill);
+        btnTabLocation = view.findViewById(R.id.btnTabLocation);
+        btnAddCategory = view.findViewById(R.id.btnAddCategory);
+        etNewCategory = view.findViewById(R.id.etNewCategory);
+        rvCategoryList = view.findViewById(R.id.rvCategoryList);
 
-        recyclerViewCategories = view.findViewById(R.id.recyclerViewCategories);
-        radioGroupCategoryType = view.findViewById(R.id.radioGroupCategoryType);
-        editTextNewCategory = view.findViewById(R.id.editTextNewCategory);
-        buttonAddCategory = view.findViewById(R.id.buttonAddCategory);
+        categoryAdapter = new CategoryAdapter(currentList, this);
+        rvCategoryList.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvCategoryList.setAdapter(categoryAdapter);
 
-        setupRecyclerView();
+        btnTabIndustry.setOnClickListener(v -> switchTab(0));
+        btnTabSkill.setOnClickListener(v -> switchTab(1));
+        btnTabLocation.setOnClickListener(v -> switchTab(2));
+        btnAddCategory.setOnClickListener(v -> addCategory());
 
-        radioGroupCategoryType.setOnCheckedChangeListener((group, checkedId) -> {
-            if (checkedId == R.id.radioCategoryJob) {
-                currentCollection = Constants.CATEGORIES_COLLECTION;
-            } else if (checkedId == R.id.radioCategorySkill) {
-                currentCollection = Constants.SKILLS_COLLECTION;
-            } else if (checkedId == R.id.radioCategoryLocation) {
-                currentCollection = Constants.LOCATIONS_COLLECTION;
-            }
-            // Tải lại adapter với collection mới
-            setupRecyclerView();
-            adapter.startListening();
-        });
-
-        buttonAddCategory.setOnClickListener(v -> addNewCategory());
-
+        loadDummyCategories();
+        switchTab(0);
         return view;
     }
 
-    private void setupRecyclerView() {
-        if (adapter != null) {
-            adapter.stopListening();
-        }
-        Query query = db.collection(currentCollection).orderBy("name");
-        FirestoreRecyclerOptions<Category> options = new FirestoreRecyclerOptions.Builder<Category>()
-                .setQuery(query, Category.class)
-                .build();
-        adapter = new CategoryAdapter(options, currentCollection);
-        recyclerViewCategories.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerViewCategories.setAdapter(adapter);
-        adapter.startListening();
+    private void switchTab(int tab) {
+        currentTab = tab;
+        btnTabIndustry.setEnabled(tab != 0);
+        btnTabSkill.setEnabled(tab != 1);
+        btnTabLocation.setEnabled(tab != 2);
+        currentList.clear();
+        if (tab == 0) currentList.addAll(allIndustries);
+        else if (tab == 1) currentList.addAll(allSkills);
+        else currentList.addAll(allLocations);
+        categoryAdapter.notifyDataSetChanged();
+        etNewCategory.setHint(tab == 0 ? "Nhập ngành nghề..." : tab == 1 ? "Nhập kỹ năng..." : "Nhập địa điểm...");
     }
 
-    private void addNewCategory() {
-        String name = editTextNewCategory.getText().toString().trim();
-        if (name.isEmpty()) {
-            Toast.makeText(getContext(), "Tên danh mục không được để trống", Toast.LENGTH_SHORT).show();
+    private void addCategory() {
+        String name = etNewCategory.getText().toString().trim();
+        if (TextUtils.isEmpty(name)) {
+            Toast.makeText(getContext(), "Vui lòng nhập tên danh mục", Toast.LENGTH_SHORT).show();
             return;
         }
+        Category newCat = new Category(name);
+        if (currentTab == 0) allIndustries.add(newCat);
+        else if (currentTab == 1) allSkills.add(newCat);
+        else allLocations.add(newCat);
+        switchTab(currentTab);
+        etNewCategory.setText("");
+    }
 
-        String id = db.collection(currentCollection).document().getId();
-        Map<String, String> category = new HashMap<>();
-        category.put("id", id);
-        category.put("name", name);
+    private void loadDummyCategories() {
+        allIndustries.clear();
+        allSkills.clear();
+        allLocations.clear();
+        allIndustries.add(new Category("Marketing"));
+        allIndustries.add(new Category("Sales"));
+        allIndustries.add(new Category("CSKH"));
+        allSkills.add(new Category("SEO"));
+        allSkills.add(new Category("Java"));
+        allSkills.add(new Category("Photoshop"));
+        allLocations.add(new Category("Quận 1"));
+        allLocations.add(new Category("Quận 2"));
+        allLocations.add(new Category("Quận Tân Bình"));
+    }
 
-        db.collection(currentCollection).document(id).set(category)
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(getContext(), "Thêm thành công!", Toast.LENGTH_SHORT).show();
-                    editTextNewCategory.setText("");
+    @Override
+    public void onDelete(Category category) {
+        new AlertDialog.Builder(getContext())
+                .setMessage("Bạn có chắc chắn xóa danh mục: " + category.getName() + " không?")
+                .setPositiveButton("Có", (dialog, which) -> {
+                    if (currentTab == 0) allIndustries.remove(category);
+                    else if (currentTab == 1) allSkills.remove(category);
+                    else allLocations.remove(category);
+                    switchTab(currentTab);
                 })
-                .addOnFailureListener(e -> Toast.makeText(getContext(), "Thêm thất bại.", Toast.LENGTH_SHORT).show());
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (adapter != null) adapter.startListening();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (adapter != null) adapter.stopListening();
+                .setNegativeButton("Không", null)
+                .show();
     }
 }
