@@ -231,7 +231,23 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12f09ce9-6b63-41e4-bd31-a9c8f7130f68" name="Changes" comment="" />
+    <list default="true" id="12f09ce9-6b63-41e4-bd31-a9c8f7130f68" name="Changes" comment="">
+<<<<<<< HEAD
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetSelector.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deploymentTargetSelector.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/adapters/EmployerJobAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/adapters/EmployerJobAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/adapters/FeaturedJobAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/adapters/FeaturedJobAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/adapters/PopularJobAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/adapters/PopularJobAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/employer/EmployerDashboardFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/employer/EmployerDashboardFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/models/Job.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/models/Job.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_employer_dashboard.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_employer_dashboard.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_employer_job.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_employer_job.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_job_card.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_job_card.xml" afterDir="false" />
+>>>>>>> bf0f1079157acb1fc38605b5210a2fac8131f542
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -240,7 +256,11 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
+<<<<<<< HEAD
   <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\MAP STUDY\.android\avd\Medium_Phone.avd)]" />
+=======
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\ASUS\.android\avd\Pixel_9_Pro_2.avd)]" />
+>>>>>>> 8a8eea3d0de8c485f0e52f8856e5428604ea1952
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -256,11 +276,22 @@
     </option>
   </component>
   <component name="Git.Settings">
+<<<<<<< HEAD
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="TaDucKhang" />
       </map>
     </option>
+=======
+<<<<<<< HEAD
+=======
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="LeThiTuyetNhung" />
+      </map>
+    </option>
+>>>>>>> bf0f1079157acb1fc38605b5210a2fac8131f542
+>>>>>>> 8a8eea3d0de8c485f0e52f8856e5428604ea1952
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -284,6 +315,7 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Android App.App.executor&quot;: &quot;Run&quot;,
@@ -302,6 +334,24 @@
     &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;AndroidSdkUpdater&quot;
+=======
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Android App.app.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "TaDucKhang",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/app_mobie/Group_Project",
+    "project.structure.last.edited": "SDK Location",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "AndroidSdkUpdater"
+>>>>>>> 8a8eea3d0de8c485f0e52f8856e5428604ea1952
   }
 }</component>
   <component name="RunManager" selected="Android App.App">
@@ -477,12 +527,20 @@
       <map>
         <entry key="com.example.hanoistudentgigs">
           <value>
+<<<<<<< HEAD
             <CheckInfo lastCheckTimestamp="1750339246780" />
+=======
+            <CheckInfo lastCheckTimestamp="1750133814158" />
+>>>>>>> 8a8eea3d0de8c485f0e52f8856e5428604ea1952
           </value>
         </entry>
         <entry key="com.example.hanoistudentgigs.test">
           <value>
+<<<<<<< HEAD
             <CheckInfo lastCheckTimestamp="1750339246783" />
+=======
+            <CheckInfo lastCheckTimestamp="1750133814163" />
+>>>>>>> 8a8eea3d0de8c485f0e52f8856e5428604ea1952
           </value>
         </entry>
       </map>

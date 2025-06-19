@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:text="Hanoi Student Gigs"
             android:textColor="@color/primaryColor"
+<<<<<<< HEAD
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -28,6 +29,15 @@
             android:layout_width="250dp"
             android:layout_height="250dp"
             android:src="@drawable/ic_onboarding_main"
+=======
+            android:textSize="34sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:src="@drawable/logo_role"
+>>>>>>> 8a8eea3d0de8c485f0e52f8856e5428604ea1952
             android:layout_marginTop="16dp"
             android:contentDescription="Main App Illustration"/>
     </LinearLayout>

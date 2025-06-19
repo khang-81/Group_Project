@@ -7,58 +7,82 @@
     app:cardElevation="0dp"
     app:strokeWidth="1dp"
     app:strokeColor="@color/dividerColor"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
     android:layout_marginBottom="12dp">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <ImageView
-            android:id="@+id/imageViewCompanyLogo"
+        <!-- Logo Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/logoCard"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_launcher_background"/>
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <ImageView
+                android:id="@+id/imageViewCompanyLogo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_business_24"
+                android:scaleType="centerCrop"/>
+        </com.google.android.material.card.MaterialCardView>
 
+        <!-- Job Title -->
         <TextView
             android:id="@+id/textViewJobTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/imageViewCompanyLogo"
             android:layout_marginStart="16dp"
-            android:text="Jr Executive"
+            android:layout_marginEnd="8dp"
+            android:text="Tuyển nhân viên phục vụ ca tối tại Cầu Giấy"
             android:textColor="@color/textColorPrimary"
-            android:textStyle="bold"/>
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintStart_toEndOf="@id/logoCard"
+            app:layout_constraintEnd_toStartOf="@id/textViewSalary"
+            app:layout_constraintTop_toTopOf="@id/logoCard" />
 
+        <!-- Company Name -->
         <TextView
             android:id="@+id/textViewCompanyName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textViewJobTitle"
-            android:layout_alignStart="@id/textViewJobTitle"
-            android:text="Burger King"
-            android:textColor="@color/textColorSecondary"/>
+            android:text="The Coffee House"
+            android:textColor="@color/textColorSecondary"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/textViewJobTitle"
+            app:layout_constraintStart_toStartOf="@id/textViewJobTitle"
+            app:layout_constraintEnd_toEndOf="@id/textViewJobTitle"/>
 
+        <!-- Salary -->
         <TextView
             android:id="@+id/textViewSalary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@id/textViewJobTitle"
-            android:text="$96,000/y"
+            android:text="25k/giờ"
             android:textColor="@color/textColorPrimary"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewJobTitle"/>
 
+        <!-- Location -->
         <TextView
             android:id="@+id/textViewLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@id/textViewCompanyName"
-            android:text="Los Angeles, US"
-            android:textColor="@color/textColorSecondary"/>
+            android:text="Cầu Giấy"
+            android:textColor="@color/textColorSecondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewCompanyName"
+            app:layout_constraintBottom_toBottomOf="@id/textViewCompanyName"/>
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

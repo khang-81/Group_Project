@@ -146,6 +146,10 @@ public class Job {
                 ", createdAt=" + createdAt +
                 '}';
     }
+<<<<<<< HEAD
 
 }
 
+=======
+}
+>>>>>>> 8a8eea3d0de8c485f0e52f8856e5428604ea1952
