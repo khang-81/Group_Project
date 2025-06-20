@@ -88,7 +88,8 @@
                 android:layout_marginStart="16dp"
                 android:background="@drawable/filter_button_background"
                 android:src="@drawable/ic_filter_list_24"
-                app:tint="@color/white" />
+                app:tint="@color/white"
+                android:contentDescription="Lọc công việc"/>
         </LinearLayout>
 
         <!-- Featured Jobs Section -->
@@ -117,12 +118,13 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewFeaturedJobs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:layout_marginTop="12dp"
             android:orientation="horizontal"
             android:clipToPadding="false"
             android:paddingStart="16dp"
-            android:paddingEnd="16dp"/>
+            android:paddingEnd="16dp"
+            android:nestedScrollingEnabled="false"/>
 
         <!-- Popular Jobs Section -->
         <RelativeLayout
@@ -150,11 +152,31 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewPopularJobs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="600dp"
             android:layout_marginTop="12dp"
             android:nestedScrollingEnabled="false"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:paddingBottom="16dp"/>
+        <TextView
+            android:id="@+id/textViewNoPopularResults"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Không tìm thấy công việc phổ biến nào."
+            android:gravity="center"
+            android:padding="16dp"
+            android:visibility="gone"
+            android:textColor="@android:color/darker_gray"
+            android:layout_marginTop="16dp"/>
+        <TextView
+            android:id="@+id/textViewNoFeaturedResults"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Không tìm thấy công việc nổi bật nào."
+            android:gravity="center"
+            android:padding="16dp"
+            android:visibility="gone"
+            android:textColor="@android:color/darker_gray"
+            android:layout_marginTop="16dp"/>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

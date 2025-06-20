@@ -23,6 +23,7 @@ public class Job {
     private String categoryName;
     private List<String> requiredSkills; // Các kỹ năng yêu cầu cho công việc
     private boolean isApproved = false;
+    private boolean isFeatured;
     private String status;
 
     private List<String> searchKeywords; // Bổ sung: Mảng chứa các từ khóa để tìm kiếm
@@ -35,6 +36,14 @@ public class Job {
     public Job() {}
 
     // --- Getters và Setters ---
+    // Getter và Setter cho isFeatured
+    public boolean getIsFeatured() { // Hoặc isFeatured() theo quy ước Boolean
+        return isFeatured;
+    }
+
+    public void setIsFeatured(boolean featured) {
+        isFeatured = featured;
+    }
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
@@ -71,7 +80,7 @@ public class Job {
     public List<String> getRequiredSkills() { return requiredSkills; }
     public void setRequiredSkills(List<String> requiredSkills) { this.requiredSkills = requiredSkills; }
 
-    public boolean isApproved() { return isApproved; }
+    public boolean getIsApproved() { return isApproved; }
     public void setApproved(boolean approved) { isApproved = approved; }
 
     public String getStatus() { return status; }
