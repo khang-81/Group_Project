@@ -49,7 +49,8 @@
         <activity
             android:name=".activities.JobDetailActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.HanoiStudentGigs.NoActionBar" />
 
         <activity
             android:name=".activities.PostJobActivity"
@@ -75,6 +76,7 @@
             android:name=".activities.FilterActivity"
             android:exported="false"
             android:parentActivityName=".activities.SearchActivity" />
+
 
     </application>
 
