@@ -117,9 +117,8 @@ public class JobDetailActivity extends AppCompatActivity {
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         String studentName = documentSnapshot.getString("fullName");
-                        String cvUrl = documentSnapshot.getString("cvUrl");
-
-                        if (cvUrl == null || cvUrl.isEmpty()) {
+                        String cvFileName = documentSnapshot.getString("cvFileName");
+                        if (cvFileName == null || cvFileName.isEmpty()) {
                             Toast.makeText(this, "Vui lòng tải lên CV trước khi ứng tuyển.", Toast.LENGTH_LONG).show();
                             return;
                         }
@@ -132,7 +131,7 @@ public class JobDetailActivity extends AppCompatActivity {
                         application.setJobId(jobId);
                         application.setStudentUid(currentUser.getUid());
                         application.setStudentName(studentName);
-                        application.setCvUrl(cvUrl);
+                        application.setCvUrl(cvFileName);
                         application.setStatus("Submitted"); // Trạng thái ban đầu
 
                         // Lưu đơn ứng tuyển vào sub-collection của job tương ứng

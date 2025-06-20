@@ -67,5 +67,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.junit.ext) // Đổi từ libs.junit.v115 sang tên alias chính xác
     androidTestImplementation(libs.espresso.core) // Đổi từ libs.espresso.core.v351 sang tên alias chính xác
-    implementation(libs.picasso)
-}
+    // XÓA DÒNG PICASSO LẶP LẠI NÀY: implementation(libs.picasso)
+
+
+} // Dấu ngoặc nhọn đóng này của khối dependencies { ... }
