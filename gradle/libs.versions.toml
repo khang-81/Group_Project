@@ -21,7 +21,7 @@ firebase-bom = "33.15.0" # Sử dụng phiên bản BOM mới nhất
 firebase-ui-firestore = "8.0.2" # firebase-ui cần phiên bản riêng
 
 # Gradle Plugin
-agp = "8.9.1"
+agp = "8.10.1"
 
 [libraries]
 # Android Core & UI
@@ -52,3 +52,4 @@ espresso-core = { group = "androidx.test.espresso", name = "espresso-core", vers
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
