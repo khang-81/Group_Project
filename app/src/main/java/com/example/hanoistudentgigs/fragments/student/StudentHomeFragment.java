@@ -26,13 +26,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-
+import com.example.hanoistudentgigs.models.Filter;
 public class StudentHomeFragment extends Fragment {
     private RecyclerView recyclerViewFeaturedJobs, recyclerViewPopularJobs;
     private FeaturedJobAdapter featuredAdapter;
     private PopularJobAdapter popularAdapter;
     private TextView textViewUserName;
     private View searchBar; // Sử dụng View để bắt sự kiện click
+    private ImageButton buttonFilter;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private TextView textViewNoPopularResults;
@@ -53,8 +54,23 @@ public class StudentHomeFragment extends Fragment {
         textViewNoPopularResults = view.findViewById(R.id.textViewNoPopularResults); // <-- THÊM DÒNG NÀY
         textViewNoFeaturedResults = view.findViewById(R.id.textViewNoFeaturedResults); // <-- THÊM DÒNG NÀY
 
-        // Thiết lập sự kiện
-        searchBar.setOnClickListener(v -> openSearchActivity());
+        // Ánh xạ nút lọc từ layout
+        buttonFilter = view.findViewById(R.id.buttonFilter); // Ánh xạ ImageButton
+
+        // Thiết lập sự kiện cho thanh tìm kiếm chung
+        // Khi nhấn vào thanh tìm kiếm chung, sẽ mở SearchActivity mà không có bộ lọc mặc định
+        searchBar.setOnClickListener(v -> openSearchActivity(null, false)); // false: không phải từ nút filter
+
+
+        // Thiết lập sự kiện cho nút lọc (buttonFilter)
+        buttonFilter.setOnClickListener(v -> {
+            // Khi nút filter được nhấn, mở SearchActivity và cho biết nó được mở từ nút filter.
+            // SearchActivity sau đó có thể hiển thị dialog/fragment lọc ngay lập tức.
+            openSearchActivity(null, true); // true: từ nút filter
+        });
+
+
+
 
         loadUserName();
         setupRecyclerViews();
@@ -62,13 +78,23 @@ public class StudentHomeFragment extends Fragment {
         return view;
     }
 
-    private void openSearchActivity() {
-        if (getActivity() != null) {
-            Intent intent = new Intent(getActivity(), SearchActivity.class);
-            startActivity(intent);
+//    private void openSearchActivity() {
+//        if (getActivity() != null) {
+//            Intent intent = new Intent(getActivity(), SearchActivity.class);
+//            startActivity(intent);
+//        }
+//    }
+private void openSearchActivity(@Nullable Filter filter, boolean openedFromFilterButton) {
+    if (getActivity() != null) {
+        Intent intent = new Intent(getActivity(), SearchActivity.class);
+        if (filter != null) {
+            intent.putExtra(Constants.KEY_FILTER_OBJECT, filter);
         }
+        // Thêm một extra để SearchActivity biết nó được mở từ nút filter
+        intent.putExtra(Constants.KEY_OPENED_FROM_FILTER_BUTTON, openedFromFilterButton);
+        startActivity(intent);
     }
-
+}
     private void loadUserName() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null && isAdded()) {
