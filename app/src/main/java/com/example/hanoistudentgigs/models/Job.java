@@ -27,6 +27,7 @@ public class Job {
 
     private List<String> searchKeywords; // Bổ sung: Mảng chứa các từ khóa để tìm kiếm
     private long minSalary; // Bổ sung: Số lương tối thiểu để lọc và sắp xếp
+    private String postedDate;
 
 
 
@@ -86,7 +87,12 @@ public class Job {
 
     public long getMinSalary() { return minSalary; }
     public void setMinSalary(long minSalary) { this.minSalary = minSalary; }
-
+    public String getPostedDate() {
+        return postedDate;
+    }
+    public void setPostedDate(String postedDate) {
+        this.postedDate = postedDate;
+    }
     // --- Override equals() và hashCode() ---
     @Override
     public boolean equals(Object o) {
@@ -140,4 +146,6 @@ public class Job {
                 ", createdAt=" + createdAt +
                 '}';
     }
+
 }
+

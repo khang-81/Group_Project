@@ -1,129 +1,78 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundColor">
+    tools:context=".activities.JobDetailActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:fitsSystemWindows="true">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:contentScrim="@color/primaryColor"
-            app:titleEnabled="false">
+        <ImageView
+            android:id="@+id/imageViewDetailCompanyLogo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/default_company_logo_placeholder"
+            android:layout_marginBottom="16dp"/>
 
-            <!-- Nội dung phần header co giãn -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:background="@color/primaryColor">
+        <TextView
+            android:id="@+id/textViewDetailJobTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            tools:text="Job Title"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    app:cardCornerRadius="40dp">
-                    <ImageView
-                        android:id="@+id/imageViewDetailCompanyLogo"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@mipmap/ic_launcher"
-                        android:scaleType="centerCrop"/>
-                </com.google.android.material.card.MaterialCardView>
+        <TextView
+            android:id="@+id/textViewDetailCompanyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            tools:text="Company Name"
+            android:textSize="18sp"
+            android:layout_marginBottom="24dp"/>
 
-                <TextView
-                    android:id="@+id/textViewDetailJobTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Product Designer"
-                    android:textColor="@color/white"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="16dp"/>
-                <TextView
-                    android:id="@+id/textViewDetailCompanyName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Google"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"/>
-            </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mô tả công việc"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"/>
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <!-- Nội dung chính của trang -->
-        <LinearLayout
+        <TextView
+            android:id="@+id/textViewDetailDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            tools:text="Description of the job."
+            android:layout_marginBottom="16dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mô tả công việc"
-                android:textColor="@color/textColorPrimary"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yêu cầu"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
 
-            <TextView
-                android:id="@+id/textViewDetailDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Nội dung mô tả công việc sẽ được hiển thị ở đây..."
-                android:lineSpacingExtra="4dp"
-                android:textColor="@color/textColorSecondary"/>
+        <TextView
+            android:id="@+id/textViewDetailRequirements"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Requirements for the job."/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Yêu cầu"
-                android:textColor="@color/textColorPrimary"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
+        <Button
+            android:id="@+id/buttonApplyNow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nộp đơn ngay"
+            android:layout_marginTop="24dp"/>
 
-            <TextView
-                android:id="@+id/textViewDetailRequirements"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Nội dung yêu cầu công việc sẽ được hiển thị ở đây..."
-                android:lineSpacingExtra="4dp"
-                android:textColor="@color/textColorSecondary"/>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonApplyNow"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="Nộp đơn ngay"
-        android:textAllCaps="false"
-        android:layout_gravity="bottom"
-        android:layout_margin="16dp"
-        app:cornerRadius="8dp"/>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </LinearLayout>
+</ScrollView>
