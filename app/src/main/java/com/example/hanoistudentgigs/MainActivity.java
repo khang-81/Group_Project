@@ -41,24 +41,10 @@ public class MainActivity extends AppCompatActivity {
             sendToLogin();
             return;
         }
-        Intent intent = getIntent();
-        boolean selectApproveTab = intent != null && intent.getBooleanExtra("SELECT_ADMIN_APPROVE_TAB", false);
-        setupUserInterface(savedInstanceState, selectApproveTab);
+        setupUserInterface(savedInstanceState);
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        if (intent != null && intent.getBooleanExtra("SELECT_ADMIN_APPROVE_TAB", false)) {
-            if (userRole != null && userRole.equals(Constants.ROLE_ADMIN)) {
-                if (bottomNav != null) {
-                    bottomNav.setSelectedItemId(R.id.nav_admin_approve_jobs);
-                }
-            }
-        }
-    }
-
-    private void setupUserInterface(Bundle savedInstanceState, boolean selectApproveTab) {
+    private void setupUserInterface(Bundle savedInstanceState) {
         String uid = mAuth.getCurrentUser().getUid();
         db.collection(Constants.USERS_COLLECTION).document(uid).get()
                 .addOnSuccessListener(documentSnapshot -> {
@@ -68,7 +54,10 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
                     userRole = documentSnapshot.getString("role");
-                    setupBottomNavigation(selectApproveTab, savedInstanceState);
+                    setupBottomNavigation();
+                    if (savedInstanceState == null) {
+                        loadFragment(getDefaultFragmentForRole());
+                    }
                 })
                 .addOnFailureListener(e -> {
                     Log.e("MainActivity", "Failed to get user role", e);
@@ -76,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    private void setupBottomNavigation(boolean selectApproveTab, Bundle savedInstanceState) {
+    private void setupBottomNavigation() {
         bottomNav.getMenu().clear();
         if (userRole == null) return;
         switch (userRole) {
@@ -91,14 +80,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         bottomNav.setOnItemSelectedListener(navListener);
-        if (savedInstanceState == null) {
-            if (selectApproveTab && userRole.equals(Constants.ROLE_ADMIN)) {
-                bottomNav.setSelectedItemId(R.id.nav_admin_approve_jobs);
-                loadFragment(new AdminApproveJobsFragment());
-            } else {
-                loadFragment(getDefaultFragmentForRole());
-            }
-        }
     }
 
     // FIX: Thay đổi kiểu trả về thành Fragment để tương thích với tất cả các loại Fragment
