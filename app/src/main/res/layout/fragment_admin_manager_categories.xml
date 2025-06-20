@@ -26,13 +26,21 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Ngành nghề"/>
+            android:text="Ngành nghề"
+            android:singleLine="true"
+            android:textSize="12sp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"/>
         <Button
             android:id="@+id/btnTabSkill"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="Kỹ Năng"
+            android:singleLine="true"
+            android:textSize="12sp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:layout_marginStart="8dp"/>
         <Button
             android:id="@+id/btnTabLocation"
@@ -40,6 +48,10 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="Địa Điểm"
+            android:singleLine="true"
+            android:textSize="12sp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:layout_marginStart="8dp"/>
     </LinearLayout>
 
@@ -61,6 +73,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:hint="Nhập ..."
+            android:inputType="text"
             android:background="@drawable/edit_text_background"
             android:padding="12dp"/>
         <Button

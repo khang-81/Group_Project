@@ -183,23 +183,18 @@ public class AdminManageUsersFragment extends Fragment {
     private void showAddUserDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Thêm người dùng mới");
-        LinearLayout layout = new LinearLayout(getContext());
-        layout.setOrientation(LinearLayout.VERTICAL);
-        final EditText etName = new EditText(getContext());
-        etName.setHint("Họ tên hoặc tên công ty");
-        layout.addView(etName);
-        final EditText etEmail = new EditText(getContext());
-        etEmail.setHint("Email");
-        etEmail.setInputType(EditorInfo.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        layout.addView(etEmail);
-        final EditText etPhone = new EditText(getContext());
-        etPhone.setHint("Số điện thoại (tùy chọn)");
-        etPhone.setInputType(EditorInfo.TYPE_CLASS_PHONE);
-        layout.addView(etPhone);
-        final EditText etSchoolOrCompany = new EditText(getContext());
+
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_add_user, null);
+        builder.setView(dialogView);
+
+        final EditText etName = dialogView.findViewById(R.id.etName);
+        final EditText etEmail = dialogView.findViewById(R.id.etEmail);
+        final EditText etPhone = dialogView.findViewById(R.id.etPhone);
+        final EditText etSchoolOrCompany = dialogView.findViewById(R.id.etSchoolOrCompany);
+
         etSchoolOrCompany.setHint(isStudentTab ? "Trường học" : "Tên công ty");
-        layout.addView(etSchoolOrCompany);
-        builder.setView(layout);
+
         builder.setPositiveButton("Thêm", (dialog, which) -> {
             String name = etName.getText().toString().trim();
             String email = etEmail.getText().toString().trim();
@@ -216,7 +211,7 @@ public class AdminManageUsersFragment extends Fragment {
             userMap.put("companyName", isStudentTab ? "" : name);
             userMap.put("email", email);
             userMap.put("role", isStudentTab ? "STUDENT" : "EMPLOYER");
-            userMap.put("phone", phone);
+            userMap.put("SDT", phone);
             userMap.put(isStudentTab ? "school" : "companyName", schoolOrCompany);
             db.collection("users").document(uid).set(userMap)
                 .addOnSuccessListener(aVoid -> {

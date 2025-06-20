@@ -1,5 +1,7 @@
 package com.example.hanoistudentgigs.models;
 
+import com.google.firebase.firestore.PropertyName;
+
 public class User {
     private String uid;
     private String fullName;
@@ -8,6 +10,7 @@ public class User {
     private String cvUrl;
     private String companyName;
     private String school;
+    @PropertyName("SDT")
     private String phone;
     private String major;
     private String year;
@@ -98,10 +101,12 @@ public class User {
         this.school = school;
     }
 
+    @PropertyName("SDT")
     public String getPhone() {
         return phone;
     }
 
+    @PropertyName("SDT")
     public void setPhone(String phone) {
         this.phone = phone;
     }

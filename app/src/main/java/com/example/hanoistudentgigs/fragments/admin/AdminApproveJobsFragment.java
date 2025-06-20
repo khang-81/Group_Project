@@ -22,7 +22,6 @@ import com.example.hanoistudentgigs.activities.JobDetailActivity;
 import com.example.hanoistudentgigs.adapters.AdminJobAdapter;
 import com.example.hanoistudentgigs.models.Job;
 import com.example.hanoistudentgigs.utils.Constants;
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -40,35 +39,46 @@ public class AdminApproveJobsFragment extends Fragment {
         rvJobList = view.findViewById(R.id.rvJobList);
         etSearchJob = view.findViewById(R.id.etSearchJob);
         db = FirebaseFirestore.getInstance();
-        setupRecyclerView("");
+
+        setupRecyclerView(""); // Initial load
+
         etSearchJob.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 setupRecyclerView(s.toString());
             }
+
             @Override
             public void afterTextChanged(Editable s) {}
         });
+
         return view;
     }
 
-    private void setupRecyclerView(String search) {
-        Query query = db.collection(Constants.JOBS_COLLECTION)
-                .whereEqualTo("isApproved", false);
-        if (search != null && !search.trim().isEmpty()) {
-            // Firestore không hỗ trợ contains, nên filter trên client
+    private void setupRecyclerView(String searchText) {
+        Query query = db.collection(Constants.JOBS_COLLECTION);
+
+        if (searchText != null && !searchText.trim().isEmpty()) {
+            query = query.orderBy("companyName").startAt(searchText).endAt(searchText + '\uf8ff');
         }
+
         FirestoreRecyclerOptions<Job> options = new FirestoreRecyclerOptions.Builder<Job>()
                 .setQuery(query, Job.class)
                 .build();
-        if (jobAdapter != null) jobAdapter.stopListening();
-        jobAdapter = new AdminJobAdapter(options, getContext(), new AdminJobAdapter.OnJobActionListener() {
+
+        if (jobAdapter != null) {
+            jobAdapter.stopListening();
+        }
+
+        AdminJobAdapter.OnJobActionListener listener = new AdminJobAdapter.OnJobActionListener() {
             @Override
             public void onApprove(Job job) {
                 showApproveDialog(job);
             }
+
             @Override
             public void onView(Job job) {
                 Intent intent = new Intent(getContext(), JobDetailActivity.class);
@@ -76,11 +86,14 @@ public class AdminApproveJobsFragment extends Fragment {
                 intent.putExtra("IS_ADMIN", true);
                 startActivity(intent);
             }
+
             @Override
             public void onDelete(Job job) {
-                // Đã có sẵn trong adapter
+                showDeleteDialog(job);
             }
-        });
+        };
+
+        jobAdapter = new AdminJobAdapter(options, getContext(), listener);
         rvJobList.setLayoutManager(new LinearLayoutManager(getContext()));
         rvJobList.setAdapter(jobAdapter);
         jobAdapter.startListening();
@@ -88,28 +101,45 @@ public class AdminApproveJobsFragment extends Fragment {
 
     private void showApproveDialog(Job job) {
         new AlertDialog.Builder(getContext())
-                .setTitle("")
-                .setMessage("Bạn có chắc chắn duyệt tin của tài khoản: " + job.getCompanyName() + " không?")
-                .setPositiveButton("Có", (dialog, which) -> {
-                    db.collection(Constants.JOBS_COLLECTION)
-                            .document(job.getId())
-                            .update("isApproved", true)
-                            .addOnSuccessListener(aVoid -> Toast.makeText(getContext(), "Đã duyệt tin đăng!", Toast.LENGTH_SHORT).show())
-                            .addOnFailureListener(e -> Toast.makeText(getContext(), "Lỗi khi duyệt tin: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                .setTitle("Duyệt tin đăng")
+                .setMessage("Bạn có chắc chắn muốn duyệt công việc: " + job.getTitle() + "?")
+                .setPositiveButton("Duyệt", (dialog, which) -> {
+                    db.collection(Constants.JOBS_COLLECTION).document(job.getId())
+                            .update("approved", true)
+                            .addOnSuccessListener(aVoid -> Toast.makeText(getContext(), "Đã duyệt tin thành công!", Toast.LENGTH_SHORT).show())
+                            .addOnFailureListener(e -> Toast.makeText(getContext(), "Lỗi khi duyệt tin.", Toast.LENGTH_SHORT).show());
                 })
-                .setNegativeButton("Không", null)
+                .setNegativeButton("Hủy", null)
+                .show();
+    }
+
+    private void showDeleteDialog(Job job) {
+        new AlertDialog.Builder(getContext())
+                .setTitle("Xóa tin đăng")
+                .setMessage("Bạn có chắc chắn muốn xóa công việc: " + job.getTitle() + "?")
+                .setPositiveButton("Xóa", (dialog, which) -> {
+                    db.collection(Constants.JOBS_COLLECTION).document(job.getId())
+                            .delete()
+                            .addOnSuccessListener(aVoid -> Toast.makeText(getContext(), "Đã xóa tin thành công!", Toast.LENGTH_SHORT).show())
+                            .addOnFailureListener(e -> Toast.makeText(getContext(), "Lỗi khi xóa tin.", Toast.LENGTH_SHORT).show());
+                })
+                .setNegativeButton("Hủy", null)
                 .show();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        if (jobAdapter != null) jobAdapter.startListening();
+        if (jobAdapter != null) {
+            jobAdapter.startListening();
+        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (jobAdapter != null) jobAdapter.stopListening();
+        if (jobAdapter != null) {
+            jobAdapter.stopListening();
+        }
     }
 } 

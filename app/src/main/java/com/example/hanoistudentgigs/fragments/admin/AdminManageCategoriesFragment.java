@@ -19,13 +19,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.hanoistudentgigs.R;
 import com.example.hanoistudentgigs.adapters.CategoryAdapter;
 import com.example.hanoistudentgigs.models.Category;
-import com.example.hanoistudentgigs.models.Rental;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 import android.util.Log;
+import java.util.regex.Pattern;
 
 public class AdminManageCategoriesFragment extends Fragment implements CategoryAdapter.OnCategoryActionListener {
     private Button btnTabIndustry, btnTabSkill, btnTabLocation, btnAddCategory;
@@ -34,7 +35,7 @@ public class AdminManageCategoriesFragment extends Fragment implements CategoryA
     private CategoryAdapter categoryAdapter;
     private List<Category> allIndustries = new ArrayList<>();
     private List<Category> allSkills = new ArrayList<>();
-    private List<Rental> allRentals = new ArrayList<>();
+    private List<Category> allLocations = new ArrayList<>();
     private List<Category> currentList = new ArrayList<>();
     private int currentTab = 0; // 0: Industry, 1: Skill, 2: Location
     private FirebaseFirestore db;
@@ -69,12 +70,45 @@ public class AdminManageCategoriesFragment extends Fragment implements CategoryA
         btnTabIndustry.setEnabled(tab != 0);
         btnTabSkill.setEnabled(tab != 1);
         btnTabLocation.setEnabled(tab != 2);
+        
+        // Clear the list and notify the adapter before loading new data
         currentList.clear();
         categoryAdapter.notifyDataSetChanged();
-        if (tab == 0) loadCategoriesFromFirestore();
-        else if (tab == 1) loadSkillsFromFirestore();
-        else loadRentalsFromFirestore();
+
+        if (tab == 0) {
+            loadCategoriesFromFirestore();
+        } else if (tab == 1) {
+            loadSkillsFromFirestore();
+        } else {
+            loadLocationsFromFirestore();
+        }
         etNewCategory.setHint(tab == 0 ? "Nhập ngành nghề..." : tab == 1 ? "Nhập kỹ năng..." : "Nhập địa điểm...");
+    }
+
+    private String generateIdFromName(String name) {
+        String prefix;
+        switch (currentTab) {
+            case 0:
+                prefix = "cat_";
+                break;
+            case 1:
+                prefix = "skill_";
+                break;
+            case 2:
+                prefix = "loc_";
+                break;
+            default:
+                prefix = "";
+        }
+
+        String normalized = Normalizer.normalize(name, Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        String slug = pattern.matcher(normalized).replaceAll("")
+                .toLowerCase()
+                .replaceAll("đ", "d")
+                .replaceAll(" ", "_")
+                .replaceAll("[^a-z0-9_]", "");
+        return prefix + slug;
     }
 
     private void addCategory() {
@@ -83,92 +117,81 @@ public class AdminManageCategoriesFragment extends Fragment implements CategoryA
             Toast.makeText(getContext(), "Vui lòng nhập tên danh mục", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (currentTab == 0) {
-            Category newCat = new Category(name);
-            allIndustries.add(newCat);
-        } else if (currentTab == 1) {
-            Category newCat = new Category(name);
-            allSkills.add(newCat);
-        } else {
-            Rental newRental = new Rental(name);
-            allRentals.add(newRental);
+
+        String collectionPath;
+        switch (currentTab) {
+            case 0: collectionPath = "categories"; break;
+            case 1: collectionPath = "skills"; break;
+            case 2: collectionPath = "locations"; break;
+            default: return;
         }
-        switchTab(currentTab);
-        etNewCategory.setText("");
+
+        String generatedId = generateIdFromName(name);
+
+        Category newCategory = new Category();
+        newCategory.setName(name);
+        newCategory.setId(generatedId);
+
+        db.collection(collectionPath).document(generatedId).set(newCategory)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(getContext(), "Thêm thành công!", Toast.LENGTH_SHORT).show();
+                    etNewCategory.setText("");
+                    switchTab(currentTab); // Refresh list
+                })
+                .addOnFailureListener(e -> Toast.makeText(getContext(), "Thêm thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     private void loadCategoriesFromFirestore() {
-        allIndustries.clear();
         db.collection("categories")
             .get()
             .addOnSuccessListener(queryDocumentSnapshots -> {
                 allIndustries.clear();
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                     Category category = doc.toObject(Category.class);
+                    category.setId(doc.getId()); // Important for deletion
                     allIndustries.add(category);
                 }
-                if (currentTab == 0) {
-                    currentList.clear();
-                    currentList.addAll(allIndustries);
-                    categoryAdapter.notifyDataSetChanged();
-                }
-            });
+                currentList.clear();
+                currentList.addAll(allIndustries);
+                categoryAdapter.notifyDataSetChanged();
+            })
+            .addOnFailureListener(e -> Log.e("FirestoreError", "Error loading categories", e));
     }
 
     private void loadSkillsFromFirestore() {
-        allSkills.clear();
         db.collection("skills")
             .get()
             .addOnSuccessListener(queryDocumentSnapshots -> {
                 allSkills.clear();
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                     Category skill = doc.toObject(Category.class);
+                    skill.setId(doc.getId()); // Important for deletion
                     allSkills.add(skill);
                 }
-                if (currentTab == 1) {
-                    currentList.clear();
-                    currentList.addAll(allSkills);
-                    categoryAdapter.notifyDataSetChanged();
-                }
-            });
+                currentList.clear();
+                currentList.addAll(allSkills);
+                categoryAdapter.notifyDataSetChanged();
+            })
+            .addOnFailureListener(e -> Log.e("FirestoreError", "Error loading skills", e));
     }
 
-    private void loadRentalsFromFirestore() {
-        allRentals.clear();
-        db.collection("rentals")
+    private void loadLocationsFromFirestore() {
+        db.collection("locations")
             .get()
             .addOnSuccessListener(queryDocumentSnapshots -> {
-                allRentals.clear();
-                int count = 0;
+                allLocations.clear();
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                    String id = doc.getId();
-                    Rental rental = new Rental();
-                    rental.setId(id);
-                    rental.setName(formatRentalName(id));
-                    allRentals.add(rental);
-                    count++;
+                    Category location = doc.toObject(Category.class);
+                    location.setId(doc.getId()); // Get the document ID
+                    allLocations.add(location);
                 }
-                Log.d("FirestoreDebug", "Số lượng địa điểm (rental) lấy được: " + count);
-                if (currentTab == 2) {
-                    currentList.clear();
-                    for (Rental rental : allRentals) {
-                        Category cat = new Category();
-                        cat.setId(rental.getId());
-                        cat.setName(rental.getName());
-                        currentList.add(cat);
-                    }
-                    categoryAdapter.notifyDataSetChanged();
-                    if (allRentals.isEmpty()) {
-                        Toast.makeText(getContext(), "Không có địa điểm nào trong hệ thống!", Toast.LENGTH_SHORT).show();
-                    }
-                }
+                currentList.clear();
+                currentList.addAll(allLocations);
+                categoryAdapter.notifyDataSetChanged();
             })
             .addOnFailureListener(e -> {
-                if (currentTab == 2) {
-                    currentList.clear();
-                    categoryAdapter.notifyDataSetChanged();
-                    Toast.makeText(getContext(), "Lỗi tải địa điểm: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                }
+                Log.e("FirestoreError", "Error loading locations", e);
+                Toast.makeText(getContext(), "Lỗi tải địa điểm: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             });
     }
 
@@ -188,15 +211,40 @@ public class AdminManageCategoriesFragment extends Fragment implements CategoryA
 
     @Override
     public void onDelete(Category category) {
+        String collectionPath;
+        switch (currentTab) {
+            case 0:
+                collectionPath = "categories";
+                break;
+            case 1:
+                collectionPath = "skills";
+                break;
+            case 2:
+                collectionPath = "locations";
+                break;
+            default:
+                return;
+        }
+
+        if (category.getId() == null || category.getId().isEmpty()) {
+            Toast.makeText(getContext(), "Không thể xóa: ID không tồn tại.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         new AlertDialog.Builder(getContext())
-                .setMessage("Bạn có chắc chắn xóa danh mục: " + category.getName() + " không?")
-                .setPositiveButton("Có", (dialog, which) -> {
-                    if (currentTab == 0) allIndustries.remove(category);
-                    else if (currentTab == 1) allSkills.remove(category);
-                    else allRentals.removeIf(r -> r.getId().equals(category.getId()));
-                    switchTab(currentTab);
+                .setTitle("Xác nhận xóa")
+                .setMessage("Bạn có chắc chắn muốn xóa: " + category.getName() + "?")
+                .setPositiveButton("Xóa", (dialog, which) -> {
+                    db.collection(collectionPath).document(category.getId())
+                            .delete()
+                            .addOnSuccessListener(aVoid -> {
+                                Toast.makeText(getContext(), "Đã xóa thành công!", Toast.LENGTH_SHORT).show();
+                                // Refresh the list after deletion
+                                switchTab(currentTab);
+                            })
+                            .addOnFailureListener(e -> Toast.makeText(getContext(), "Xóa thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show());
                 })
-                .setNegativeButton("Không", null)
+                .setNegativeButton("Hủy", null)
                 .show();
     }
 }
