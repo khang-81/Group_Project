@@ -62,12 +62,12 @@ dependencies {
     implementation(libs.picasso) // Chỉ dùng một lần, bỏ dòng 'com.squareup.picasso:picasso:2.71828'
     implementation(libs.circleimageview) // CircleImageView
 
+    // Glide library
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
 
     // Thư viện Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.junit.ext) // Đổi từ libs.junit.v115 sang tên alias chính xác
     androidTestImplementation(libs.espresso.core) // Đổi từ libs.espresso.core.v351 sang tên alias chính xác
-    // XÓA DÒNG PICASSO LẶP LẠI NÀY: implementation(libs.picasso)
-
-
-} // Dấu ngoặc nhọn đóng này của khối dependencies { ... }
+}

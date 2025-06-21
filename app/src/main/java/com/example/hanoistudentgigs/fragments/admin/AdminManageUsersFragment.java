@@ -1,6 +1,7 @@
 package com.example.hanoistudentgigs.fragments.admin;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,6 +33,40 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.example.hanoistudentgigs.activities.ProfileEditActivity;
+
+import android.content.DialogInterface;
+import android.view.inputmethod.EditorInfo;
+import android.widget.LinearLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import java.util.HashMap;
+import java.util.Map;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.hanoistudentgigs.R;
+import com.example.hanoistudentgigs.adapters.UserAdapter;
+import com.example.hanoistudentgigs.models.User;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
+import android.content.Intent;
+import com.example.hanoistudentgigs.activities.ProfileEditActivity;
+import android.app.Activity;
+
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.firestore.WriteBatch;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 public class AdminManageUsersFragment extends Fragment {
     private Button btnStudentTab, btnEmployerTab;
@@ -43,6 +78,20 @@ public class AdminManageUsersFragment extends Fragment {
     private boolean isStudentTab = true;
     private FirebaseFirestore db;
     private FloatingActionButton fabAddUser;
+    private ActivityResultLauncher<Intent> editProfileLauncher;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        editProfileLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // Toast.makeText(getContext(), "Danh sách người dùng được cập nhật.", Toast.LENGTH_SHORT).show();
+                        // The onResume will handle the refresh
+                    }
+                });
+    }
 
     @Nullable
     @Override
@@ -55,22 +104,7 @@ public class AdminManageUsersFragment extends Fragment {
         fabAddUser = view.findViewById(R.id.fabAddUser);
 
         db = FirebaseFirestore.getInstance();
-        userAdapter = new UserAdapter(filteredUsers, new UserAdapter.OnUserActionListener() {
-            @Override
-            public void onDelete(User user) {
-                confirmAndDeleteUser(user);
-            }
-            @Override
-            public void onView(User user) {
-                showUserDetailDialog(user);
-            }
-            @Override
-            public void onVerify(User user) {
-                showVerifyUserDialog(user);
-            }
-        });
-        rvUserList.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvUserList.setAdapter(userAdapter);
+        setupRecyclerView();
 
         btnStudentTab.setOnClickListener(v -> switchTab(true));
         btnEmployerTab.setOnClickListener(v -> switchTab(false));
@@ -88,8 +122,38 @@ public class AdminManageUsersFragment extends Fragment {
 
         fabAddUser.setOnClickListener(v -> showAddUserDialog());
 
-        loadUsersFromFirestore();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadUsersFromFirestore();
+    }
+
+    private void setupRecyclerView() {
+        userAdapter = new UserAdapter(filteredUsers, new UserAdapter.OnUserActionListener() {
+            @Override
+            public void onDelete(User user) {
+                confirmAndDeleteUser(user);
+            }
+            @Override
+            public void onView(User user) {
+                showUserDetailDialog(user);
+            }
+            @Override
+            public void onEdit(User user) {
+                Intent intent = new Intent(getActivity(), ProfileEditActivity.class);
+                intent.putExtra("USER_ID", user.getUid());
+                editProfileLauncher.launch(intent);
+            }
+            @Override
+            public void onVerify(User user) {
+                showVerifyUserDialog(user);
+            }
+        });
+        rvUserList.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvUserList.setAdapter(userAdapter);
     }
 
     private void switchTab(boolean student) {
@@ -134,50 +198,54 @@ public class AdminManageUsersFragment extends Fragment {
     private void confirmAndDeleteUser(User user) {
         new AlertDialog.Builder(getContext())
             .setTitle("Xác nhận xóa")
-            .setMessage("Bạn có chắc muốn xóa người dùng này và toàn bộ dữ liệu liên quan?")
+            .setMessage("Bạn có chắc muốn xóa người dùng này và toàn bộ dữ liệu liên quan? Hành động này không thể hoàn tác.")
             .setPositiveButton("Xóa", (dialog, which) -> {
-                // Xóa user
-                db.collection("users").document(user.getUid()).delete()
-                    .addOnSuccessListener(aVoid -> {
-                        // Xóa application liên quan (studentUid hoặc employerUid)
-                        db.collection("applications")
-                            .whereEqualTo("studentUid", user.getUid())
-                            .get()
-                            .addOnSuccessListener(queryDocumentSnapshots -> {
-                                for (com.google.firebase.firestore.DocumentSnapshot doc : queryDocumentSnapshots) {
-                                    doc.getReference().delete();
-                                }
-                                // Nếu là employer, xóa application theo employerUid
-                                if (user.getRole() != null && user.getRole().equals("EMPLOYER")) {
-                                    db.collection("applications")
-                                        .whereEqualTo("employerUid", user.getUid())
-                                        .get()
-                                        .addOnSuccessListener(employerApps -> {
-                                            for (com.google.firebase.firestore.DocumentSnapshot doc : employerApps) {
-                                                doc.getReference().delete();
-                                            }
-                                            // Xóa job liên quan
-                                            db.collection("jobs")
-                                                .whereEqualTo("employerUid", user.getUid())
-                                                .get()
-                                                .addOnSuccessListener(jobs -> {
-                                                    for (com.google.firebase.firestore.DocumentSnapshot jobDoc : jobs) {
-                                                        jobDoc.getReference().delete();
-                                                    }
-                                                    Toast.makeText(getContext(), "Đã xóa người dùng và dữ liệu liên quan!", Toast.LENGTH_SHORT).show();
-                                                    loadUsersFromFirestore();
-                                                });
-                                        });
-                                } else {
-                                    Toast.makeText(getContext(), "Đã xóa người dùng và dữ liệu liên quan!", Toast.LENGTH_SHORT).show();
-                                    loadUsersFromFirestore();
-                                }
-                            });
-                    })
-                    .addOnFailureListener(e -> Toast.makeText(getContext(), "Lỗi khi xóa: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                deleteUserAndRelatedData(user);
             })
             .setNegativeButton("Hủy", null)
             .show();
+    }
+
+    private void deleteUserAndRelatedData(User user) {
+        // Step 1: Create a list of all tasks to get documents for deletion
+        List<Task<QuerySnapshot>> tasks = new ArrayList<>();
+
+        // Task to get applications where the user is the student
+        tasks.add(db.collection("applications").whereEqualTo("studentUid", user.getUid()).get());
+
+        // If the user is an employer, add tasks for their jobs and related applications
+        if ("EMPLOYER".equals(user.getRole())) {
+            tasks.add(db.collection("jobs").whereEqualTo("employerUid", user.getUid()).get());
+            tasks.add(db.collection("applications").whereEqualTo("employerUid", user.getUid()).get());
+        }
+
+        // Step 2: Wait for all read tasks to complete
+        Tasks.whenAllSuccess(tasks).addOnSuccessListener(results -> {
+            WriteBatch batch = db.batch();
+
+            // Add the user document itself to the batch for deletion
+            batch.delete(db.collection("users").document(user.getUid()));
+
+            // Loop through the results of the tasks (list of QuerySnapshot)
+            for (Object result : results) {
+                if (result instanceof QuerySnapshot) {
+                    QuerySnapshot snapshot = (QuerySnapshot) result;
+                    for (DocumentSnapshot doc : snapshot.getDocuments()) {
+                        batch.delete(doc.getReference());
+                    }
+                }
+            }
+
+            // Step 3: Commit the batch
+            batch.commit().addOnSuccessListener(aVoid -> {
+                Toast.makeText(getContext(), "Đã xóa người dùng và toàn bộ dữ liệu liên quan!", Toast.LENGTH_SHORT).show();
+                loadUsersFromFirestore(); // Refresh the list
+            }).addOnFailureListener(e -> {
+                Toast.makeText(getContext(), "Lỗi khi thực hiện xóa: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            });
+        }).addOnFailureListener(e -> {
+            Toast.makeText(getContext(), "Lỗi khi tìm dữ liệu để xóa: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void showAddUserDialog() {
@@ -186,41 +254,82 @@ public class AdminManageUsersFragment extends Fragment {
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_add_user, null);
-        builder.setView(dialogView);
-
-        final EditText etName = dialogView.findViewById(R.id.etName);
+        final EditText etFullName = dialogView.findViewById(R.id.etFullName);
         final EditText etEmail = dialogView.findViewById(R.id.etEmail);
         final EditText etPhone = dialogView.findViewById(R.id.etPhone);
-        final EditText etSchoolOrCompany = dialogView.findViewById(R.id.etSchoolOrCompany);
+        final EditText etSchoolName = dialogView.findViewById(R.id.etSchoolName);
+        final EditText etMajor = dialogView.findViewById(R.id.etMajor);
+        final EditText etYear = dialogView.findViewById(R.id.etYear);
+        final EditText etExperience = dialogView.findViewById(R.id.etExperience);
+        final EditText etSkillsDescription = dialogView.findViewById(R.id.etSkillsDescription);
+        final EditText etAddress = dialogView.findViewById(R.id.etAddress);
+        final EditText etWebsite = dialogView.findViewById(R.id.etWebsite);
 
-        etSchoolOrCompany.setHint(isStudentTab ? "Trường học" : "Tên công ty");
+        if (isStudentTab) {
+            etSchoolName.setVisibility(View.VISIBLE);
+            etMajor.setVisibility(View.VISIBLE);
+            etYear.setVisibility(View.VISIBLE);
+            etExperience.setVisibility(View.VISIBLE);
+            etSkillsDescription.setVisibility(View.VISIBLE);
+            etAddress.setVisibility(View.GONE);
+            etWebsite.setVisibility(View.GONE);
+            etFullName.setHint("Họ tên");
+            etSchoolName.setHint("Trường học");
+        } else {
+            etSchoolName.setHint("Tên công ty");
+            etMajor.setVisibility(View.GONE);
+            etYear.setVisibility(View.GONE);
+            etExperience.setVisibility(View.GONE);
+            etSkillsDescription.setVisibility(View.GONE);
+            etAddress.setVisibility(View.VISIBLE);
+            etWebsite.setVisibility(View.VISIBLE);
+            etFullName.setHint("Tên người đại diện");
+        }
 
+        builder.setView(dialogView);
         builder.setPositiveButton("Thêm", (dialog, which) -> {
-            String name = etName.getText().toString().trim();
+            String fullName = etFullName.getText().toString().trim();
             String email = etEmail.getText().toString().trim();
             String phone = etPhone.getText().toString().trim();
-            String schoolOrCompany = etSchoolOrCompany.getText().toString().trim();
-            if (name.isEmpty() || email.isEmpty()) {
-                Toast.makeText(getContext(), "Vui lòng nhập đủ tên và email", Toast.LENGTH_SHORT).show();
+            String schoolName = etSchoolName.getText().toString().trim();
+
+            if (fullName.isEmpty() || email.isEmpty()) {
+                Toast.makeText(getContext(), "Vui lòng nhập đầy đủ thông tin bắt buộc.", Toast.LENGTH_SHORT).show();
                 return;
             }
+
+            // Create a User object
+            String role = isStudentTab ? "STUDENT" : "EMPLOYER";
             String uid = db.collection("users").document().getId();
-            Map<String, Object> userMap = new HashMap<>();
-            userMap.put("uid", uid);
-            userMap.put("fullName", isStudentTab ? name : "");
-            userMap.put("companyName", isStudentTab ? "" : name);
-            userMap.put("email", email);
-            userMap.put("role", isStudentTab ? "STUDENT" : "EMPLOYER");
-            userMap.put("SDT", phone);
-            userMap.put(isStudentTab ? "school" : "companyName", schoolOrCompany);
-            db.collection("users").document(uid).set(userMap)
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(getContext(), "Đã thêm người dùng!", Toast.LENGTH_SHORT).show();
-                    loadUsersFromFirestore();
-                })
-                .addOnFailureListener(e -> Toast.makeText(getContext(), "Lỗi khi thêm: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+            User newUser = new User();
+            newUser.setUid(uid);
+            newUser.setFullName(fullName);
+            newUser.setEmail(email);
+            newUser.setPhone(phone);
+            newUser.setRole(role);
+            newUser.setVerified(false);
+
+            if(isStudentTab) {
+                newUser.setSchoolName(schoolName);
+                newUser.setMajor(etMajor.getText().toString().trim());
+                newUser.setYear(etYear.getText().toString().trim());
+                newUser.setExperience(etExperience.getText().toString().trim());
+                newUser.setSkillsDescription(etSkillsDescription.getText().toString().trim());
+            } else {
+                newUser.setCompanyName(schoolName);
+                newUser.setAddress(etAddress.getText().toString().trim());
+                newUser.setWebsite(etWebsite.getText().toString().trim());
+            }
+
+            // Add to Firestore
+            db.collection("users").document(uid).set(newUser)
+                    .addOnSuccessListener(aVoid -> {
+                        Toast.makeText(getContext(), "Thêm người dùng thành công!", Toast.LENGTH_SHORT).show();
+                        loadUsersFromFirestore();
+                    })
+                    .addOnFailureListener(e -> Toast.makeText(getContext(), "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show());
         });
-        builder.setNegativeButton("Hủy", null);
+        builder.setNegativeButton("Hủy", (dialog, which) -> dialog.cancel());
         builder.show();
     }
 
@@ -253,18 +362,18 @@ public class AdminManageUsersFragment extends Fragment {
 
     private void showVerifyUserDialog(User user) {
         new AlertDialog.Builder(getContext())
-            .setTitle("")
-            .setMessage("Bạn có chắc chắn xác thực tài khoản: " + user.getEmail() + " không?")
-            .setPositiveButton("Có", (dialog, which) -> {
+            .setTitle("Duyệt tài khoản")
+            .setMessage("Bạn có chắc chắn muốn duyệt tài khoản: " + user.getEmail() + " không?")
+            .setPositiveButton("Duyệt", (dialog, which) -> {
                 db.collection("users").document(user.getUid())
                     .update("verified", true)
                     .addOnSuccessListener(aVoid -> {
-                        Toast.makeText(getContext(), "Đã xác thực tài khoản!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Đã duyệt tài khoản!", Toast.LENGTH_SHORT).show();
                         loadUsersFromFirestore();
                     })
-                    .addOnFailureListener(e -> Toast.makeText(getContext(), "Lỗi xác thực: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                    .addOnFailureListener(e -> Toast.makeText(getContext(), "Lỗi khi duyệt: " + e.getMessage(), Toast.LENGTH_SHORT).show());
             })
-            .setNegativeButton("Không", null)
+            .setNegativeButton("Hủy", null)
             .show();
     }
 }
