@@ -42,18 +42,15 @@
 
         <activity
             android:name=".activities.JobDetailActivity"
-            android:exported="false"
-            android:parentActivityName=".MainActivity" />
+            android:exported="false" />
 
         <activity
             android:name=".activities.PostJobActivity"
-            android:exported="false"
-            android:parentActivityName=".MainActivity" />
+            android:exported="false" />
 
         <activity
             android:name=".activities.ProfileEditActivity"
-            android:exported="false"
-            android:parentActivityName=".MainActivity" />
+            android:exported="false" />
 
         <activity
             android:name=".activities.ForgotPasswordActivity"

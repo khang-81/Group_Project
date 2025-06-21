@@ -128,17 +128,30 @@ public class AdminManageCategoriesFragment extends Fragment implements CategoryA
 
         String generatedId = generateIdFromName(name);
 
-        Category newCategory = new Category();
-        newCategory.setName(name);
-        newCategory.setId(generatedId);
+        // Kiểm tra xem document có ID này đã tồn tại chưa
+        db.collection(collectionPath).document(generatedId).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                if (task.getResult() != null && task.getResult().exists()) {
+                    // Document đã tồn tại
+                    Toast.makeText(getContext(), "Tên danh mục này đã tồn tại.", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Document chưa tồn tại, tiến hành thêm mới
+                    Category newCategory = new Category();
+                    newCategory.setName(name);
+                    newCategory.setId(generatedId);
 
-        db.collection(collectionPath).document(generatedId).set(newCategory)
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(getContext(), "Thêm thành công!", Toast.LENGTH_SHORT).show();
-                    etNewCategory.setText("");
-                    switchTab(currentTab); // Refresh list
-                })
-                .addOnFailureListener(e -> Toast.makeText(getContext(), "Thêm thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                    db.collection(collectionPath).document(generatedId).set(newCategory)
+                            .addOnSuccessListener(aVoid -> {
+                                Toast.makeText(getContext(), "Thêm thành công!", Toast.LENGTH_SHORT).show();
+                                etNewCategory.setText("");
+                                switchTab(currentTab); // Refresh list
+                            })
+                            .addOnFailureListener(e -> Toast.makeText(getContext(), "Thêm thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                }
+            } else {
+                Toast.makeText(getContext(), "Lỗi khi kiểm tra: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void loadCategoriesFromFirestore() {
@@ -210,6 +223,11 @@ public class AdminManageCategoriesFragment extends Fragment implements CategoryA
     }
 
     @Override
+    public void onEdit(Category category) {
+        showEditDialog(category);
+    }
+
+    @Override
     public void onDelete(Category category) {
         String collectionPath;
         switch (currentTab) {
@@ -246,5 +264,43 @@ public class AdminManageCategoriesFragment extends Fragment implements CategoryA
                 })
                 .setNegativeButton("Hủy", null)
                 .show();
+    }
+
+    private void showEditDialog(Category category) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Sửa tên danh mục");
+
+        // Set up the input
+        final EditText input = new EditText(getContext());
+        input.setText(category.getName());
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("Lưu", (dialog, which) -> {
+            String newName = input.getText().toString().trim();
+            if (TextUtils.isEmpty(newName)) {
+                Toast.makeText(getContext(), "Tên không được để trống", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String collectionPath;
+            switch (currentTab) {
+                case 0: collectionPath = "categories"; break;
+                case 1: collectionPath = "skills"; break;
+                case 2: collectionPath = "locations"; break;
+                default: return;
+            }
+
+            db.collection(collectionPath).document(category.getId())
+                    .update("name", newName)
+                    .addOnSuccessListener(aVoid -> {
+                        Toast.makeText(getContext(), "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
+                        switchTab(currentTab); // Refresh list
+                    })
+                    .addOnFailureListener(e -> Toast.makeText(getContext(), "Cập nhật thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+        });
+        builder.setNegativeButton("Hủy", (dialog, which) -> dialog.cancel());
+
+        builder.show();
     }
 }

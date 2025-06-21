@@ -22,6 +22,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         void onDelete(User user);
         void onView(User user);
         void onVerify(User user);
+        void onEdit(User user);
     }
 
     public UserAdapter(List<User> userList, OnUserActionListener listener) {
@@ -53,6 +54,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         holder.btnView.setOnClickListener(v -> {
             if (listener != null) listener.onView(user);
         });
+        holder.btnEdit.setOnClickListener(v -> {
+            if (listener != null) listener.onEdit(user);
+        });
         holder.btnVerify.setOnClickListener(v -> {
             if (listener != null) listener.onVerify(user);
         });
@@ -65,11 +69,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {
         TextView tvName;
-        Button btnView, btnVerify, btnDelete;
+        Button btnView, btnVerify, btnDelete, btnEdit;
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvUserName);
             btnView = itemView.findViewById(R.id.btnViewUser);
+            btnEdit = itemView.findViewById(R.id.btnEditUser);
             btnVerify = itemView.findViewById(R.id.btnVerifyUser);
             btnDelete = itemView.findViewById(R.id.btnDeleteUser);
         }
