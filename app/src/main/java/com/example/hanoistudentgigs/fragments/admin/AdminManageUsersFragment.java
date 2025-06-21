@@ -207,45 +207,40 @@ public class AdminManageUsersFragment extends Fragment {
     }
 
     private void deleteUserAndRelatedData(User user) {
-        // Step 1: Create a list of all tasks to get documents for deletion
-        List<Task<QuerySnapshot>> tasks = new ArrayList<>();
+        WriteBatch batch = db.batch();
 
-        // Task to get applications where the user is the student
-        tasks.add(db.collection("applications").whereEqualTo("studentUid", user.getUid()).get());
+        // Add the user document itself to the batch for deletion
+        batch.delete(db.collection("users").document(user.getUid()));
 
-        // If the user is an employer, add tasks for their jobs and related applications
+        // If the user is an employer, find and delete all their jobs.
+        // Deleting a job document will also delete its 'applications' sub-collection.
         if ("EMPLOYER".equals(user.getRole())) {
-            tasks.add(db.collection("jobs").whereEqualTo("employerUid", user.getUid()).get());
-            tasks.add(db.collection("applications").whereEqualTo("employerUid", user.getUid()).get());
-        }
-
-        // Step 2: Wait for all read tasks to complete
-        Tasks.whenAllSuccess(tasks).addOnSuccessListener(results -> {
-            WriteBatch batch = db.batch();
-
-            // Add the user document itself to the batch for deletion
-            batch.delete(db.collection("users").document(user.getUid()));
-
-            // Loop through the results of the tasks (list of QuerySnapshot)
-            for (Object result : results) {
-                if (result instanceof QuerySnapshot) {
-                    QuerySnapshot snapshot = (QuerySnapshot) result;
-                    for (DocumentSnapshot doc : snapshot.getDocuments()) {
-                        batch.delete(doc.getReference());
+            db.collection("jobs").whereEqualTo("employerUid", user.getUid()).get()
+                .addOnSuccessListener(jobsSnapshot -> {
+                    for (DocumentSnapshot jobDoc : jobsSnapshot) {
+                        batch.delete(jobDoc.getReference());
                     }
-                }
-            }
 
-            // Step 3: Commit the batch
+                    // Now, commit the batch with all deletions
+                    batch.commit().addOnSuccessListener(aVoid -> {
+                        Toast.makeText(getContext(), "Đã xóa người dùng và các tin đăng liên quan!", Toast.LENGTH_SHORT).show();
+                        loadUsersFromFirestore(); // Refresh the list
+                    }).addOnFailureListener(e -> {
+                        Toast.makeText(getContext(), "Lỗi khi thực hiện xóa: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(getContext(), "Lỗi khi tìm tin đăng để xóa: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+        } else {
+            // If the user is a Student, just commit the deletion of the user document
             batch.commit().addOnSuccessListener(aVoid -> {
-                Toast.makeText(getContext(), "Đã xóa người dùng và toàn bộ dữ liệu liên quan!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Đã xóa người dùng!", Toast.LENGTH_SHORT).show();
                 loadUsersFromFirestore(); // Refresh the list
             }).addOnFailureListener(e -> {
-                Toast.makeText(getContext(), "Lỗi khi thực hiện xóa: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Lỗi khi xóa người dùng: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             });
-        }).addOnFailureListener(e -> {
-            Toast.makeText(getContext(), "Lỗi khi tìm dữ liệu để xóa: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-        });
+        }
     }
 
     private void showAddUserDialog() {
