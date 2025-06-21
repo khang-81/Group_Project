@@ -52,7 +52,7 @@ public class AdminJobAdapter extends FirestoreRecyclerAdapter<Job, AdminJobAdapt
             holder.btnApproveJob.setEnabled(true);
         }
 
-        // Xử lý sự kiện nút Duyệt
+
         holder.btnApproveJob.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onApprove(job);

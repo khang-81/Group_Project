@@ -44,7 +44,7 @@ public class ProfileFragment extends Fragment {
     private LinearLayout studentInfoLayout;
     private TextView textViewSchool, textViewMajor, textViewSkills, textViewExperience, textViewCvStatus;
     private Button buttonUploadCv;
-    private ProgressBar progressBarCv;
+
 
     // Các Views dành riêng cho Nhà tuyển dụng
     private LinearLayout employerInfoLayout;
@@ -53,19 +53,9 @@ public class ProfileFragment extends Fragment {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
-    private FirebaseStorage storage;
+
     private FirebaseUser currentUser;
 
-    private final ActivityResultLauncher<Intent> filePickerLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                    Uri filePath = result.getData().getData();
-                    if (filePath != null) {
-                        uploadCv(filePath);
-                    }
-                }
-            });
 
     @Nullable
     @Override
@@ -74,7 +64,7 @@ public class ProfileFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-        storage = FirebaseStorage.getInstance();
+
         currentUser = mAuth.getCurrentUser();
 
         // Ánh xạ các View
@@ -89,7 +79,7 @@ public class ProfileFragment extends Fragment {
 //        textViewExperience = view.findViewById(R.id.textViewProfileExperience);
         textViewCvStatus = view.findViewById(R.id.textViewCvStatus);
         buttonUploadCv = view.findViewById(R.id.buttonUploadCv);
-        progressBarCv = view.findViewById(R.id.progressBarCv);
+
         employerInfoLayout = view.findViewById(R.id.employerInfoLayout);
         textViewCompanyName = view.findViewById(R.id.textViewProfileCompanyName);
         textViewAddress = view.findViewById(R.id.textViewProfileAddress);
@@ -121,15 +111,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        buttonUploadCv.setOnClickListener(v -> {
-            // FIX: Cho phép chọn nhiều loại tệp văn bản
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("*/*"); // Cho phép chọn bất kỳ loại file nào
-            // Tạo một mảng chứa các loại MIME được chấp nhận
-            String[] mimeTypes = {"application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"};
-            intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
-            filePickerLauncher.launch(intent);
-        });
+
     }
 
     private void loadUserProfile() {
@@ -158,11 +140,12 @@ public class ProfileFragment extends Fragment {
                             setText(textViewMajor, document, "major");
                             setText(textViewSkills, document, "skillsDescription");
                             setText(textViewExperience, document, "experience");
-                            if (document.contains("cvUrl") && document.getString("cvUrl") != null && !document.getString("cvUrl").isEmpty()) {
-                                textViewCvStatus.setText("Đã tải lên CV.");
+                            String cvFileName = document.getString("cvFileName"); // Lấy tên file CV từ Firestore
+                            if (cvFileName != null && !cvFileName.isEmpty()) {
+                                textViewCvStatus.setText("CV hiện tại: " + cvFileName); // Hiển thị tên file
                                 textViewCvStatus.setTextColor(ContextCompat.getColor(getContext(), R.color.successColor));
                             } else {
-                                textViewCvStatus.setText("Chưa có CV.");
+                                textViewCvStatus.setText("Chưa có tệp CV nào được chọn."); // Thông báo rõ ràng hơn
                                 textViewCvStatus.setTextColor(ContextCompat.getColor(getContext(), R.color.errorColor));
                             }
                         } else if (Constants.ROLE_EMPLOYER.equals(role)) {
@@ -203,46 +186,5 @@ public class ProfileFragment extends Fragment {
             return mime.getExtensionFromMimeType(cR.getType(uri));
         }
         return null;
-    }
+    }}
 
-    private void uploadCv(Uri filePath) {
-        if (currentUser == null || getContext() == null) {
-            Toast.makeText(getContext(), "Lỗi: Không thể xác định người dùng.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        progressBarCv.setVisibility(View.VISIBLE);
-        buttonUploadCv.setEnabled(false);
-
-        // FIX: Lấy phần mở rộng của file một cách linh hoạt
-        String fileExtension = getFileExtension(filePath);
-        if (fileExtension == null) {
-            // Nếu không thể xác định, dùng một giá trị mặc định hoặc báo lỗi
-            Toast.makeText(getContext(), "Không thể xác định loại tệp.", Toast.LENGTH_SHORT).show();
-            progressBarCv.setVisibility(View.GONE);
-            buttonUploadCv.setEnabled(true);
-            return;
-        }
-
-        // FIX: Tạo tên file với phần mở rộng chính xác
-        StorageReference cvRef = storage.getReference().child("cvs/" + currentUser.getUid() + "." + fileExtension);
-
-        cvRef.putFile(filePath)
-                .addOnSuccessListener(taskSnapshot ->
-                        cvRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                            String downloadUrl = uri.toString();
-                            db.collection(Constants.USERS_COLLECTION).document(currentUser.getUid()).update("cvUrl", downloadUrl)
-                                    .addOnSuccessListener(aVoid -> {
-                                        progressBarCv.setVisibility(View.GONE);
-                                        buttonUploadCv.setEnabled(true);
-                                        Toast.makeText(getContext(), "Tải lên CV thành công!", Toast.LENGTH_SHORT).show();
-                                        loadUserProfile();
-                                    });
-                        })
-                )
-                .addOnFailureListener(e -> {
-                    progressBarCv.setVisibility(View.GONE);
-                    buttonUploadCv.setEnabled(true);
-                    Toast.makeText(getContext(), "Tải lên thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
-    }
-}

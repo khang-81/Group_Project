@@ -21,6 +21,8 @@ import com.example.hanoistudentgigs.utils.Constants;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import java.util.HashMap; // Thêm import này
+import java.util.Map; // Thêm import này
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -41,44 +43,79 @@ public class MainActivity extends AppCompatActivity {
             sendToLogin();
             return;
         }
-        Intent intent = getIntent();
-        boolean selectApproveTab = intent != null && intent.getBooleanExtra("SELECT_ADMIN_APPROVE_TAB", false);
-        setupUserInterface(savedInstanceState, selectApproveTab);
+        setupUserInterface(savedInstanceState);
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        if (intent != null && intent.getBooleanExtra("SELECT_ADMIN_APPROVE_TAB", false)) {
-            if (userRole != null && userRole.equals(Constants.ROLE_ADMIN)) {
-                if (bottomNav != null) {
-                    bottomNav.setSelectedItemId(R.id.nav_admin_approve_jobs);
-                }
-            }
-        }
-    }
-
-    private void setupUserInterface(Bundle savedInstanceState, boolean selectApproveTab) {
+    private void setupUserInterface(Bundle savedInstanceState) {
         String uid = mAuth.getCurrentUser().getUid();
         db.collection(Constants.USERS_COLLECTION).document(uid).get()
                 .addOnSuccessListener(documentSnapshot -> {
-                    if (isFinishing() || isDestroyed() || !documentSnapshot.exists()) {
-                        mAuth.signOut();
-                        sendToLogin();
+                    if (isFinishing() || isDestroyed()) {
+                        // Nếu Activity đang bị hủy, không làm gì cả
                         return;
                     }
-                    userRole = documentSnapshot.getString("role");
-                    setupBottomNavigation(selectApproveTab, savedInstanceState);
+
+                    if (!documentSnapshot.exists()) {
+                        // Tài liệu người dùng không tồn tại, tạo một tài liệu mặc định
+                        Log.w("MainActivity", "Tài liệu người dùng không tồn tại. Tạo tài liệu mặc định.");
+                        Map<String, Object> userData = new HashMap<>();
+                        userData.put("role", Constants.ROLE_STUDENT); // Mặc định là sinh viên
+                        // Thêm các trường mặc định khác nếu cần, ví dụ:
+                        userData.put("fullName", mAuth.getCurrentUser().getDisplayName() != null ? mAuth.getCurrentUser().getDisplayName() : "Người dùng mới");
+                        userData.put("email", mAuth.getCurrentUser().getEmail());
+
+                        db.collection(Constants.USERS_COLLECTION).document(uid).set(userData)
+                                .addOnSuccessListener(aVoid -> {
+                                    Log.d("MainActivity", "Đã tạo tài liệu người dùng mặc định.");
+                                    userRole = Constants.ROLE_STUDENT; // Đặt vai trò sau khi tạo
+                                    continueSetup(savedInstanceState); // Tiếp tục thiết lập UI
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e("MainActivity", "Lỗi khi tạo tài liệu người dùng mặc định", e);
+                                    // Nếu không tạo được tài liệu, có thể đăng xuất để tránh vòng lặp lỗi
+                                    mAuth.signOut();
+                                    sendToLogin();
+                                });
+                    } else {
+                        // Tài liệu người dùng đã tồn tại, lấy vai trò và tiếp tục
+                        userRole = documentSnapshot.getString("role");
+                        if (userRole == null || userRole.isEmpty()) {
+                            // Trường hợp hiếm: tài liệu tồn tại nhưng không có vai trò.
+                            // Có thể xử lý bằng cách đặt vai trò mặc định hoặc đăng xuất.
+                            Log.w("MainActivity", "Tài liệu người dùng tồn tại nhưng không có vai trò. Đặt mặc định là sinh viên.");
+                            userRole = Constants.ROLE_STUDENT;
+                            // Cập nhật vai trò vào Firestore nếu bạn muốn
+                            db.collection(Constants.USERS_COLLECTION).document(uid).update("role", Constants.ROLE_STUDENT)
+                                    .addOnSuccessListener(aVoid -> Log.d("MainActivity", "Đã cập nhật vai trò mặc định cho người dùng."))
+                                    .addOnFailureListener(e -> Log.e("MainActivity", "Lỗi cập nhật vai trò mặc định.", e));
+                        }
+                        continueSetup(savedInstanceState); // Tiếp tục thiết lập UI
+                    }
                 })
                 .addOnFailureListener(e -> {
                     Log.e("MainActivity", "Failed to get user role", e);
+                    // Nếu không lấy được tài liệu người dùng vì lỗi, thì đăng xuất
+                    mAuth.signOut(); // Giữ lại dòng này trong trường hợp lỗi mạng hoặc quyền truy cập
                     sendToLogin();
                 });
     }
 
-    private void setupBottomNavigation(boolean selectApproveTab, Bundle savedInstanceState) {
+    // Phương thức mới để tiếp tục thiết lập UI sau khi vai trò được xác định/tạo
+    private void continueSetup(Bundle savedInstanceState) {
+        setupBottomNavigation();
+        if (savedInstanceState == null) {
+            loadFragment(getDefaultFragmentForRole());
+        }
+    }
+
+    private void setupBottomNavigation() {
         bottomNav.getMenu().clear();
-        if (userRole == null) return;
+        if (userRole == null) {
+            // Điều này không nên xảy ra sau khi continueSetup được gọi, nhưng là một kiểm tra an toàn
+            Log.e("MainActivity", "userRole vẫn null sau khi thiết lập. Đang gửi đến Login.");
+            sendToLogin();
+            return;
+        }
         switch (userRole) {
             case Constants.ROLE_STUDENT:
                 getMenuInflater().inflate(R.menu.student_bottom_navigation_menu, bottomNav.getMenu());
@@ -89,21 +126,17 @@ public class MainActivity extends AppCompatActivity {
             case Constants.ROLE_ADMIN:
                 getMenuInflater().inflate(R.menu.admin_bottom_navigation_menu, bottomNav.getMenu());
                 break;
+            default:
+                Log.e("MainActivity", "Vai trò không xác định: " + userRole + ". Đang gửi đến Login.");
+                mAuth.signOut(); // Đăng xuất nếu vai trò không hợp lệ
+                sendToLogin();
+                break;
         }
         bottomNav.setOnItemSelectedListener(navListener);
-        if (savedInstanceState == null) {
-            if (selectApproveTab && userRole.equals(Constants.ROLE_ADMIN)) {
-                bottomNav.setSelectedItemId(R.id.nav_admin_approve_jobs);
-                loadFragment(new AdminApproveJobsFragment());
-            } else {
-                loadFragment(getDefaultFragmentForRole());
-            }
-        }
     }
 
-    // FIX: Thay đổi kiểu trả về thành Fragment để tương thích với tất cả các loại Fragment
     private Fragment getDefaultFragmentForRole() {
-        if (userRole == null) return null;
+        if (userRole == null) return null; // Vẫn cần kiểm tra an toàn
         switch (userRole) {
             case Constants.ROLE_STUDENT:
                 return new StudentHomeFragment();
@@ -130,14 +163,12 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new ProfileFragment();
                 }
                 // --- Employer (Recruiter) Navigation ---
-                // FIX: Sử dụng đúng ID từ file menu (recruiter_bottom_navigation_menu.xml)
                 else if (itemId == R.id.nav_recruiter_dashboard) {
                     selectedFragment = new EmployerDashboardFragment();
                 } else if (itemId == R.id.nav_recruiter_profile) {
                     selectedFragment = new ProfileFragment();
                 }
                 // --- Admin Navigation ---
-                // FIX: Sử dụng đúng ID từ file menu (admin_bottom_navigation_menu.xml)
                 else if (itemId == R.id.nav_admin_dashboard) {
                     selectedFragment = new AdminDashboardFragment();
                 } else if (itemId == R.id.nav_admin_approve_jobs) {
@@ -157,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
                         .commit();
                 return true;
             } catch (IllegalStateException e) {
-                Log.e("MainActivity", "Error committing fragment transaction", e);
+                Log.e("MainActivity", "Lỗi khi thực hiện giao dịch fragment", e);
             }
         }
         return false;
