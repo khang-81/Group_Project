@@ -1,0 +1,90 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Hàm kiểm tra xem user có phải là admin không
+    function isAdmin() {
+      return request.auth != null && 
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'ADMIN';
+    }
+    
+    // Hàm kiểm tra xem user có phải là chủ sở hữu của document không
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Quy tắc cho collection users
+    match /users/{userId} {
+      // Admin có thể đọc, tạo, cập nhật, xóa tất cả users
+      allow read, write: if isAdmin();
+      
+      // User thường chỉ có thể đọc và cập nhật thông tin của chính mình
+      allow read, update: if isOwner(userId);
+      
+      // Cho phép tạo user mới khi đăng ký (không cần quyền admin)
+      allow create: if request.auth != null;
+    }
+    
+    // Quy tắc cho collection jobs
+    match /jobs/{jobId} {
+      // Admin có thể đọc, tạo, cập nhật, xóa tất cả jobs
+      allow read, write: if isAdmin();
+      
+      // Tất cả user đã đăng nhập có thể đọc jobs
+      allow read: if request.auth != null;
+      
+      // Employer có thể tạo và cập nhật jobs của mình
+      allow create, update: if request.auth != null && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'EMPLOYER' &&
+        resource.data.employerUid == request.auth.uid;
+      
+      // Employer có thể xóa jobs của mình
+      allow delete: if request.auth != null && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'EMPLOYER' &&
+        resource.data.employerUid == request.auth.uid;
+    }
+    
+    // Quy tắc cho collection applications
+    match /jobs/{jobId}/applications/{applicationId} {
+      // Admin có thể đọc, tạo, cập nhật, xóa tất cả applications
+      allow read, write: if isAdmin();
+      
+      // Student có thể tạo applications
+      allow create: if request.auth != null && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'STUDENT';
+      
+      // Student có thể đọc và cập nhật applications của mình
+      allow read, update: if request.auth != null && 
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'STUDENT' &&
+         resource.data.studentUid == request.auth.uid) ||
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'EMPLOYER' &&
+         get(/databases/$(database)/documents/jobs/$(jobId)).data.employerUid == request.auth.uid);
+    }
+    
+    // Quy tắc cho collection categories
+    match /categories/{categoryId} {
+      // Admin có thể đọc, tạo, cập nhật, xóa tất cả categories
+      allow read, write: if isAdmin();
+      
+      // Tất cả user đã đăng nhập có thể đọc categories
+      allow read: if request.auth != null;
+    }
+
+    // Quy tắc cho collection skills
+    match /skills/{skillId} {
+      // Admin có thể đọc, tạo, cập nhật, xóa tất cả skills
+      allow read, write: if isAdmin();
+
+      // Tất cả user đã đăng nhập có thể đọc skills
+      allow read: if request.auth != null;
+    }
+
+    // Quy tắc cho collection locations
+    match /locations/{locationId} {
+      // Admin có thể đọc, tạo, cập nhật, xóa tất cả locations
+      allow read, write: if isAdmin();
+
+      // Tất cả user đã đăng nhập có thể đọc locations
+      allow read: if request.auth != null;
+    }
+  }
+} 
