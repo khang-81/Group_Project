@@ -54,7 +54,19 @@
         android:background="@drawable/edit_text_background"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thời gian bài đăng"
+        android:layout_marginTop="16dp"/>
 
+    <Spinner
+        android:id="@+id/spinnerDateRange"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/edit_text_background"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"/>
     <Button
         android:id="@+id/buttonApplyFilter"
         android:layout_width="match_parent"
