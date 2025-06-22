@@ -220,7 +220,14 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
+<<<<<<< Updated upstream
   <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\ASUS\.android\avd\Pixel_9_Pro.avd)]" />
+=======
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\Lenovo\.android\avd\Medium_Phone.avd)]" />
+>>>>>>> Stashed changes
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -236,7 +243,32 @@
     </option>
   </component>
   <component name="Git.Settings">
+<<<<<<< Updated upstream
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/HanoiStudentGigs" />
+=======
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;LeHieudzso1&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/khang-81/Group_Project.git&quot;,
+    &quot;accountId&quot;: &quot;7ee265de-aa76-45ba-9b08-21e1cf00ddf7&quot;
+  }
+}</component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="$USER_HOME$/xampp/php/php.exe" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+>>>>>>> Stashed changes
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
@@ -255,7 +287,12 @@
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
+<<<<<<< Updated upstream
     "git-widget-placeholder": "master",
+=======
+    "com.google.services.firebase.aqiPopupShown": "true",
+    "git-widget-placeholder": "NguyenKhanhDuy",
+>>>>>>> Stashed changes
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/app_mobie/HanoiStudentGigs",
     "project.structure.last.edited": "Modules",
@@ -365,12 +402,20 @@
       <map>
         <entry key="com.example.hanoistudentgigs">
           <value>
+<<<<<<< Updated upstream
             <CheckInfo lastCheckTimestamp="1749965847109" />
+=======
+            <CheckInfo lastCheckTimestamp="1750591993681" />
+>>>>>>> Stashed changes
           </value>
         </entry>
         <entry key="com.example.hanoistudentgigs.test">
           <value>
+<<<<<<< Updated upstream
             <CheckInfo lastCheckTimestamp="1749965847099" />
+=======
+            <CheckInfo lastCheckTimestamp="1750591993680" />
+>>>>>>> Stashed changes
           </value>
         </entry>
       </map>
