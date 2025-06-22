@@ -98,7 +98,7 @@ private void openSearchActivity(@Nullable Filter filter, boolean openedFromFilte
     private void loadUserName() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null && isAdded()) {
-            db.collection(Constants.USERS_COLLECTION).document(currentUser.getUid()).get()
+            db.collection(Constants.STUDENTS_COLLECTION).document(currentUser.getUid()).get()
                     .addOnSuccessListener(documentSnapshot -> {
                         if (getContext() != null && documentSnapshot.exists()) {
                             String fullName = documentSnapshot.getString("fullName");
