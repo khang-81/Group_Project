@@ -4,19 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="24dp"
-    android:gravity="center_horizontal"
-    android:background="#FFF">
+    android:gravity="center_horizontal">
 
-    <Button
-        android:id="@+id/btnStatsTitle"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Quản Lý Hệ Thống"
+        android:textSize="24sp"
         android:textStyle="bold"
-        android:enabled="false"
-        android:backgroundTint="#3B5A7A"
-        android:textColor="#FFF"
-        android:layout_marginBottom="16dp"/>
+        android:textColor="@color/textColorPrimary"
+        android:layout_marginBottom="32dp"/>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
