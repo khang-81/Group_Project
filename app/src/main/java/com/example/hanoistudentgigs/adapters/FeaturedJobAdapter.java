@@ -111,6 +111,7 @@ public class FeaturedJobAdapter extends FirestoreRecyclerAdapter<Job, FeaturedJo
             textViewSalary.setText(job.getSalaryDescription());
             textViewLocation.setText(job.getLocationName());
 
+
             Picasso.get().load(job.getCompanyLogoUrl()).into(imageViewCompanyLogo);
         }
     }

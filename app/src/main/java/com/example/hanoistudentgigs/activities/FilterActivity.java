@@ -55,14 +55,9 @@ public class FilterActivity extends AppCompatActivity {
 
     private void loadSpinnerData() {
         loadDataForSpinner(Constants.CATEGORIES_COLLECTION, spinnerCategory, "Tất cả ngành nghề");
-        loadDataForSpinner(Constants.LOCATIONS_COLLECTION, spinnerLocation, "Tất cả địa điểm");
+        loadDataForSpinner("rentals", spinnerLocation, "Tất cả địa điểm");
 
-        List<String> jobTypes = new ArrayList<>();
-        jobTypes.add("Tất cả loại hình");
-        jobTypes.add("PartTime");
-        jobTypes.add("Freelance");
-        jobTypes.add("Internship");
-        ArrayAdapter<String> jobTypeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, jobTypes);
+        ArrayAdapter<String> jobTypeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new String[]{"Tất cả loại hình", "PartTime", "Freelance", "Internship"});
         jobTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerJobType.setAdapter(jobTypeAdapter);
     }

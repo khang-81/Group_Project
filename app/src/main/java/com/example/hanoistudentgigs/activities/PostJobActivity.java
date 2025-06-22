@@ -14,17 +14,23 @@ import java.util.Date; // Vẫn cần nếu bạn muốn lấy thời gian hiệ
 import java.util.HashMap; // Cần để tạo Map
 import java.util.Map; // Cần để tạo Map
 import java.util.concurrent.TimeUnit; // Cần để chuyển đổi Date sang seconds/nanoseconds
+import java.util.UUID;
 
 public class PostJobActivity extends AppCompatActivity {
     private TextInputEditText editTextJobTitle, editTextCompanyName, editTextLocation, editTextSalary, editTextDescription;
     private Button buttonPostJob;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
+    private String editingJobId = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_job); // Tạo file layout này với các EditText tương ứng
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -36,7 +42,46 @@ public class PostJobActivity extends AppCompatActivity {
         editTextDescription = findViewById(R.id.editTextDescription);
         buttonPostJob = findViewById(R.id.buttonPostJob);
 
+        if (getIntent().hasExtra("EDIT_JOB_ID")) {
+            editingJobId = getIntent().getStringExtra("EDIT_JOB_ID");
+            setTitle("Sửa tin đăng");
+            buttonPostJob.setText("Lưu thay đổi");
+            loadJobDetails();
+        } else {
+            setTitle("Đăng tin mới");
+        }
+
         buttonPostJob.setOnClickListener(v -> postJob());
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    private void loadJobDetails() {
+        db.collection("jobs").document(editingJobId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        Job job = documentSnapshot.toObject(Job.class);
+                        if (job != null) {
+                            editTextJobTitle.setText(job.getTitle());
+                            editTextCompanyName.setText(job.getCompanyName());
+                            editTextLocation.setText(job.getLocationName());
+                            editTextSalary.setText(job.getSalaryDescription());
+                            editTextDescription.setText(job.getDescription());
+                        }
+                    } else {
+                        Toast.makeText(this, "Không tìm thấy tin đăng.", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Lỗi khi tải dữ liệu: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    finish();
+                });
     }
 
     private void postJob() {
@@ -53,11 +98,7 @@ public class PostJobActivity extends AppCompatActivity {
 
         String employerUid = mAuth.getCurrentUser().getUid();
 
-        // Tạo một ID ngẫu nhiên cho job document
-        String jobId = db.collection("jobs").document().getId();
-
         Job job = new Job();
-        job.setId(jobId);
         job.setTitle(title);
         job.setCompanyName(company);
         job.setLocationName(location);
@@ -80,6 +121,18 @@ public class PostJobActivity extends AppCompatActivity {
         job.setCreatedAt(createdAtMap); // Gán Map vào trường createdAt của Job
         // --- KẾT THÚC PHẦN THAY ĐỔI QUAN TRỌNG ---
 
+        if (editingJobId != null) {
+            // Chế độ Sửa: Cập nhật job hiện có
+            updateJobInFirestore(job);
+        } else {
+            // Chế độ Tạo mới: Thêm job mới
+            addJobToFirestore(job);
+        }
+    }
+
+    private void addJobToFirestore(Job job) {
+        String jobId = UUID.randomUUID().toString();
+        job.setId(jobId);
         db.collection("jobs").document(jobId).set(job)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(PostJobActivity.this, "Đăng tin thành công, chờ Admin duyệt.", Toast.LENGTH_LONG).show();
@@ -88,5 +141,16 @@ public class PostJobActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> {
                     Toast.makeText(PostJobActivity.this, "Đăng tin thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
+    }
+
+    private void updateJobInFirestore(Job job) {
+        job.setId(editingJobId);
+        db.collection("jobs").document(editingJobId)
+                .set(job) // set sẽ ghi đè, nếu chỉ muốn update vài trường thì dùng update
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(PostJobActivity.this, "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
+                    finish();
+                })
+                .addOnFailureListener(e -> Toast.makeText(PostJobActivity.this, "Cập nhật thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 }

@@ -1,64 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp">
+    android:background="#FFF"
+    android:padding="16dp"
+    android:layout_marginBottom="8dp"
+    android:elevation="2dp"
+    android:clipToPadding="false">
+
+    <TextView
+        android:id="@+id/tvCompanyName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Công ty A"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="#000000"/>
+
+    <TextView
+        android:id="@+id/tvJobTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chức danh công việc"
+        android:textSize="14sp"
+        android:textColor="#666666"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="12dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <TextView
-            android:id="@+id/textViewAdminJobTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tuyển chuyên viên Marketing"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:textColor="@color/textColorPrimary"/>
-
-        <TextView
-            android:id="@+id/textViewAdminCompanyName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Công ty A"
-            android:layout_marginTop="4dp"
-            android:textColor="@color/textColorSecondary"/>
-
-        <TextView
-            android:id="@+id/textViewAdminJobDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mô tả công việc ngắn gọn..."
-            android:layout_marginTop="8dp"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:textColor="@color/textColorSecondary"/>
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="16dp">
+            android:layout_marginBottom="8dp">
 
             <Button
-                android:id="@+id/buttonDelete"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:id="@+id/btnViewJob"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Xóa"
+                android:text="Xem"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#2196F3"
                 android:layout_marginEnd="8dp"/>
 
             <Button
-                android:id="@+id/buttonApprove"
+                android:id="@+id/btnEditJob"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Sửa"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#FF9800"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnApproveJob"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Duyệt"
-                android:layout_marginStart="8dp"/>
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#4CAF50"
+                android:layout_marginEnd="8dp"/>
+
+            <Button
+                android:id="@+id/btnDeleteJob"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Xóa"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#F44336"/>
         </LinearLayout>
     </LinearLayout>
-</com.google.android.material.card.MaterialCardView>
+</LinearLayout>

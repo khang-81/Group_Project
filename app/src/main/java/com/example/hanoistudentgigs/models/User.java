@@ -1,5 +1,7 @@
 package com.example.hanoistudentgigs.models;
 
+import com.google.firebase.firestore.PropertyName;
+
 public class User {
     private String uid;
     private String fullName;
@@ -8,7 +10,15 @@ public class User {
     private String cvUrl;
     private String companyName;
     private String school;
+    @PropertyName("SDT")
     private String phone;
+    private String major;
+    private String year;
+    private String experience;
+    private String skillsDescription;
+    private String schoolName;
+    private String address;
+    private String website;
 
     private boolean verified = false;
 
@@ -25,6 +35,13 @@ public class User {
         this.companyName = companyName;
         this.school = school;
         this.phone = phone;
+    }
+
+    // Constructor với 3 tham số (fullName, email, role) để tiện tạo user mẫu
+    public User(String fullName, String email, String role) {
+        this.fullName = fullName;
+        this.email = email;
+        this.role = role;
     }
 
     // Getter và Setter cho từng trường
@@ -84,14 +101,37 @@ public class User {
         this.school = school;
     }
 
+    @PropertyName("SDT")
     public String getPhone() {
         return phone;
     }
 
+    @PropertyName("SDT")
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
     public boolean isVerified() { return verified; }
     public void setVerified(boolean verified) { this.verified = verified; }
+
+    public String getMajor() { return major; }
+    public void setMajor(String major) { this.major = major; }
+
+    public String getYear() { return year; }
+    public void setYear(String year) { this.year = year; }
+
+    public String getExperience() { return experience; }
+    public void setExperience(String experience) { this.experience = experience; }
+
+    public String getSkillsDescription() { return skillsDescription; }
+    public void setSkillsDescription(String skillsDescription) { this.skillsDescription = skillsDescription; }
+
+    public String getSchoolName() { return schoolName; }
+    public void setSchoolName(String schoolName) { this.schoolName = schoolName; }
+
+    public String getAddress() { return address; }
+    public void setAddress(String address) { this.address = address; }
+
+    public String getWebsite() { return website; }
+    public void setWebsite(String website) { this.website = website; }
 }
