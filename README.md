@@ -1,8 +1,10 @@
 
 Hanoi Student Gigs 💼✨
+
 Hanoi Student Gigs là một ứng dụng di động được xây dựng trên nền tảng Android, đóng vai trò là cầu nối giữa sinh viên tại Hà Nội và các nhà tuyển dụng, giúp sinh viên dễ dàng tìm kiếm các công việc bán thời gian, thực tập, hoặc freelance phù hợp với lịch học và kỹ năng của mình.
 
 🎯 Mục tiêu Dự án
+
 Dành cho Sinh viên: Cung cấp một nền tảng tập trung, đáng tin cậy để tìm kiếm và ứng tuyển các công việc linh hoạt, giúp tích lũy kinh nghiệm và có thêm thu nhập.
 
 Dành cho Nhà tuyển dụng: Tạo ra một kênh hiệu quả để tiếp cận nguồn nhân lực trẻ, năng động và tài năng từ các trường đại học tại Hà Nội.
