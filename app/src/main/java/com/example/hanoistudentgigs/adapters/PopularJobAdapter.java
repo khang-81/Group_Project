@@ -113,7 +113,6 @@ public class PopularJobAdapter extends FirestoreRecyclerAdapter<Job, PopularJobA
             textViewCompanyName.setText(job.getCompanyName());
             textViewSalary.setText(job.getSalaryDescription());
             textViewLocation.setText(job.getLocationName());
-
             if (job.getCompanyLogoUrl() != null && !job.getCompanyLogoUrl().isEmpty()) {
                 Picasso.get().load(job.getCompanyLogoUrl())
                         .placeholder(R.drawable.ic_business_24) // Placeholder để dễ thấy lỗi tải ảnh

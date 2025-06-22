@@ -24,9 +24,7 @@
                 android:id="@+id/imageViewCompanyLogo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
                 android:src="@drawable/ic_business_24"
-
                 android:scaleType="centerCrop"/>
         </com.google.android.material.card.MaterialCardView>
 
@@ -106,6 +104,4 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </com.google.android.material.card.MaterialCardView>
-

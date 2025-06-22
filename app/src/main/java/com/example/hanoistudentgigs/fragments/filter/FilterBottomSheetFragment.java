@@ -21,7 +21,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-import android.util.Log;
 
 public class FilterBottomSheetFragment extends BottomSheetDialogFragment {
 
@@ -91,8 +90,8 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment {
     private void loadSpinnerData() {
         // Load Categories
         loadDataForSpinner(Constants.CATEGORIES_COLLECTION, spinnerCategory, "Tất cả ngành nghề");
-        // Load Locations (địa điểm)
-        loadDataForSpinner("rentals", spinnerLocation, "Tất cả địa điểm");
+        // Load Locations
+        loadDataForSpinner(Constants.LOCATIONS_COLLECTION, spinnerLocation, "Tất cả địa điểm");
         // Load Job Types
         ArrayAdapter<String> jobTypeAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, new String[]{"Tất cả loại hình", "PartTime", "Freelance", "Internship"});
         jobTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -100,19 +99,13 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment {
     }
 
     private void loadDataForSpinner(String collectionPath, Spinner spinner, String defaultText) {
-        db.collection(collectionPath).get().addOnCompleteListener(task -> {
+        db.collection(collectionPath).orderBy("name").get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 List<String> items = new ArrayList<>();
-                items.add(defaultText);
-                int count = 0;
+                items.add(defaultText); // Thêm lựa chọn mặc định
                 for (QueryDocumentSnapshot document : task.getResult()) {
-                    String displayName = document.contains("name") && document.getString("name") != null
-                        ? document.getString("name")
-                        : document.getId();
-                    items.add(displayName);
-                    count++;
+                    items.add(document.getString("name"));
                 }
-                Log.d("FirestoreDebug", "Số lượng rentals lấy được: " + count + ", collection: " + collectionPath);
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, items);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(adapter);
