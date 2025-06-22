@@ -87,8 +87,9 @@ public class AdminManageUsersFragment extends Fragment {
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
-                        // Toast.makeText(getContext(), "Danh sách người dùng được cập nhật.", Toast.LENGTH_SHORT).show();
-                        // The onResume will handle the refresh
+                        // Tải lại danh sách người dùng ngay khi có kết quả thành công
+                        Toast.makeText(getContext(), "Cập nhật danh sách...", Toast.LENGTH_SHORT).show();
+                        loadUsersFromFirestore();
                     }
                 });
     }
@@ -128,7 +129,10 @@ public class AdminManageUsersFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        loadUsersFromFirestore();
+        // Không cần load lại ở đây nữa vì đã xử lý ở activity result
+        if (allUsers.isEmpty()) {
+            loadUsersFromFirestore();
+        }
     }
 
     private void setupRecyclerView() {
@@ -177,19 +181,26 @@ public class AdminManageUsersFragment extends Fragment {
     }
 
     private void loadUsersFromFirestore() {
-        allUsers.clear();
+        // Xóa danh sách hiển thị và cập nhật giao diện ngay lập tức
         filteredUsers.clear();
+        if (userAdapter != null) {
+            userAdapter.notifyDataSetChanged();
+        }
+
         String role = isStudentTab ? "STUDENT" : "EMPLOYER";
         db.collection("users")
                 .whereEqualTo("role", role)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful() && task.getResult() != null) {
+                        // Xóa danh sách tổng ngay trước khi thêm dữ liệu mới để tránh trùng lặp
+                        allUsers.clear();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             User user = document.toObject(User.class);
                             user.setUid(document.getId());
                             allUsers.add(user);
                         }
+                        // Lọc và hiển thị danh sách người dùng mới
                         filterUsers(etSearchUser.getText().toString());
                     }
                 });

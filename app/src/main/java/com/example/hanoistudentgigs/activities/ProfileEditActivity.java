@@ -22,7 +22,8 @@ public class ProfileEditActivity extends AppCompatActivity {
 
     // Views cho Nhà tuyển dụng
     private LinearLayout employerFieldsLayout;
-    private TextInputEditText editTextEditCompanyName, editTextEditAddress, editTextEditPhone, editTextEditWebsite;
+    private TextInputEditText editTextEditCompanyName, editTextEditAddress, editTextEditPhone, editTextEditWebsite,
+                              editTextEditEmployerFullName, editTextEditEmployerEmail;
 
     private Button buttonSaveChanges;
     private FirebaseFirestore db;
@@ -64,6 +65,8 @@ public class ProfileEditActivity extends AppCompatActivity {
         editTextEditExperience = findViewById(R.id.editTextEditExperience);
 
         employerFieldsLayout = findViewById(R.id.employerFieldsLayout);
+        editTextEditEmployerFullName = findViewById(R.id.editTextEditEmployerFullName);
+        editTextEditEmployerEmail = findViewById(R.id.editTextEditEmployerEmail);
         editTextEditCompanyName = findViewById(R.id.editTextEditCompanyName);
         editTextEditAddress = findViewById(R.id.editTextEditAddress);
         editTextEditPhone = findViewById(R.id.editTextEditPhone);
@@ -103,6 +106,8 @@ public class ProfileEditActivity extends AppCompatActivity {
                     // Hiển thị form cho Nhà tuyển dụng và điền dữ liệu
                     studentFieldsLayout.setVisibility(View.GONE);
                     employerFieldsLayout.setVisibility(View.VISIBLE);
+                    editTextEditEmployerFullName.setText(document.getString("fullName"));
+                    editTextEditEmployerEmail.setText(document.getString("email"));
                     editTextEditCompanyName.setText(document.getString("companyName"));
                     editTextEditAddress.setText(document.getString("address"));
                     editTextEditPhone.setText(document.getString("phone"));
@@ -122,13 +127,14 @@ public class ProfileEditActivity extends AppCompatActivity {
             updates.put("schoolName", editTextEditSchool.getText().toString().trim());
             updates.put("major", editTextEditMajor.getText().toString().trim());
             updates.put("year", editTextEditYear.getText().toString().trim());
-            updates.put("phone", editTextEditStudentPhone.getText().toString().trim());
+            updates.put("SDT", editTextEditStudentPhone.getText().toString().trim());
             updates.put("skillsDescription", editTextEditSkills.getText().toString().trim());
             updates.put("experience", editTextEditExperience.getText().toString().trim());
         } else if (Constants.ROLE_EMPLOYER.equals(userRole)) {
+            updates.put("fullName", editTextEditEmployerFullName.getText().toString().trim());
             updates.put("companyName", editTextEditCompanyName.getText().toString().trim());
             updates.put("address", editTextEditAddress.getText().toString().trim());
-            updates.put("phone", editTextEditPhone.getText().toString().trim());
+            updates.put("SDT", editTextEditPhone.getText().toString().trim());
             updates.put("website", editTextEditWebsite.getText().toString().trim());
         }
 

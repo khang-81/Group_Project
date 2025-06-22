@@ -20,6 +20,9 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+
 public class AdminJobAdapter extends FirestoreRecyclerAdapter<Job, AdminJobAdapter.JobViewHolder> {
     private Context context;
     private OnJobActionListener listener;
@@ -43,15 +46,17 @@ public class AdminJobAdapter extends FirestoreRecyclerAdapter<Job, AdminJobAdapt
         holder.tvCompanyName.setText(job.getCompanyName());
         holder.tvJobTitle.setText(job.getTitle());
 
-        // Set trạng thái nút Duyệt
+        // Cập nhật trạng thái nút "Duyệt"
+        holder.btnApproveJob.setVisibility(View.VISIBLE); // Luôn hiển thị nút
         if (job.isApproved()) {
-            holder.btnApproveJob.setVisibility(View.GONE);
+            holder.btnApproveJob.setText("Đã duyệt");
+            holder.btnApproveJob.setEnabled(false);
+            holder.btnApproveJob.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#BDBDBD"))); // Màu xám
         } else {
-            holder.btnApproveJob.setVisibility(View.VISIBLE);
             holder.btnApproveJob.setText("Duyệt");
             holder.btnApproveJob.setEnabled(true);
+            holder.btnApproveJob.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#4CAF50"))); // Màu xanh lá cây
         }
-
 
         holder.btnApproveJob.setOnClickListener(v -> {
             if (listener != null) {
