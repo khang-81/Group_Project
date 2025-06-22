@@ -51,7 +51,6 @@ public class EmployerJobAdapter extends FirestoreRecyclerAdapter<Job, EmployerJo
 
     public static class EmployerJobViewHolder extends RecyclerView.ViewHolder {
         private TextView textViewJobTitle;
-        // Có thể thêm các TextView khác như số lượng ứng viên, ngày đăng...
 
         public EmployerJobViewHolder(@NonNull View itemView) {
             super(itemView);

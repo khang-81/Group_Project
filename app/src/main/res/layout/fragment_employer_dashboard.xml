@@ -15,7 +15,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Tiêu đề màn hình -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -39,13 +38,14 @@
                 android:id="@+id/recyclerViewActiveJobs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="8dp"
+                android:nestedScrollingEnabled="false"/>
 
             <!-- Phần việc làm đã đóng -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Việc làm đã đóng"
+                android:text="Việc làm đã tuyển"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/textColorPrimary"
@@ -55,7 +55,8 @@
                 android:id="@+id/recyclerViewClosedJobs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="8dp"
+                android:nestedScrollingEnabled="false"/>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
@@ -69,4 +70,5 @@
         android:contentDescription="Đăng tin mới"
         android:src="@drawable/ic_add_24"
         app:tint="@color/white"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
