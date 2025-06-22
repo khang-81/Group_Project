@@ -8,6 +8,7 @@
     import android.widget.LinearLayout;
     import android.widget.TextView;
     import android.widget.Toast;
+    import com.google.firebase.firestore.SetOptions;
 
     import androidx.activity.result.ActivityResultLauncher;
     import androidx.activity.result.contract.ActivityResultContracts;
@@ -115,37 +116,70 @@
             if (mAuth.getCurrentUser() == null) return;
             String uid = mAuth.getCurrentUser().getUid();
 
-            db.collection(Constants.USERS_COLLECTION).document(uid).get().addOnSuccessListener(document -> {
-                if (document.exists()) {
-                    userRole = document.getString("role");
+            // BƯỚC 1: Đọc VAI TRÒ từ collection "users"
+            db.collection(Constants.USERS_COLLECTION).document(uid).get().addOnSuccessListener(userDoc -> {
+                if (userDoc.exists()) {
+                    userRole = userDoc.getString("role"); // Lấy vai trò TỪ USERS_COLLECTION
+
+                    // Xử lý cho Sinh viên
                     if (Constants.ROLE_STUDENT.equals(userRole)) {
                         studentFieldsLayout.setVisibility(View.VISIBLE);
                         employerFieldsLayout.setVisibility(View.GONE);
-                        editTextEditStudentFullName.setText(document.getString("fullName"));
-                        editTextEditSchool.setText(document.getString("schoolName"));
-                        editTextEditMajor.setText(document.getString("major"));
-                        editTextEditSkills.setText(document.getString("skillsDescription"));
-                        editTextEditExperience.setText(document.getString("experience"));
 
-                        // THÊM LẠI LOGIC NÀY để đọc tên file CV từ Firestore
-                        currentCvFileName = document.getString("cvFileName"); // Đọc tên file CV từ Firestore
-                        if (currentCvFileName != null && !currentCvFileName.isEmpty()) {
-                            textViewCvFileName.setText("CV hiện tại: " + currentCvFileName);
-                        } else {
-                            textViewCvFileName.setText("Chưa có tệp CV nào được chọn.");
-                        }
-                    } else if (Constants.ROLE_EMPLOYER.equals(userRole)) {
-                        employerFieldsLayout.setVisibility(View.GONE); // Sửa lỗi ẩn đi mất của bạn ở đoạn này.
-                        employerFieldsLayout.setVisibility(View.VISIBLE); // Sửa lỗi hiển thị
-                        editTextEditCompanyName.setText(document.getString("companyName"));
-                        editTextEditAddress.setText(document.getString("address"));
-                        editTextEditPhone.setText(document.getString("phone"));
-                        editTextEditWebsite.setText(document.getString("website"));
+                        // BƯỚC 2: Nếu là sinh viên, ĐỌC PROFILE CHI TIẾT TỪ STUDENTS_COLLECTION
+                        // Đây là một TRUY VẤN FIRESTORE MỚI
+                        db.collection(Constants.STUDENTS_COLLECTION).document(uid).get().addOnSuccessListener(studentProfileDoc -> {
+                            if (studentProfileDoc.exists()) {
+                                editTextEditStudentFullName.setText(studentProfileDoc.getString("fullName"));
+                                editTextEditSchool.setText(studentProfileDoc.getString("schoolName"));
+                                editTextEditMajor.setText(studentProfileDoc.getString("major"));
+                                editTextEditSkills.setText(studentProfileDoc.getString("skillsDescription"));
+                                editTextEditExperience.setText(studentProfileDoc.getString("experience"));
+                                currentCvFileName = studentProfileDoc.getString("cvFileName");
+                                if (currentCvFileName != null && !currentCvFileName.isEmpty()) {
+                                    textViewCvFileName.setText("CV hiện tại: " + currentCvFileName);
+                                } else {
+                                    textViewCvFileName.setText("Chưa có tệp CV nào được chọn.");
+                                }
+                            } else {
+                                Toast.makeText(this, "Chưa có hồ sơ sinh viên, vui lòng điền thông tin.", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(e -> {
+                            Toast.makeText(this, "Lỗi tải hồ sơ sinh viên: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Log.e("ProfileEditActivity", "Error loading student profile", e);
+                        });
+
                     }
+                    // Xử lý cho Nhà tuyển dụng
+                    else if (Constants.ROLE_EMPLOYER.equals(userRole)) {
+                        employerFieldsLayout.setVisibility(View.VISIBLE); // Hiển thị layout nhà tuyển dụng
+                        studentFieldsLayout.setVisibility(View.GONE); // Ẩn layout sinh viên
+
+                        // Tải dữ liệu cho nhà tuyển dụng từ Constants.EMPLOYERS_COLLECTION
+                        db.collection(Constants.EMPLOYERS_COLLECTION).document(uid).get().addOnSuccessListener(employerProfileDoc -> {
+                            if (employerProfileDoc.exists()) {
+                                editTextEditCompanyName.setText(employerProfileDoc.getString("companyName"));
+                                editTextEditAddress.setText(employerProfileDoc.getString("address"));
+                                editTextEditPhone.setText(employerProfileDoc.getString("phone"));
+                                editTextEditWebsite.setText(employerProfileDoc.getString("website"));
+                            } else {
+                                Toast.makeText(this, "Chưa có hồ sơ nhà tuyển dụng, vui lòng điền thông tin.", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(e -> {
+                            Toast.makeText(this, "Lỗi tải hồ sơ nhà tuyển dụng: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Log.e("ProfileEditActivity", "Error loading employer profile", e);
+                        });
+                    } else {
+                        Toast.makeText(this, "Không tìm thấy vai trò người dùng hợp lệ.", Toast.LENGTH_SHORT).show();
+                        Log.e("ProfileEditActivity", "Invalid user role: " + userRole);
+                    }
+                } else {
+                    Toast.makeText(this, "Không tìm thấy thông tin người dùng cơ bản (UID: " + uid + ").", Toast.LENGTH_SHORT).show();
+                    Log.e("ProfileEditActivity", "User basic info not found for UID: " + uid);
                 }
             }).addOnFailureListener(e -> {
-                Toast.makeText(this, "Lỗi tải hồ sơ: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("ProfileEditActivity", "Error loading profile", e);
+                Toast.makeText(this, "Lỗi tải thông tin người dùng cơ bản: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("ProfileEditActivity", "Error loading basic user info", e);
             });
         }
 
@@ -168,37 +202,45 @@
             Map<String, Object> updates = new HashMap<>();
 
             if (Constants.ROLE_STUDENT.equals(userRole)) {
+                // Đổ dữ liệu từ EditText vào Map
                 updates.put("fullName", editTextEditStudentFullName.getText().toString().trim());
                 updates.put("schoolName", editTextEditSchool.getText().toString().trim());
                 updates.put("major", editTextEditMajor.getText().toString().trim());
                 updates.put("skillsDescription", editTextEditSkills.getText().toString().trim());
                 updates.put("experience", editTextEditExperience.getText().toString().trim());
+                updates.put("cvFileName", currentCvFileName);
 
-                // THÊM DÒNG NÀY ĐỂ LƯU TÊN FILE CV VÀO FIRESTORE
-                updates.put("cvFileName", currentCvFileName); // <--- THÊM DÒNG NÀY
-
+                // LƯU VÀO STUDENTS_COLLECTION
+                db.collection(Constants.STUDENTS_COLLECTION).document(uid).set(updates, SetOptions.merge()) // Đã có import SetOptions
+                        .addOnSuccessListener(aVoid -> {
+                            Toast.makeText(this, "Cập nhật hồ sơ thành công!", Toast.LENGTH_SHORT).show();
+                            finish();
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(this, "Cập nhật thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Log.e("ProfileEditActivity", "Error updating Firestore student profile", e); // Log rõ hơn
+                        });
             } else if (Constants.ROLE_EMPLOYER.equals(userRole)) {
+                // Đổ dữ liệu từ EditText vào Map
                 updates.put("companyName", editTextEditCompanyName.getText().toString().trim());
                 updates.put("address", editTextEditAddress.getText().toString().trim());
                 updates.put("phone", editTextEditPhone.getText().toString().trim());
                 updates.put("website", editTextEditWebsite.getText().toString().trim());
+
+                // LƯU VÀO EMPLOYERS_COLLECTION
+                db.collection(Constants.EMPLOYERS_COLLECTION).document(uid).set(updates, SetOptions.merge()) // Đã có import SetOptions
+                        .addOnSuccessListener(aVoid -> {
+                            Toast.makeText(this, "Cập nhật hồ sơ nhà tuyển dụng thành công!", Toast.LENGTH_SHORT).show();
+                            finish();
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(this, "Cập nhật hồ sơ nhà tuyển dụng thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Log.e("ProfileEditActivity", "Error updating Firestore employer profile", e); // Log rõ hơn
+                        });
+            } else {
+                Toast.makeText(this, "Không xác định được vai trò để cập nhật.", Toast.LENGTH_SHORT).show();
             }
-
-            db.collection(Constants.USERS_COLLECTION).document(uid).update(updates)
-                    .addOnSuccessListener(aVoid -> {
-                        Toast.makeText(this, "Cập nhật hồ sơ thành công!", Toast.LENGTH_SHORT).show();
-                        finish();
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(this, "Cập nhật thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        Log.e("ProfileEditActivity", "Error updating Firestore profile", e);
-                    });
         }
-
-        /**
-         * Phương thức trợ giúp để đặt lại trạng thái lựa chọn CV và cập nhật UI.
-         */
-
 
         private String getFileName(Uri uri) {
             String result = null;

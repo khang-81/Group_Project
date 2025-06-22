@@ -106,14 +106,7 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/textColorPrimary"/>
-            <TextView
-                android:id="@+id/textViewSeeAllFeatured"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Xem tất cả"
-                android:textColor="@color/primaryColor"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"/>
+
         </RelativeLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewFeaturedJobs"
@@ -140,14 +133,7 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/textColorPrimary"/>
-            <TextView
-                android:id="@+id/textViewSeeAllPopular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Xem tất cả"
-                android:textColor="@color/primaryColor"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"/>
+
         </RelativeLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewPopularJobs"

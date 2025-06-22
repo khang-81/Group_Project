@@ -8,9 +8,9 @@ public class Application {
     private String jobId;
     private String studentUid;
     private String studentName;
-    private String cvUrl;
+//    private String cvUrl;
     private String status;
-
+    private String cvFileName;
     @ServerTimestamp
     private Date appliedDate;
 
@@ -23,9 +23,10 @@ public class Application {
         this.jobId = jobId;
         this.studentUid = studentUid;
         this.studentName = studentName;
-        this.cvUrl = cvUrl;
+//        this.cvUrl = cvUrl;
         this.status = status;
         this.appliedDate = appliedDate;
+        this.cvFileName = cvFileName;
     }
 
     // Getter và Setter cho từng trường
@@ -61,12 +62,19 @@ public class Application {
         this.studentName = studentName;
     }
 
-    public String getCvUrl() {
-        return cvUrl;
-    }
+//    public String getCvUrl() {
+//        return cvUrl;
+//    }
+//
+//    public void setCvUrl(String cvUrl) {
+//        this.cvUrl = cvUrl;
+//    }
+    public String getCvFileName() {
+            return cvFileName;
+        }
 
-    public void setCvUrl(String cvUrl) {
-        this.cvUrl = cvUrl;
+    public void setCvFileName(String cvFileName) {
+        this.cvFileName = cvFileName;
     }
 
     public String getStatus() {

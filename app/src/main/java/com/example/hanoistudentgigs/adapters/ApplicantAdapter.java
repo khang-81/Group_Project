@@ -28,9 +28,8 @@ public class ApplicantAdapter extends FirestoreRecyclerAdapter<Application, Appl
     protected void onBindViewHolder(@NonNull ApplicantViewHolder holder, int position, @NonNull Application model) {
         holder.bind(model);
         holder.buttonViewCv.setOnClickListener(v -> {
-            if (model.getCvUrl() != null && !model.getCvUrl().isEmpty()) {
-                try {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(model.getCvUrl()));
+            if (model.getCvFileName() != null && !model.getCvFileName().isEmpty()) {                try {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(model.getCvFileName()));
                     context.startActivity(browserIntent);
                 } catch (Exception e) {
                     Toast.makeText(context, "Không thể mở link CV.", Toast.LENGTH_SHORT).show();
