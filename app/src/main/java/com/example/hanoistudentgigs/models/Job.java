@@ -135,14 +135,6 @@ public class Job {
         this.requiredSkills = requiredSkills;
     }
 
-    public boolean getIsApproved() {
-        return isApproved;
-    }
-
-    public void setIsApproved(boolean isApproved) {
-        this.isApproved = isApproved;
-    }
-
     public String getStatus() {
         return status;
     }

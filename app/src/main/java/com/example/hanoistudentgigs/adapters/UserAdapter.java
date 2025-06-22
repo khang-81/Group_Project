@@ -14,6 +14,9 @@ import com.example.hanoistudentgigs.models.User;
 
 import java.util.List;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
     private List<User> userList;
     private OnUserActionListener listener;
@@ -42,9 +45,22 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         User user = userList.get(position);
         String displayName = user.getRole().equalsIgnoreCase("student") ? user.getFullName() : user.getCompanyName();
         holder.tvName.setText(displayName + " (" + user.getEmail() + ")");
-        // Ẩn/hiện nút xác thực tuỳ role, không xử lý callback
+
+        // Chỉ hiển thị nút duyệt cho nhà tuyển dụng
         if (user.getRole().equalsIgnoreCase("employer")) {
             holder.btnVerify.setVisibility(View.VISIBLE);
+
+            // Cập nhật trạng thái nút "Duyệt"
+            if (user.isVerified()) {
+                holder.btnVerify.setText("Đã duyệt");
+                holder.btnVerify.setEnabled(false);
+                holder.btnVerify.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#BDBDBD"))); // Màu xám
+            } else {
+                holder.btnVerify.setText("Duyệt");
+                holder.btnVerify.setEnabled(true);
+                holder.btnVerify.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#4CAF50"))); // Màu xanh lá
+            }
+
         } else {
             holder.btnVerify.setVisibility(View.GONE);
         }
