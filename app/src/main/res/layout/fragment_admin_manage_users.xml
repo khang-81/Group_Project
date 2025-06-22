@@ -28,13 +28,13 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Student"/>
+            android:text="Sinh Viên"/>
         <Button
             android:id="@+id/btnEmployerTab"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Employer"
+            android:text="Nhà Tuyển Dụng"
             android:layout_marginStart="8dp"/>
     </LinearLayout>
 

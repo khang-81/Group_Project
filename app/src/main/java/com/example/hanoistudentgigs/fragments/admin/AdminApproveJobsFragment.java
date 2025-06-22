@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hanoistudentgigs.R;
 import com.example.hanoistudentgigs.activities.JobDetailActivity;
+import com.example.hanoistudentgigs.activities.PostJobActivity;
 import com.example.hanoistudentgigs.adapters.AdminJobAdapter;
 import com.example.hanoistudentgigs.models.Job;
 import com.example.hanoistudentgigs.utils.Constants;
@@ -31,6 +32,16 @@ public class AdminApproveJobsFragment extends Fragment {
     private EditText etSearchJob;
     private AdminJobAdapter jobAdapter;
     private FirebaseFirestore db;
+    private String currentSearchText = "";
+    private static final String SEARCH_QUERY_KEY = "SEARCH_QUERY";
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            currentSearchText = savedInstanceState.getString(SEARCH_QUERY_KEY, "");
+        }
+    }
 
     @Nullable
     @Override
@@ -40,7 +51,8 @@ public class AdminApproveJobsFragment extends Fragment {
         etSearchJob = view.findViewById(R.id.etSearchJob);
         db = FirebaseFirestore.getInstance();
 
-        setupRecyclerView(""); // Initial load
+        rvJobList.setLayoutManager(new LinearLayoutManager(getContext()));
+        etSearchJob.setText(currentSearchText);
 
         etSearchJob.addTextChangedListener(new TextWatcher() {
             @Override
@@ -48,7 +60,8 @@ public class AdminApproveJobsFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                setupRecyclerView(s.toString());
+                currentSearchText = s.toString();
+                setupRecyclerView(currentSearchText);
             }
 
             @Override
@@ -56,6 +69,18 @@ public class AdminApproveJobsFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(SEARCH_QUERY_KEY, currentSearchText);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setupRecyclerView(etSearchJob.getText().toString());
     }
 
     private void setupRecyclerView(String searchText) {
@@ -88,13 +113,19 @@ public class AdminApproveJobsFragment extends Fragment {
             }
 
             @Override
+            public void onEdit(Job job) {
+                Intent intent = new Intent(getContext(), PostJobActivity.class);
+                intent.putExtra("EDIT_JOB_ID", job.getId());
+                startActivity(intent);
+            }
+
+            @Override
             public void onDelete(Job job) {
                 showDeleteDialog(job);
             }
         };
 
         jobAdapter = new AdminJobAdapter(options, getContext(), listener);
-        rvJobList.setLayoutManager(new LinearLayoutManager(getContext()));
         rvJobList.setAdapter(jobAdapter);
         jobAdapter.startListening();
     }

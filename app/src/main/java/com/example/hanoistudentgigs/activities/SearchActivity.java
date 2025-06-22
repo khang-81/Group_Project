@@ -1,41 +1,43 @@
 package com.example.hanoistudentgigs.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log; // Import Log
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.hanoistudentgigs.R;
-import com.example.hanoistudentgigs.adapters.PopularJobAdapter;
+import com.example.hanoistudentgigs.adapters.PopularJobAdapter; // Chỉ cần PopularJobAdapter trong SearchActivity
 import com.example.hanoistudentgigs.models.Filter;
 import com.example.hanoistudentgigs.models.Job;
 import com.example.hanoistudentgigs.utils.Constants;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import android.view.MotionEvent;
-import android.os.Handler;
-import android.os.Looper;
-import android.view.View;
-import android.widget.TextView;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager; // Cần thêm
-import android.content.Context; // Cần thêm
-import android.view.KeyEvent; // Cần thêm
+
 public class SearchActivity extends AppCompatActivity {
 
     private EditText editTextSearchQuery;
     private ImageButton buttonFilter;
     private RecyclerView recyclerViewSearchResults;
-    private PopularJobAdapter adapter;
+    private PopularJobAdapter adapter; // Chỉ cần một adapter cho RecyclerView này
     private FirebaseFirestore db;
     private Filter currentFilter = new Filter();
     private String currentSearchText = "";
@@ -50,10 +52,10 @@ public class SearchActivity extends AppCompatActivity {
             result -> {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Filter receivedFilter = (Filter) result.getData().getSerializableExtra("applied_filter");
+                    Log.d("SearchActivity", "Filter received: " + (receivedFilter != null ? receivedFilter.toString() : "null"));
                     if (receivedFilter != null) {
                         this.currentFilter = receivedFilter;
-                        // Đảm bảo rằng việc gọi performSearch() diễn ra trên luồng chính
-                        handler.post(() -> performSearch());
+                        handler.post(() -> performSearch()); // Đảm bảo gọi trên luồng chính
                     }
                 }
             });
@@ -69,47 +71,37 @@ public class SearchActivity extends AppCompatActivity {
         recyclerViewSearchResults = findViewById(R.id.recyclerViewSearchResults);
         textViewNoResults = findViewById(R.id.textViewNoResults);
 
+        // THÊM DÒNG NÀY: Vô hiệu hóa ItemAnimator để tránh lỗi đồng bộ hóa
+        recyclerViewSearchResults.setItemAnimator(null);
+
+        // Thiết lập lắng nghe sự kiện nhấn Enter trên bàn phím cho ô tìm kiếm
         editTextSearchQuery.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH ||
                     actionId == EditorInfo.IME_ACTION_DONE ||
                     (event != null && event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-                // Đảm bảo dừng mọi tìm kiếm đang chờ xử lý từ TextWatcher
                 if (searchRunnable != null) {
-                    handler.removeCallbacks(searchRunnable);
+                    handler.removeCallbacks(searchRunnable); // Hủy tìm kiếm đang chờ
                 }
                 currentSearchText = editTextSearchQuery.getText().toString().trim().toLowerCase();
-                performSearch();
+                performSearch(); // Thực hiện tìm kiếm ngay lập tức
                 // Ẩn bàn phím sau khi tìm kiếm
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (imm != null) {
                     imm.hideSoftInputFromWindow(editTextSearchQuery.getWindowToken(), 0);
                 }
-                return true; // Xử lý sự kiện
+                return true; // Đã xử lý sự kiện
             }
             return false; // Không xử lý sự kiện
         });
-        // Khởi tạo Adapter với một query ban đầu.
-        // Đây là Query mặc định khi không có tìm kiếm/lọc nào được áp dụng.
-        Query initialQuery = db.collection(Constants.JOBS_COLLECTION)
-                .whereEqualTo("isApproved", true)
-                .orderBy("createdAt", Query.Direction.DESCENDING);
 
-        FirestoreRecyclerOptions<Job> initialOptions = new FirestoreRecyclerOptions.Builder<Job>()
-                .setQuery(initialQuery, Job.class)
-                .build();
-
-        adapter = new PopularJobAdapter(initialOptions, this);
-        recyclerViewSearchResults.setLayoutManager(new LinearLayoutManager(this));
-        recyclerViewSearchResults.setAdapter(adapter);
-
-        // Gọi performSearch() lần đầu để áp dụng các bộ lọc/tìm kiếm ban đầu
-        // (nếu có, ví dụ từ một Intent) hoặc để hiển thị tất cả các công việc đã duyệt.
+        // Gọi performSearch() lần đầu để thiết lập adapter và tải dữ liệu ban đầu
         performSearch();
 
+        // Thiết lập lắng nghe sự kiện click cho nút Filter
         buttonFilter.setOnClickListener(v -> {
             Intent intent = new Intent(SearchActivity.this, FilterActivity.class);
-            intent.putExtra("current_filter", currentFilter);
-            filterLauncher.launch(intent);
+            intent.putExtra("current_filter", currentFilter); // Truyền bộ lọc hiện tại
+            filterLauncher.launch(intent); // Khởi chạy FilterActivity và chờ kết quả
         });
 
         // Xử lý sự kiện chạm vào biểu tượng tìm kiếm trong EditText
@@ -123,9 +115,8 @@ public class SearchActivity extends AppCompatActivity {
                                 editTextSearchQuery.getCompoundDrawablePadding())) {
                     Log.d("SearchActivity", "Search icon clicked!");
                     currentSearchText = editTextSearchQuery.getText().toString().trim().toLowerCase();
-                    // Loại bỏ bất kỳ runnable tìm kiếm đang chờ xử lý nào
                     if (searchRunnable != null) {
-                        handler.removeCallbacks(searchRunnable);
+                        handler.removeCallbacks(searchRunnable); // Hủy tìm kiếm đang chờ
                     }
                     performSearch(); // Thực hiện tìm kiếm ngay lập tức khi click icon
                     return true; // Xử lý sự kiện chạm
@@ -134,7 +125,7 @@ public class SearchActivity extends AppCompatActivity {
             return false; // Không xử lý sự kiện chạm nếu không phải click icon
         });
 
-
+        // Lắng nghe sự thay đổi văn bản trong ô tìm kiếm để thực hiện tìm kiếm tự động
         editTextSearchQuery.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -146,7 +137,7 @@ public class SearchActivity extends AppCompatActivity {
                     handler.removeCallbacks(searchRunnable);
                 }
                 searchRunnable = () -> performSearch();
-                // Đặt một độ trễ để tránh tìm kiếm quá thường xuyên
+                // Đặt một độ trễ để tránh tìm kiếm quá thường xuyên (ví dụ: gõ từng ký tự)
                 handler.postDelayed(searchRunnable, 300); // 300ms delay
             }
             @Override
@@ -157,6 +148,7 @@ public class SearchActivity extends AppCompatActivity {
     private void performSearch() {
         Log.d("SearchActivity", "Starting performSearch() for keyword: '" + currentSearchText + "' and filter: " + currentFilter.toString());
 
+        // Xây dựng truy vấn Firestore dựa trên từ khóa tìm kiếm và bộ lọc
         Query query = db.collection(Constants.JOBS_COLLECTION).whereEqualTo("isApproved", true);
 
         if (currentFilter.getCategory() != null && !currentFilter.getCategory().isEmpty()) {
@@ -173,85 +165,45 @@ public class SearchActivity extends AppCompatActivity {
         }
 
         if (!currentSearchText.isEmpty()) {
-            // Chuẩn hóa chuỗi tìm kiếm để tìm kiếm không dấu nếu cần (đã nhập Normalizer)
-            // String normalizedSearchText = normalizeString(currentSearchText);
-            Log.d("SearchActivity", "Applying search keyword (normalized): " + currentSearchText);
-            // Lưu ý: whereArrayContains("searchKeywords", currentSearchText) yêu cầu
-            // trường "searchKeywords" trong Firestore phải là một mảng chứa các từ khóa đã chuẩn hóa.
-            // Nếu bạn muốn tìm kiếm text toàn văn trên các trường khác (ví dụ: title, companyName),
-            // bạn sẽ cần một giải pháp tìm kiếm toàn văn phức tạp hơn (ví dụ: Algolia, ElasticSearch)
-            // hoặc phải lưu trữ các từ khóa theo từng trường cụ thể.
-            // Với whereArrayContains, "uniqlo" phải là một phần tử trong mảng searchKeywords.
+            Log.d("SearchActivity", "Applying search keyword: " + currentSearchText);
+            // Sử dụng whereArrayContains cho các từ khóa tìm kiếm. Đảm bảo trường 'searchKeywords' là một mảng trong Firestore.
             query = query.whereArrayContains("searchKeywords", currentSearchText);
         }
 
-        query = query.orderBy("createdAt", Query.Direction.DESCENDING);
+        // Luôn sắp xếp theo thời gian tạo để có kết quả nhất quán
+        query = query.orderBy("createdAt._seconds", Query.Direction.DESCENDING);
 
+        // Xây dựng FirestoreRecyclerOptions mới với truy vấn đã cập nhật
         FirestoreRecyclerOptions<Job> newOptions = new FirestoreRecyclerOptions.Builder<Job>()
                 .setQuery(query, Job.class)
-                .setLifecycleOwner(this)
+                .setLifecycleOwner(this) // Đặt lifecycle owner là Activity này
                 .build();
 
         Log.d("SearchActivity", "Query being applied to adapter: " + query.toString());
         Log.d("SearchActivity", "Firestore query constructed.");
 
-        // Dừng adapter lắng nghe query cũ trước khi cập nhật options.
-        // Mặc dù updateOptions() tự làm điều này, nhưng việc gọi rõ ràng có thể hữu ích
-        // trong một số trường hợp để đảm bảo trạng thái sạch.
+        // Dừng adapter cũ nếu nó đang lắng nghe trước khi thay thế
         if (adapter != null) {
             adapter.stopListening();
-            Log.d("SearchActivity", "Adapter stopped listening before updating options.");
+            Log.d("SearchActivity", "Old adapter stopped listening.");
         }
 
-        // Cập nhật options cho adapter
-        adapter.updateOptions(newOptions);
-        adapter.notifyDataSetChanged();
+        // TẠO MỚI HOÀN TOÀN ADAPTER VÀ GÁN LẠI CHO RECYCLERVIEW
+        adapter = new PopularJobAdapter(newOptions, this, recyclerViewSearchResults, textViewNoResults);
+        recyclerViewSearchResults.setLayoutManager(new LinearLayoutManager(this)); // Đặt lại LayoutManager
+        recyclerViewSearchResults.setAdapter(adapter); // Gán adapter mới
+
+        // Bắt đầu lắng nghe dữ liệu ngay lập tức với adapter mới
         adapter.startListening();
-        Log.d("SearchActivity", "Adapter updated options.");
+        Log.d("SearchActivity", "New adapter created, set, and started listening.");
 
-        // Sau khi updateOptions, adapter sẽ tự động startListening() lại.
-        // Tuy nhiên, nếu bạn muốn đảm bảo, bạn có thể gọi adapter.startListening() ở đây,
-        // nhưng hãy cẩn thận để không gọi nó hai lần.
-        // Thông thường, FirestoreRecyclerAdapter sẽ tự động lắng nghe sau khi updateOptions.
-
-        // Listener để kiểm tra kết quả truy vấn và hiển thị thông báo "No Results"
-        query.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                int resultCount = task.getResult().size();
-                Log.d("SearchActivity", "Query success for text: '" + currentSearchText + "', count: " + resultCount);
-
-                // Cập nhật trạng thái hiển thị của RecyclerView và TextViewNoResults
-                if (resultCount == 0) {
-                    Log.d("SearchActivity", "No documents found for '" + currentSearchText + "'. Displaying no results message.");
-                    recyclerViewSearchResults.setVisibility(View.GONE);
-                    textViewNoResults.setVisibility(View.VISIBLE);
-                    textViewNoResults.setText("Không tìm thấy kết quả phù hợp."); // Đặt tin nhắn rõ ràng
-                } else {
-                    Log.d("SearchActivity", "Documents found for '" + currentSearchText + "'. Displaying results.");
-                    recyclerViewSearchResults.setVisibility(View.VISIBLE);
-                    textViewNoResults.setVisibility(View.GONE);
-                    // In ra các ID công việc tìm thấy để debug
-                    task.getResult().getDocuments().forEach(doc -> Log.d("SearchActivity", "Found Job ID: " + doc.getId()));
-                }
-            } else {
-                Log.e("SearchActivity", "Error getting documents for text: '" + currentSearchText + "'", task.getException());
-                recyclerViewSearchResults.setVisibility(View.GONE);
-                textViewNoResults.setVisibility(View.VISIBLE);
-                textViewNoResults.setText("Đã xảy ra lỗi khi tìm kiếm: " + task.getException().getMessage());
-            }
-        });
+        // Không cần query.get().addOnCompleteListener, vì FirestoreRecyclerAdapter xử lý cập nhật thời gian thực.
     }
-
-    // Phương thức normalizeString (nếu bạn muốn tìm kiếm không dấu)
-    // private String normalizeString(String input) {
-    //     String nfdNormalizedString = Normalizer.normalize(input, Normalizer.Form.NFD);
-    //     Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
-    //     return pattern.matcher(nfdNormalizedString).replaceAll("").toLowerCase();
-    // }
 
     @Override
     protected void onStart() {
         super.onStart();
+        // Bắt đầu lắng nghe khi Activity được hiển thị (trở lại foreground)
         if (adapter != null) {
             adapter.startListening();
             Log.d("SearchActivity", "Adapter started listening from onStart.");
@@ -261,9 +213,13 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        // Dừng lắng nghe khi Activity không còn hiển thị (đi vào background)
         if (adapter != null) {
             adapter.stopListening();
             Log.d("SearchActivity", "Adapter stopped listening from onStop.");
         }
     }
+
+    // Bạn có thể thêm phương thức onResume/onPause nếu cần các hành vi cụ thể khác
+    // nhưng với FirestoreRecyclerAdapter, onStart/onStop là đủ để quản lý lắng nghe.
 }

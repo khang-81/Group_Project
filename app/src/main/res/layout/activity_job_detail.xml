@@ -18,6 +18,16 @@
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/default_company_logo_placeholder"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/textViewDetailCompanyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            tools:text="Company Name"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:layout_marginBottom="16dp"/>
 
         <TextView
@@ -26,17 +36,68 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             tools:text="Job Title"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textSize="22sp"
+            android:layout_marginBottom="24dp"/>
 
         <TextView
-            android:id="@+id/textViewDetailCompanyName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            tools:text="Company Name"
+            android:text="Mức lương"
             android:textSize="18sp"
-            android:layout_marginBottom="24dp"/>
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+        <TextView
+            android:id="@+id/textViewDetailSalary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="25.000 - 28.000 VNĐ/giờ"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Địa điểm"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+        <TextView
+            android:id="@+id/textViewDetailLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Cầu Giấy"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Loại hình công việc"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+        <TextView
+            android:id="@+id/textViewDetailJobType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Part-time"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ngành nghề"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+        <TextView
+            android:id="@+id/textViewDetailCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Phục vụ / Pha chế"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp"/>
 
         <TextView
             android:layout_width="wrap_content"
