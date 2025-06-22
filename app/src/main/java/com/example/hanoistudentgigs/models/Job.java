@@ -22,14 +22,14 @@ public class Job {
     private String jobType; // PartTime, Freelance, Internship
     private String categoryName;
     private List<String> requiredSkills; // Các kỹ năng yêu cầu cho công việc
-    private boolean isApproved = false;
-    private boolean isFeatured;
+    private boolean approved  = false;
+    private boolean featured;
     private String status;
 
     private List<String> searchKeywords; // Bổ sung: Mảng chứa các từ khóa để tìm kiếm
     private long minSalary; // Bổ sung: Số lương tối thiểu để lọc và sắp xếp
 
-
+    private String postedDate;
 
 
     // Constructor rỗng
@@ -37,12 +37,10 @@ public class Job {
 
     // --- Getters và Setters ---
     // Getter và Setter cho isFeatured
-    public boolean getIsFeatured() { // Hoặc isFeatured() theo quy ước Boolean
-        return isFeatured;
-    }
+    public boolean isFeatured() { return featured; }
 
-    public void setIsFeatured(boolean featured) {
-        isFeatured = featured;
+    public void setFeatured(boolean featured) {
+        this.featured = featured;
     }
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
@@ -80,8 +78,7 @@ public class Job {
     public List<String> getRequiredSkills() { return requiredSkills; }
     public void setRequiredSkills(List<String> requiredSkills) { this.requiredSkills = requiredSkills; }
 
-    public boolean getIsApproved() { return isApproved; }
-    public void setApproved(boolean approved) { isApproved = approved; }
+    public boolean isApproved() { return approved; }    public void setApproved(boolean approved) { this.approved = approved; }
 
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
@@ -96,13 +93,16 @@ public class Job {
     public long getMinSalary() { return minSalary; }
     public void setMinSalary(long minSalary) { this.minSalary = minSalary; }
 
+    public String getPostedDate() { return postedDate; } // <-- ĐÃ THÊM GETTER
+    public void setPostedDate(String postedDate) { this.postedDate = postedDate; } // <-- ĐÃ THÊM SETTER
     // --- Override equals() và hashCode() ---
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Job job = (Job) o;
-        return isApproved == job.isApproved &&
+        return  approved == job.approved &&
+                featured == job.featured &&
                 minSalary == job.minSalary &&
                 Objects.equals(id, job.id) &&
                 Objects.equals(title, job.title) &&
@@ -118,12 +118,12 @@ public class Job {
                 Objects.equals(requiredSkills, job.requiredSkills) &&
                 Objects.equals(status, job.status) &&
                 Objects.equals(searchKeywords, job.searchKeywords) &&
-                Objects.equals(createdAt, job.createdAt);
-    }
+                Objects.equals(createdAt, job.createdAt)  &&
+                Objects.equals(postedDate, job.postedDate);    }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, companyName, companyLogoUrl, locationName, salaryDescription, description, requirements, employerUid, jobType, categoryName, requiredSkills, isApproved, status, searchKeywords, minSalary, createdAt);
+        return Objects.hash(id, title, companyName, companyLogoUrl, locationName, salaryDescription, description, requirements, employerUid, jobType, categoryName, requiredSkills, approved, status, searchKeywords, minSalary, createdAt);
     }
 
     // --- Override toString() ---
@@ -142,11 +142,13 @@ public class Job {
                 ", jobType='" + jobType + '\'' +
                 ", categoryName='" + categoryName + '\'' +
                 ", requiredSkills=" + requiredSkills +
-                ", isApproved=" + isApproved +
+                ", approved=" + approved +
+                ", featured=" + featured + // Cập nhật tên biến
                 ", status='" + status + '\'' +
                 ", searchKeywords=" + searchKeywords +
                 ", minSalary=" + minSalary +
                 ", createdAt=" + createdAt +
+                ", postedDate='" + postedDate + '\'' +
                 '}';
     }
 }
