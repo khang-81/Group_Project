@@ -8,8 +8,6 @@ import android.os.Looper;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hanoistudentgigs.R;
-
-import com.example.hanoistudentgigs.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -21,14 +19,8 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-            if (currentUser != null) {
-                // Nếu đã đăng nhập, chuyển thẳng vào MainActivity
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
-            } else {
-                // Nếu chưa, chuyển đến màn hình đăng nhập
-                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-            }
+            // FIX: Luôn chuyển đến màn hình chọn vai trò sau khi màn hình chờ kết thúc.
+            startActivity(new Intent(SplashActivity.this, RoleSelectionActivity.class));
             finish();
         }, 2000); // Hiển thị trong 2 giây
     }

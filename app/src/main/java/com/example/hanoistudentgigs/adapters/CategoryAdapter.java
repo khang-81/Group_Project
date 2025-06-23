@@ -1,6 +1,5 @@
 package com.example.hanoistudentgigs.adapters;
 
-import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,33 +7,21 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.example.hanoistudentgigs.R;
 import com.example.hanoistudentgigs.models.Category;
+import java.util.List;
 
-public class CategoryAdapter extends FirestoreRecyclerAdapter<Category, CategoryAdapter.CategoryViewHolder> {
-    private String collectionPath;
-
-    public CategoryAdapter(@NonNull FirestoreRecyclerOptions<Category> options, String collectionPath) {
-        super(options);
-        this.collectionPath = collectionPath;
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
+    public interface OnCategoryActionListener {
+        void onDelete(Category category);
     }
 
-    @Override
-    protected void onBindViewHolder(@NonNull CategoryViewHolder holder, int position, @NonNull Category model) {
-        holder.textViewCategoryName.setText(model.getName());
-        holder.buttonDeleteCategory.setOnClickListener(v -> {
-            new AlertDialog.Builder(holder.itemView.getContext())
-                    .setTitle("Xác nhận xóa")
-                    .setMessage("Bạn có chắc chắn muốn xóa '" + model.getName() + "'?")
-                    .setPositiveButton("Xóa", (dialog, which) -> {
-                        FirebaseFirestore.getInstance().collection(collectionPath).document(model.getId()).delete();
-                    })
-                    .setNegativeButton("Hủy", null)
-                    .show();
-        });
+    private List<Category> categoryList;
+    private OnCategoryActionListener listener;
+
+    public CategoryAdapter(List<Category> categoryList, OnCategoryActionListener listener) {
+        this.categoryList = categoryList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -44,13 +31,25 @@ public class CategoryAdapter extends FirestoreRecyclerAdapter<Category, Category
         return new CategoryViewHolder(view);
     }
 
-    static class CategoryViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewCategoryName;
-        Button buttonDeleteCategory;
-        CategoryViewHolder(@NonNull View itemView) {
+    @Override
+    public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
+        Category category = categoryList.get(position);
+        holder.tvCategoryName.setText(category.getName());
+        holder.btnDeleteCategory.setOnClickListener(v -> listener.onDelete(category));
+    }
+
+    @Override
+    public int getItemCount() {
+        return categoryList.size();
+    }
+
+    public static class CategoryViewHolder extends RecyclerView.ViewHolder {
+        TextView tvCategoryName;
+        Button btnDeleteCategory;
+        public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewCategoryName = itemView.findViewById(R.id.textViewCategoryName);
-            buttonDeleteCategory = itemView.findViewById(R.id.buttonDeleteCategory);
+            tvCategoryName = itemView.findViewById(R.id.tvCategoryName);
+            btnDeleteCategory = itemView.findViewById(R.id.btnDeleteCategory);
         }
     }
 }

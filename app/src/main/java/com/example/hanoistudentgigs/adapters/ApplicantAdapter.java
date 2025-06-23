@@ -61,7 +61,7 @@ public class ApplicantAdapter extends FirestoreRecyclerAdapter<Application, Appl
 
         public void bind(Application application) {
             if (application == null) return;
-            textViewApplicantName.setText(application.getStudentName() != null ? application.getStudentName() : "Không rõ tên");
+            textViewApplicantName.setText(application.getStudentUid() != null ? application.getStudentUid() : "Không rõ tên");
             textViewApplicationStatus.setText(application.getStatus() != null ? "Trạng thái: " + application.getStatus() : "Trạng thái: Chưa rõ");
         }
     }

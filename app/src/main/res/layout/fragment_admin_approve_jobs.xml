@@ -1,8 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/recyclerViewApproveJobs"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
-    android:clipToPadding="false"/>
+    android:padding="24dp"
+    android:background="#FFF">
+
+    <Button
+        android:id="@+id/btnApproveJobsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Kiểm Duyệt Tin Đăng"
+        android:textStyle="bold"
+        android:enabled="false"
+        android:backgroundTint="#3B5A7A"
+        android:textColor="#FFF"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/etSearchJob"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tìm kiếm công ty..."
+        android:drawableLeft="@drawable/ic_search_24"
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvJobList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+</LinearLayout>

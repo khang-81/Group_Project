@@ -1,9 +1,12 @@
 package com.example.hanoistudentgigs.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.example.hanoistudentgigs.R;
 import com.example.hanoistudentgigs.models.Application;
 import com.example.hanoistudentgigs.utils.Constants;
+import com.squareup.picasso.Picasso;
 
 public class JobDetailActivity extends AppCompatActivity {
     private TextView textViewDetailJobTitle, textViewDetailCompanyName, textViewDetailDescription, textViewDetailRequirements;
@@ -21,15 +25,22 @@ public class JobDetailActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private String jobId;
     private FirebaseAuth mAuth;
+    private ImageView imageViewJob;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_detail);
-
+        imageViewJob = findViewById(R.id.imageViewDetailCompanyLogo); // Sử dụng đúng ID từ XML
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Hiển thị nút back
+            getSupportActionBar().setTitle(""); // Bỏ tiêu đề mặc định của Toolbar nếu CollapsingToolbarLayout quản lý
+        }
         textViewDetailJobTitle = findViewById(R.id.textViewDetailJobTitle);
         textViewDetailCompanyName = findViewById(R.id.textViewDetailCompanyName);
         textViewDetailDescription = findViewById(R.id.textViewDetailDescription);
@@ -39,16 +50,26 @@ public class JobDetailActivity extends AppCompatActivity {
         // Nhận jobId từ Intent đã gửi từ JobAdapter
         jobId = getIntent().getStringExtra("JOB_ID");
 
+        // Ẩn nút Nộp đơn nếu là admin
+        boolean isAdmin = getIntent().getBooleanExtra("IS_ADMIN", false);
+        if (isAdmin) {
+            buttonApplyNow.setVisibility(Button.GONE);
+        } else {
+            buttonApplyNow.setOnClickListener(v -> applyForJob());
+        }
+
         if (jobId != null) {
             loadJobDetails();
         } else {
             Toast.makeText(this, "Không tìm thấy thông tin công việc.", Toast.LENGTH_SHORT).show();
             finish();
         }
-
-        buttonApplyNow.setOnClickListener(v -> applyForJob());
     }
-
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed(); // Điều này sẽ đưa người dùng quay lại màn hình trước đó
+        return true;
+    }
     private void loadJobDetails() {
         db.collection("jobs").document(jobId).get()
                 .addOnCompleteListener(task -> {
@@ -60,15 +81,30 @@ public class JobDetailActivity extends AppCompatActivity {
                             textViewDetailCompanyName.setText(document.getString("companyName"));
                             textViewDetailDescription.setText(document.getString("description"));
                             textViewDetailRequirements.setText(document.getString("requirements"));
+
+                            // Lấy URL ảnh từ DocumentSnapshot và tải bằng Picasso
+                            String imageUrl = document.getString("companyLogoUrl"); // Lấy URL từ trường "imageUrl" trong Firestore
+                            if (imageUrl != null && !imageUrl.isEmpty()) {
+                                Picasso.get().load(imageUrl)
+                                        .placeholder(R.drawable.ic_business_24) // Ảnh placeholder khi đang tải
+                                        .error(R.drawable.ic_error_24)       // Ảnh lỗi nếu tải thất bại
+                                        .into(imageViewJob); // Tải vào imageViewJob
+                                Log.d("JobDetailActivity", "URL ảnh công việc: " + imageUrl);
+                            } else {
+                                imageViewJob.setImageResource(R.drawable.ic_business_24); // Hiển thị ảnh mặc định
+                                Log.w("JobDetailActivity", "URL ảnh công việc rỗng hoặc null cho Job ID: " + jobId);
+                            }
+
                         } else {
-                            Toast.makeText(this, "Không tìm thấy dữ liệu.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "Không tìm thấy dữ liệu công việc.", Toast.LENGTH_SHORT).show();
+                            Log.w("JobDetailActivity", "Document không tồn tại cho Job ID: " + jobId);
                         }
                     } else {
-                        Toast.makeText(this, "Lỗi khi tải dữ liệu.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Lỗi khi tải dữ liệu công việc.", Toast.LENGTH_SHORT).show();
+                        Log.e("JobDetailActivity", "Lỗi khi tải dữ liệu công việc: ", task.getException());
                     }
                 });
     }
-
     private void applyForJob() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
@@ -95,7 +131,7 @@ public class JobDetailActivity extends AppCompatActivity {
                         application.setId(applicationId);
                         application.setJobId(jobId);
                         application.setStudentUid(currentUser.getUid());
-                        application.setStudentName(studentName);
+//                        application.setStudentName(studentName);
                         application.setCvUrl(cvUrl);
                         application.setStatus("Submitted"); // Trạng thái ban đầu
 
@@ -112,5 +148,19 @@ public class JobDetailActivity extends AppCompatActivity {
                     }
                 })
                 .addOnFailureListener(e -> Toast.makeText(this, "Lỗi khi lấy thông tin người dùng.", Toast.LENGTH_SHORT).show());
+    }
+
+    @Override
+    public void onBackPressed() {
+        boolean isAdmin = getIntent().getBooleanExtra("IS_ADMIN", false);
+        if (isAdmin) {
+            Intent intent = new Intent(this, com.example.hanoistudentgigs.MainActivity.class);
+            intent.putExtra("SELECT_ADMIN_APPROVE_TAB", true);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
+        } else {
+            super.onBackPressed();
+        }
     }
 }

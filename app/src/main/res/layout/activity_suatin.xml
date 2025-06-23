@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9F9FC"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Header -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#C7EEFF"
+            android:padding="16dp"
+            android:text="Hanoi Student Gigs"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center" />
+
+        <!-- Tiêu đề -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Đăng tin"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#1E4976"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Tiêu đề công việc -->
+        <EditText
+            android:id="@+id/etTitle"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Tiêu đề công việc"
+            android:background="@android:drawable/edit_text"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Thông tin công việc -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thông tin công việc"
+            android:textStyle="bold"
+            android:textColor="#1E4976"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="4dp" />
+
+        <!-- Địa điểm -->
+        <EditText
+            android:id="@+id/etLocation"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Địa điểm làm việc"
+            android:background="@android:drawable/edit_text"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Label Loại hình công việc -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Loại hình công việc"
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp" />
+
+        <!-- Spinner Loại hình công việc -->
+        <Spinner
+            android:id="@+id/spnJobType"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Lĩnh vực - Kỹ năng -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginEnd="4dp">
+
+                <!-- Label Lĩnh vực -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lĩnh vực"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="4dp" />
+
+                <Spinner
+                    android:id="@+id/spnField"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/etSkills"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:hint="Kỹ năng"
+                android:background="@android:drawable/edit_text" />
+        </LinearLayout>
+
+        <!-- Trình độ - Kinh nghiệm -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <EditText
+                android:id="@+id/etEducation"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:hint="Trình độ"
+                android:background="@android:drawable/edit_text"
+                android:layout_marginEnd="4dp" />
+
+            <EditText
+                android:id="@+id/etExperience"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:hint="Kinh nghiệm"
+                android:background="@android:drawable/edit_text" />
+        </LinearLayout>
+
+        <!-- Mức lương - Thời gian -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <EditText
+                android:id="@+id/etSalary"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:hint="Mức lương"
+                android:background="@android:drawable/edit_text"
+                android:layout_marginEnd="4dp" />
+
+            <EditText
+                android:id="@+id/etTime"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:hint="Thời gian"
+                android:background="@android:drawable/edit_text" />
+        </LinearLayout>
+
+        <!-- Mô tả công việc -->
+        <EditText
+            android:id="@+id/etDescription"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_marginBottom="8dp"
+            android:background="@android:drawable/edit_text"
+            android:gravity="top"
+            android:hint="Mô tả công việc"
+            android:inputType="textMultiLine" />
+
+        <!-- Hạn nộp hồ sơ - Thông tin liên hệ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <EditText
+                android:id="@+id/etDeadline"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:hint="Hạn nộp hồ sơ (tùy chọn)"
+                android:focusable="false"
+                android:clickable="true"
+                android:inputType="none"
+                android:background="@android:drawable/edit_text"
+                android:layout_marginEnd="4dp" />
+
+            <EditText
+                android:id="@+id/etContact"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:hint="Thông tin liên hệ"
+                android:inputType="textEmailAddress"
+                android:background="@android:drawable/edit_text" />
+        </LinearLayout>
+
+        <!-- Button đăng tin -->
+        <Button
+            android:id="@+id/btnUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lưu thay đổi"
+            android:backgroundTint="#3166B5"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+
+</ScrollView>
