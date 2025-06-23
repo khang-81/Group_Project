@@ -6,8 +6,8 @@ import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,7 +17,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private TextInputEditText editTextEmail, editTextPassword;
     private Button buttonLogin;
-    private TextView textViewRegisterNow, textViewForgotPassword; // Bổ sung textViewForgotPassword
+    private TextView textViewRegisterNow, textViewForgotPassword;
     private FirebaseAuth mAuth;
 
     @Override
@@ -31,13 +31,12 @@ public class LoginActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonLogin = findViewById(R.id.buttonLogin);
         textViewRegisterNow = findViewById(R.id.textViewRegisterNow);
-        textViewForgotPassword = findViewById(R.id.textViewForgotPassword); // Ánh xạ view
+        textViewForgotPassword = findViewById(R.id.textViewForgotPassword);
 
         textViewRegisterNow.setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
         });
 
-        // FIX: Thêm sự kiện onClick để mở màn hình Quên Mật Khẩu
         textViewForgotPassword.setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
         });
@@ -58,8 +57,16 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(LoginActivity.this, "Đăng nhập thành công.", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(LoginActivity.this, com.example.hanoistudentgigs.MainActivity.class);
+
+                        // ✅ Sau khi đăng nhập thành công, chuyển sang TrangChuActivity
+                        Intent intent = new Intent(LoginActivity.this, TrangChuActivity.class);
+
+                        // Gửi email người dùng nếu cần
+                        intent.putExtra("email", email);
+
+                        // Xóa ngăn xếp các activity trước đó
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
                         startActivity(intent);
                         finish();
                     } else {

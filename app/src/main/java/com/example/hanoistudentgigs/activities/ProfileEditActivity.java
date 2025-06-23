@@ -1,10 +1,15 @@
 package com.example.hanoistudentgigs.activities;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,10 +25,26 @@ public class ProfileEditActivity extends AppCompatActivity {
     private LinearLayout studentFieldsLayout;
     private TextInputEditText editTextEditStudentFullName, editTextEditSchool, editTextEditMajor, editTextEditSkills, editTextEditExperience, editTextEditYear, editTextEditStudentPhone;
 
+    private Uri cvFileUri;
+
     // Views cho Nhà tuyển dụng
     private LinearLayout employerFieldsLayout;
     private TextInputEditText editTextEditCompanyName, editTextEditAddress, editTextEditPhone, editTextEditWebsite;
 
+    private ActivityResultLauncher<String> selectCvLauncher = registerForActivityResult(
+            new ActivityResultContracts.GetContent(),
+            uri -> {
+                if (uri != null) {
+                    cvFileUri = uri; // Đảm bảo gán đúng
+                    Log.d("CV_UPLOAD", "Selected CV URI: " + uri.toString()); // Log để kiểm tra
+                    // ... cập nhật UI ...
+                } else {
+                    cvFileUri = null;
+                    Log.d("CV_UPLOAD", "No CV selected or selection cancelled.");
+                    // ... cập nhật UI ...
+                }
+            }
+    );
     private Button buttonSaveChanges;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;

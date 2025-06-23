@@ -1,5 +1,3 @@
-import java.io.File
-
 plugins {
     alias(libs.plugins.android.application)
     id("com.google.gms.google-services") // Tên plugin Firestore
@@ -64,16 +62,10 @@ dependencies {
     implementation(libs.picasso) // Chỉ dùng một lần, bỏ dòng 'com.squareup.picasso:picasso:2.71828'
     implementation(libs.circleimageview) // CircleImageView
 
-    // Glide library
-    implementation("com.github.bumptech.glide:glide:4.16.0")
-    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
 
     // Thư viện Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.junit.ext) // Đổi từ libs.junit.v115 sang tên alias chính xác
     androidTestImplementation(libs.espresso.core) // Đổi từ libs.espresso.core.v351 sang tên alias chính xác
-}
-
-tasks.withType<Test> {
-    enabled = false
+    implementation(libs.picasso)
 }

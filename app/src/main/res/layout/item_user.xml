@@ -21,46 +21,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="4dp">
-        <Button
-            android:id="@+id/btnViewUser"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Xem"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#2196F3"
-            android:layout_marginEnd="4dp"/>
-        <Button
-            android:id="@+id/btnEditUser"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Sửa"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#FF9800"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
-            android:id="@+id/btnVerifyUser"
-            android:layout_width="0dp"
+            android:id="@+id/btnViewUser"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Duyệt"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#4CAF50"
-            android:layout_marginEnd="4dp"/>
+            android:text="Xem"
+            android:layout_marginEnd="8dp"/>
+        <Button
+            android:id="@+id/btnVerifyUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Xác thực"
+            android:layout_marginEnd="8dp"/>
         <Button
             android:id="@+id/btnDeleteUser"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Xóa"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#F44336"/>
+            android:text="Xóa"/>
     </LinearLayout>
 </LinearLayout>
