@@ -28,13 +28,12 @@ public class ApplicantAdapter extends FirestoreRecyclerAdapter<Application, Appl
     protected void onBindViewHolder(@NonNull ApplicantViewHolder holder, int position, @NonNull Application model) {
         holder.bind(model);
         holder.buttonViewCv.setOnClickListener(v -> {
-            if (model.getCvUrl() != null && !model.getCvUrl().isEmpty()) {
-                try {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(model.getCvUrl()));
-                    context.startActivity(browserIntent);
-                } catch (Exception e) {
-                    Toast.makeText(context, "Không thể mở link CV.", Toast.LENGTH_SHORT).show();
-                }
+            if (model.getCvFileName() != null && !model.getCvFileName().isEmpty()) {                try {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(model.getCvFileName()));
+                context.startActivity(browserIntent);
+            } catch (Exception e) {
+                Toast.makeText(context, "Không thể mở link CV.", Toast.LENGTH_SHORT).show();
+            }
             } else {
                 Toast.makeText(context, "Ứng viên này chưa tải lên CV.", Toast.LENGTH_SHORT).show();
             }
@@ -61,7 +60,7 @@ public class ApplicantAdapter extends FirestoreRecyclerAdapter<Application, Appl
 
         public void bind(Application application) {
             if (application == null) return;
-            textViewApplicantName.setText(application.getStudentUid() != null ? application.getStudentUid() : "Không rõ tên");
+            textViewApplicantName.setText(application.getStudentName() != null ? application.getStudentName() : "Không rõ tên");
             textViewApplicationStatus.setText(application.getStatus() != null ? "Trạng thái: " + application.getStatus() : "Trạng thái: Chưa rõ");
         }
     }

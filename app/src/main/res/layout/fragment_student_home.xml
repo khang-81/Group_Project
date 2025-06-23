@@ -12,7 +12,6 @@
         android:orientation="vertical"
         android:paddingTop="16dp">
 
-        <!-- Header Section -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,9 +46,8 @@
                 android:layout_centerVertical="true"/>
         </RelativeLayout>
 
-        <!-- Search Bar and Filter -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/searchBarContainer" android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:paddingStart="16dp"
@@ -92,7 +90,6 @@
                 android:contentDescription="Lọc công việc"/>
         </LinearLayout>
 
-        <!-- Featured Jobs Section -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -106,19 +103,11 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/textColorPrimary"/>
-            <TextView
-                android:id="@+id/textViewSeeAllFeatured"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Xem tất cả"
-                android:textColor="@color/primaryColor"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"/>
         </RelativeLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewFeaturedJobs"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:orientation="horizontal"
             android:clipToPadding="false"
@@ -126,7 +115,6 @@
             android:paddingEnd="16dp"
             android:nestedScrollingEnabled="false"/>
 
-        <!-- Popular Jobs Section -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -140,24 +128,17 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/textColorPrimary"/>
-            <TextView
-                android:id="@+id/textViewSeeAllPopular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Xem tất cả"
-                android:textColor="@color/primaryColor"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"/>
         </RelativeLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewPopularJobs"
             android:layout_width="match_parent"
-            android:layout_height="600dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:nestedScrollingEnabled="false"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:paddingBottom="16dp"/>
+
         <TextView
             android:id="@+id/textViewNoPopularResults"
             android:layout_width="match_parent"

@@ -149,7 +149,9 @@ public class SearchActivity extends AppCompatActivity {
         Log.d("SearchActivity", "Starting performSearch() for keyword: '" + currentSearchText + "' and filter: " + currentFilter.toString());
 
         // Xây dựng truy vấn Firestore dựa trên từ khóa tìm kiếm và bộ lọc
-        Query query = db.collection(Constants.JOBS_COLLECTION).whereEqualTo("isApproved", true);
+        Query query = db.collection(Constants.JOBS_COLLECTION);
+//                .whereEqualTo("approved", false);
+
 
         if (currentFilter.getCategory() != null && !currentFilter.getCategory().isEmpty()) {
             query = query.whereEqualTo("categoryName", currentFilter.getCategory());
@@ -163,7 +165,6 @@ public class SearchActivity extends AppCompatActivity {
             query = query.whereEqualTo("jobType", currentFilter.getJobType());
             Log.d("SearchActivity", "Filtering by job type: " + currentFilter.getJobType());
         }
-
         if (!currentSearchText.isEmpty()) {
             Log.d("SearchActivity", "Applying search keyword: " + currentSearchText);
             // Sử dụng whereArrayContains cho các từ khóa tìm kiếm. Đảm bảo trường 'searchKeywords' là một mảng trong Firestore.
@@ -171,7 +172,7 @@ public class SearchActivity extends AppCompatActivity {
         }
 
         // Luôn sắp xếp theo thời gian tạo để có kết quả nhất quán
-        query = query.orderBy("createdAt._seconds", Query.Direction.DESCENDING);
+        query = query.orderBy("createdAt", Query.Direction.DESCENDING);
 
         // Xây dựng FirestoreRecyclerOptions mới với truy vấn đã cập nhật
         FirestoreRecyclerOptions<Job> newOptions = new FirestoreRecyclerOptions.Builder<Job>()

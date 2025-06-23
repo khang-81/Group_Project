@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.hanoistudentgigs.R;
 import com.example.hanoistudentgigs.activities.LoginActivity;
 import com.example.hanoistudentgigs.fragments.admin.AdminApproveJobsFragment;
 import com.example.hanoistudentgigs.fragments.admin.AdminDashboardFragment;
@@ -20,8 +21,8 @@ import com.example.hanoistudentgigs.utils.Constants;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashMap; // Thêm import này
+import java.util.Map; // Thêm import này
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -42,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
             sendToLogin();
             return;
         }
-        // Logic để lấy vai trò người dùng và thiết lập giao diện là chính xác.
         setupUserInterface(savedInstanceState);
     }
 
@@ -51,48 +51,59 @@ public class MainActivity extends AppCompatActivity {
         db.collection(Constants.USERS_COLLECTION).document(uid).get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (isFinishing() || isDestroyed()) {
+                        // Nếu Activity đang bị hủy, không làm gì cả
                         return;
                     }
 
                     if (!documentSnapshot.exists()) {
+                        // Tài liệu người dùng không tồn tại, tạo một tài liệu mặc định
                         Log.w("MainActivity", "Tài liệu người dùng không tồn tại. Tạo tài liệu mặc định.");
                         Map<String, Object> userData = new HashMap<>();
                         userData.put("role", Constants.ROLE_STUDENT); // Mặc định là sinh viên
+                        // Thêm các trường mặc định khác nếu cần, ví dụ:
                         userData.put("fullName", mAuth.getCurrentUser().getDisplayName() != null ? mAuth.getCurrentUser().getDisplayName() : "Người dùng mới");
                         userData.put("email", mAuth.getCurrentUser().getEmail());
 
                         db.collection(Constants.USERS_COLLECTION).document(uid).set(userData)
                                 .addOnSuccessListener(aVoid -> {
                                     Log.d("MainActivity", "Đã tạo tài liệu người dùng mặc định.");
-                                    userRole = Constants.ROLE_STUDENT;
-                                    continueSetup(savedInstanceState);
+                                    userRole = Constants.ROLE_STUDENT; // Đặt vai trò sau khi tạo
+                                    continueSetup(savedInstanceState); // Tiếp tục thiết lập UI
                                 })
                                 .addOnFailureListener(e -> {
                                     Log.e("MainActivity", "Lỗi khi tạo tài liệu người dùng mặc định", e);
+                                    // Nếu không tạo được tài liệu, có thể đăng xuất để tránh vòng lặp lỗi
                                     mAuth.signOut();
                                     sendToLogin();
                                 });
                     } else {
+                        // Tài liệu người dùng đã tồn tại, lấy vai trò và tiếp tục
                         userRole = documentSnapshot.getString("role");
                         if (userRole == null || userRole.isEmpty()) {
+                            // Trường hợp hiếm: tài liệu tồn tại nhưng không có vai trò.
+                            // Có thể xử lý bằng cách đặt vai trò mặc định hoặc đăng xuất.
                             Log.w("MainActivity", "Tài liệu người dùng tồn tại nhưng không có vai trò. Đặt mặc định là sinh viên.");
                             userRole = Constants.ROLE_STUDENT;
-                            db.collection(Constants.USERS_COLLECTION).document(uid).update("role", Constants.ROLE_STUDENT);
+                            // Cập nhật vai trò vào Firestore nếu bạn muốn
+                            db.collection(Constants.USERS_COLLECTION).document(uid).update("role", Constants.ROLE_STUDENT)
+                                    .addOnSuccessListener(aVoid -> Log.d("MainActivity", "Đã cập nhật vai trò mặc định cho người dùng."))
+                                    .addOnFailureListener(e -> Log.e("MainActivity", "Lỗi cập nhật vai trò mặc định.", e));
                         }
-                        continueSetup(savedInstanceState);
+                        continueSetup(savedInstanceState); // Tiếp tục thiết lập UI
                     }
                 })
                 .addOnFailureListener(e -> {
                     Log.e("MainActivity", "Failed to get user role", e);
-                    mAuth.signOut();
+                    // Nếu không lấy được tài liệu người dùng vì lỗi, thì đăng xuất
+                    mAuth.signOut(); // Giữ lại dòng này trong trường hợp lỗi mạng hoặc quyền truy cập
                     sendToLogin();
                 });
     }
 
+    // Phương thức mới để tiếp tục thiết lập UI sau khi vai trò được xác định/tạo
     private void continueSetup(Bundle savedInstanceState) {
         setupBottomNavigation();
         if (savedInstanceState == null) {
-            // Tải fragment mặc định dựa trên vai trò người dùng
             loadFragment(getDefaultFragmentForRole());
         }
     }
@@ -100,7 +111,8 @@ public class MainActivity extends AppCompatActivity {
     private void setupBottomNavigation() {
         bottomNav.getMenu().clear();
         if (userRole == null) {
-            Log.e("MainActivity", "userRole vẫn null, đang gửi đến Login.");
+            // Điều này không nên xảy ra sau khi continueSetup được gọi, nhưng là một kiểm tra an toàn
+            Log.e("MainActivity", "userRole vẫn null sau khi thiết lập. Đang gửi đến Login.");
             sendToLogin();
             return;
         }
@@ -116,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             default:
                 Log.e("MainActivity", "Vai trò không xác định: " + userRole + ". Đang gửi đến Login.");
-                mAuth.signOut();
+                mAuth.signOut(); // Đăng xuất nếu vai trò không hợp lệ
                 sendToLogin();
                 break;
         }
@@ -124,12 +136,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Fragment getDefaultFragmentForRole() {
-        if (userRole == null) return null;
+        if (userRole == null) return null; // Vẫn cần kiểm tra an toàn
         switch (userRole) {
             case Constants.ROLE_STUDENT:
                 return new StudentHomeFragment();
-            // LỖI XẢY RA Ở ĐÂY vÌ EmployerDashboardFragment KHÔNG KẾ THỪA TỪ Fragment
-            // Dòng code này là ĐÚNG. Vấn đề nằm ở file EmployerDashboardFragment.java
             case Constants.ROLE_EMPLOYER:
                 return new EmployerDashboardFragment();
             case Constants.ROLE_ADMIN:
@@ -144,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                 Fragment selectedFragment = null;
                 int itemId = item.getItemId();
 
-                // Logic tạo fragment dựa trên menu item được chọn. Logic này là chính xác.
+                // --- Student Navigation ---
                 if (itemId == R.id.nav_student_home) {
                     selectedFragment = new StudentHomeFragment();
                 } else if (itemId == R.id.nav_student_applications) {
@@ -152,12 +162,13 @@ public class MainActivity extends AppCompatActivity {
                 } else if (itemId == R.id.nav_student_profile) {
                     selectedFragment = new ProfileFragment();
                 }
-                // LỖI CŨNG XẢY RA Ở ĐÂY vÌ EmployerDashboardFragment KHÔNG KẾ THỪA TỪ Fragment
+                // --- Employer (Recruiter) Navigation ---
                 else if (itemId == R.id.nav_recruiter_dashboard) {
                     selectedFragment = new EmployerDashboardFragment();
                 } else if (itemId == R.id.nav_recruiter_profile) {
-                    selectedFragment = new ProfileFragment(); // Giả định ProfileFragment cũng là một Fragment hợp lệ
+                    selectedFragment = new ProfileFragment();
                 }
+// --- Admin Navigation ---
                 else if (itemId == R.id.nav_admin_dashboard) {
                     selectedFragment = new AdminDashboardFragment();
                 } else if (itemId == R.id.nav_admin_approve_jobs) {
@@ -166,7 +177,6 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new AdminManageUsersFragment();
                 }
 
-                // Phương thức loadFragment xử lý transaction một cách chính xác.
                 return loadFragment(selectedFragment);
             };
 
