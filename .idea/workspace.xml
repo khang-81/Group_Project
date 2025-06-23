@@ -75,7 +75,22 @@
           <theme>@style/Theme.HanoiStudentGigs</theme>
         </config>
       </layout>
-      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_search_large.xml">
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_work_24.xml">
+        <config>
+          <theme>@style/Theme.HanoiStudentGigs</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/logo_placeholder_background.xml">
+        <config>
+          <theme>@style/Theme.HanoiStudentGigs</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/search_bar_background.xml">
+        <config>
+          <theme>@style/Theme.HanoiStudentGigs</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/status_indicator_open.xml">
         <config>
           <theme>@style/Theme.HanoiStudentGigs</theme>
         </config>
@@ -190,6 +205,11 @@
           <theme>@style/Theme.HanoiStudentGigs</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_job_posting.xml">
+        <config>
+          <theme>@style/Theme.HanoiStudentGigs</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_student_application.xml">
         <config>
           <theme>@style/Theme.HanoiStudentGigs</theme>
@@ -223,7 +243,12 @@
   <component name="ChangeListManager">
     <list default="true" id="12f09ce9-6b63-41e4-bd31-a9c8f7130f68" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/PostJobActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/PostJobActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/adapters/JobAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/adapters/JobAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/employer/EmployerDashboardFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/employer/EmployerDashboardFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/models/Job.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/models/Job.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_employer_dashboard.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_employer_dashboard.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -246,8 +271,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
-        <option value="resourceFile" />
         <option value="layoutResourceFile" />
+        <option value="resourceFile" />
       </list>
     </option>
   </component>
@@ -422,12 +447,12 @@
       <map>
         <entry key="com.example.hanoistudentgigs">
           <value>
-            <CheckInfo lastCheckTimestamp="1750500317076" />
+            <CheckInfo lastCheckTimestamp="1750658062004" />
           </value>
         </entry>
         <entry key="com.example.hanoistudentgigs.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1750500317077" />
+            <CheckInfo lastCheckTimestamp="1750658062005" />
           </value>
         </entry>
       </map>

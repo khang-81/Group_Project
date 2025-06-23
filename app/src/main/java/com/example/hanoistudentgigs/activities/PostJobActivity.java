@@ -5,15 +5,15 @@ import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.hanoistudentgigs.R;
+import com.example.hanoistudentgigs.models.Job; // Sửa lại thành models
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.Timestamp; // Import Timestamp của Firebase
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.example.hanoistudentgigs.R;
-import com.example.hanoistudentgigs.models.Job;
-import java.util.Date; // Vẫn cần nếu bạn muốn lấy thời gian hiện tại
-import java.util.HashMap; // Cần để tạo Map
-import java.util.Map; // Cần để tạo Map
-import java.util.concurrent.TimeUnit; // Cần để chuyển đổi Date sang seconds/nanoseconds
+
+import java.util.Date; // Import Date để lấy thời gian hiện tại
 import java.util.UUID;
 
 public class PostJobActivity extends AppCompatActivity {
@@ -26,10 +26,11 @@ public class PostJobActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post_job); // Tạo file layout này với các EditText tương ứng
+        setContentView(R.layout.activity_post_job);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Đăng tin tuyển dụng");
         }
 
         db = FirebaseFirestore.getInstance();
@@ -51,16 +52,17 @@ public class PostJobActivity extends AppCompatActivity {
             setTitle("Đăng tin mới");
         }
 
-        buttonPostJob.setOnClickListener(v -> postJob());
+        buttonPostJob.setOnClickListener(v -> saveJob());
     }
 
     @Override
     public boolean onSupportNavigateUp() {
-        onBackPressed();
+        finish(); // Đóng activity hiện tại để quay về màn hình trước
         return true;
     }
 
     private void loadJobDetails() {
+        if (editingJobId == null) return;
         db.collection("jobs").document(editingJobId)
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
@@ -84,7 +86,7 @@ public class PostJobActivity extends AppCompatActivity {
                 });
     }
 
-    private void postJob() {
+    private void saveJob() {
         String title = editTextJobTitle.getText().toString().trim();
         String company = editTextCompanyName.getText().toString().trim();
         String location = editTextLocation.getText().toString().trim();
@@ -96,6 +98,10 @@ public class PostJobActivity extends AppCompatActivity {
             return;
         }
 
+        if (mAuth.getCurrentUser() == null) {
+            Toast.makeText(this, "Vui lòng đăng nhập để thực hiện chức năng này.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         String employerUid = mAuth.getCurrentUser().getUid();
 
         Job job = new Job();
@@ -106,20 +112,12 @@ public class PostJobActivity extends AppCompatActivity {
         job.setDescription(description);
         job.setEmployerUid(employerUid);
         job.setApproved(false); // Mặc định tin đăng cần được Admin duyệt
+        job.setStatus("Open"); // Mặc định trạng thái là Open
 
-        // --- ĐÂY LÀ PHẦN THAY ĐỔI QUAN TRỌNG ĐỂ XỬ LÝ createdAt DƯỚI DẠNG MAP ---
-        // Lấy thời gian hiện tại
-        Date now = new Date();
-        long seconds = TimeUnit.MILLISECONDS.toSeconds(now.getTime());
-        int nanoseconds = (int) (TimeUnit.MILLISECONDS.toNanos(now.getTime() % 1000)); // Lấy phần nano giây còn lại từ milliseconds
-
-        // Tạo Map cho createdAt
-        Map<String, Object> createdAtMap = new HashMap<>();
-        createdAtMap.put("_seconds", seconds); // Lưu ý tên trường _seconds
-        createdAtMap.put("_nanoseconds", nanoseconds); // Lưu ý tên trường _nanoseconds
-
-        job.setCreatedAt(createdAtMap); // Gán Map vào trường createdAt của Job
-        // --- KẾT THÚC PHẦN THAY ĐỔI QUAN TRỌNG ---
+        // --- SỬA LỖI TẠI ĐÂY ---
+        // Gán trực tiếp đối tượng Timestamp của Firebase thay vì Map
+        job.setCreatedAt(new Timestamp(new Date()));
+        // --- KẾT THÚC PHẦN SỬA LỖI ---
 
         if (editingJobId != null) {
             // Chế độ Sửa: Cập nhật job hiện có
@@ -144,9 +142,13 @@ public class PostJobActivity extends AppCompatActivity {
     }
 
     private void updateJobInFirestore(Job job) {
+        // Khi sửa, không cần thay đổi ID và thời gian tạo
+        // Chúng ta sẽ lấy lại job cũ để giữ lại các giá trị này
+        // Tuy nhiên, để đơn giản, ví dụ này sẽ ghi đè.
+        // Cách tốt hơn là dùng .update() thay vì .set()
         job.setId(editingJobId);
         db.collection("jobs").document(editingJobId)
-                .set(job) // set sẽ ghi đè, nếu chỉ muốn update vài trường thì dùng update
+                .set(job) // set sẽ ghi đè toàn bộ document
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(PostJobActivity.this, "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
                     finish();

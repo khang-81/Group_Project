@@ -2,88 +2,148 @@ package com.example.hanoistudentgigs.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+
+import com.bumptech.glide.Glide;
 import com.example.hanoistudentgigs.R;
-import com.example.hanoistudentgigs.activities.JobDetailActivity;
+import com.example.hanoistudentgigs.activities.PostJobActivity;
 import com.example.hanoistudentgigs.models.Job;
-import com.squareup.picasso.Picasso;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-public class JobAdapter extends FirestoreRecyclerAdapter<Job, JobAdapter.JobViewHolder> {
-    private Context context;
+import java.util.List;
 
-    public JobAdapter(@NonNull FirestoreRecyclerOptions<Job> options, Context context) {
-        super(options);
+public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
+
+    private final List<Job> jobList;
+    private final Context context; // Thêm lại biến context
+    private static final String TAG = "JobAdapter";
+
+    // --- SỬA LỖI TẠI ĐÂY: Hàm khởi tạo chấp nhận cả Context và List<Job> ---
+    public JobAdapter(Context context, List<Job> jobList) {
         this.context = context;
-    }
-
-    @Override
-    protected void onBindViewHolder(@NonNull JobViewHolder holder, int position, @NonNull Job model) {
-        // Lấy ID của document từ snapshot tại vị trí hiện tại
-        String jobId = getSnapshots().getSnapshot(position).getId();
-        // Gán ID này vào đối tượng Job (đảm bảo lớp Job có phương thức setId)
-        model.setId(jobId);
-
-        holder.bind(model);
-        holder.itemView.setOnClickListener(v -> {
-            // Khi người dùng nhấn vào một item, mở JobDetailActivity
-            Intent intent = new Intent(context, JobDetailActivity.class);
-            // Gửi ID của job qua Intent để màn hình chi tiết biết cần tải dữ liệu nào
-            intent.putExtra("JOB_ID", model.getId());
-            context.startActivity(intent);
-        });
+        this.jobList = jobList;
     }
 
     @NonNull
     @Override
     public JobViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_job_card, parent, false);
+        // Sử dụng context đã được truyền vào
+        View view = LayoutInflater.from(context).inflate(R.layout.item_job_posting, parent, false);
         return new JobViewHolder(view);
     }
 
-    // Class ViewHolder để giữ các view của một item
-    public static class JobViewHolder extends RecyclerView.ViewHolder {
-        private TextView textViewJobTitle, textViewCompanyName, textViewSalary, textViewLocation;
-        private ImageView imageViewCompanyLogo;
+    @Override
+    public void onBindViewHolder(@NonNull JobViewHolder holder, int position) {
+        try {
+            Job job = jobList.get(position);
+            if (job == null) {
+                Log.w(TAG, "Job object is null at position: " + position);
+                return;
+            }
+
+            // Gán dữ liệu một cách an toàn
+            holder.textViewJobTitle.setText(job.getTitle() != null ? job.getTitle() : "Không có tiêu đề");
+            holder.textViewCompanyName.setText(job.getCompanyName() != null ? job.getCompanyName() : "Không có tên công ty");
+            holder.textViewSalary.setText(job.getSalaryDescription() != null ? job.getSalaryDescription() : "Thỏa thuận");
+            holder.textViewLocation.setText(job.getLocationName() != null ? job.getLocationName() : "Không có địa điểm");
+
+            Glide.with(context)
+                    .load(job.getCompanyLogoUrl())
+                    .placeholder(R.drawable.logo_placeholder_background)
+                    .error(R.drawable.logo_placeholder_background)
+                    .into(holder.imageViewCompanyLogo);
+
+            if ("Open".equalsIgnoreCase(job.getStatus())) {
+                holder.viewStatusIndicator.setBackground(ContextCompat.getDrawable(context, R.drawable.status_indicator_open));
+            } else {
+                holder.viewStatusIndicator.setBackground(ContextCompat.getDrawable(context, R.drawable.status_indicator_closed));
+            }
+        } catch (Exception e) {
+            // Bắt tất cả các lỗi có thể xảy ra để ứng dụng không bị crash
+            // Ghi lại lỗi để bạn có thể xem trong Logcat
+            Log.e(TAG, "Error binding view at position " + position, e);
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return jobList != null ? jobList.size() : 0;
+    }
+
+    class JobViewHolder extends RecyclerView.ViewHolder {
+        ImageView imageViewCompanyLogo;
+        TextView textViewJobTitle, textViewCompanyName, textViewSalary, textViewLocation;
+        View viewStatusIndicator;
+        TextView buttonEdit, buttonDelete;
 
         public JobViewHolder(@NonNull View itemView) {
             super(itemView);
+            imageViewCompanyLogo = itemView.findViewById(R.id.imageViewCompanyLogo);
             textViewJobTitle = itemView.findViewById(R.id.textViewJobTitle);
             textViewCompanyName = itemView.findViewById(R.id.textViewCompanyName);
             textViewSalary = itemView.findViewById(R.id.textViewSalary);
             textViewLocation = itemView.findViewById(R.id.textViewLocation);
-            imageViewCompanyLogo = itemView.findViewById(R.id.imageViewCompanyLogo);
+            viewStatusIndicator = itemView.findViewById(R.id.viewStatusIndicator);
+            buttonEdit = itemView.findViewById(R.id.buttonEdit);
+            buttonDelete = itemView.findViewById(R.id.buttonDelete);
+
+            buttonEdit.setOnClickListener(v -> {
+                int position = getBindingAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    Job job = jobList.get(position);
+                    if (job != null && job.getId() != null) {
+                        Intent intent = new Intent(context, PostJobActivity.class);
+                        intent.putExtra("EDIT_JOB_ID", job.getId());
+                        context.startActivity(intent);
+                    } else {
+                        Toast.makeText(context, "Không thể sửa tin này do thiếu ID.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            buttonDelete.setOnClickListener(v -> {
+                int position = getBindingAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    Job job = jobList.get(position);
+                    if (job != null && job.getId() != null) {
+                        showDeleteConfirmationDialog(job, position);
+                    }
+                }
+            });
         }
 
-        public void bind(Job job) {
+        private void showDeleteConfirmationDialog(Job job, int position) {
+            new AlertDialog.Builder(context)
+                    .setTitle("Xác nhận xóa")
+                    .setMessage("Bạn có chắc chắn muốn xóa tin tuyển dụng '" + job.getTitle() + "' không?")
+                    .setPositiveButton("Xóa", (dialog, which) -> deleteJobFromFirestore(job, position))
+                    .setNegativeButton("Hủy", null)
+                    .show();
+        }
 
-
-            textViewJobTitle.setText(job.getTitle());
-            textViewCompanyName.setText(job.getCompanyName());
-
-
-            textViewSalary.setText(job.getSalaryDescription());
-            textViewLocation.setText(job.getLocationName());
-            // TODO: Dùng Picasso hoặc Glide để load ảnh logo từ URL (nếu có)
-            // Trong JobViewHolder.bind(Job job)
-            // Kiểm tra xem URL có tồn tại và không rỗng không
-            if (job.getCompanyLogoUrl() != null && !job.getCompanyLogoUrl().isEmpty()) {
-                Picasso.get()
-                        .load(job.getCompanyLogoUrl())
-                        .placeholder(R.drawable.default_company_logo_placeholder) // Ảnh placeholder khi đang tải
-                        .error(R.drawable.error_company_logo_placeholder) // Ảnh hiển thị nếu tải lỗi
-                        .into(imageViewCompanyLogo);
-            } else {
-                // Hiển thị ảnh mặc định nếu không có URL logo
-                imageViewCompanyLogo.setImageResource(R.drawable.default_company_logo_placeholder);
-            }
+        private void deleteJobFromFirestore(Job job, int position) {
+            FirebaseFirestore.getInstance().collection("jobs").document(job.getId())
+                    .delete()
+                    .addOnSuccessListener(aVoid -> {
+                        Toast.makeText(context, "Đã xóa tin thành công.", Toast.LENGTH_SHORT).show();
+                        if (jobList != null && position < jobList.size()) {
+                            jobList.remove(position);
+                            notifyItemRemoved(position);
+                            notifyItemRangeChanged(position, jobList.size());
+                        }
+                    })
+                    .addOnFailureListener(e -> Toast.makeText(context, "Xóa tin thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show());
         }
     }
 }
