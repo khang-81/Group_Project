@@ -11,43 +11,45 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp"
-        android:gravity="center_vertical">
-
-        <LinearLayout
+        android:layout_marginBottom="4dp">
+        <Button
+            android:id="@+id/btnViewUser"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
-
-            <!-- FIX: Thêm ID cho TextView này -->
-            <TextView
-                android:id="@+id/textViewUserName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tên Người Dùng"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/textColorPrimary"/>
-
-            <!-- FIX: Thêm ID cho TextView này -->
-            <TextView
-                android:id="@+id/textViewUserEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="email@example.com"
-                android:textColor="@color/textColorSecondary"/>
-        </LinearLayout>
-
-        <!-- FIX: Thêm ID cho Button này -->
+            android:layout_weight="1"
+            android:text="Xem"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#2196F3"
+            android:layout_marginEnd="4dp"/>
         <Button
-            android:id="@+id/buttonDeleteUser"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
+            android:id="@+id/btnEditUser"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Sửa"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#FF9800"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnVerifyUser"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Duyệt"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#4CAF50"
+            android:layout_marginEnd="4dp"/>
+        <Button
+            android:id="@+id/btnDeleteUser"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Xóa"
-            android:textColor="@color/errorColor"/>
-
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#F44336"/>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

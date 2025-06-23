@@ -1,3 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">HanoiStudentGigs</string>
+
+    <!-- Trang chủ -->
+    <string name="hint_post_job">Đăng tin mới</string>
+    <string name="title_jobs">Tin đăng</string>
+    <string name="title_applicants">Ứng viên</string>
+    <string name="see_all">Xem tất cả</string>
+    <string name="jobs_list">Danh sách công việc</string>
+    <string name="applicants_list">Danh sách ứng viên</string>
+
+
+
+    <!-- Đăng tin -->
+    <string name="header_title">Hanoi Student Gigs</string>
+    <string name="post_title">Đăng tin</string>
+    <string name="job_title_hint">Tiêu đề công việc</string>
+    <string name="job_info_section">Thông tin công việc</string>
+    <string name="job_location_hint">Địa điểm làm việc</string>
+    <string name="job_type_label">Loại hình công việc</string>
+    <string name="job_field_label">Lĩnh vực</string>
+    <string name="skills_hint">Kỹ năng</string>
+    <string name="education_hint">Trình độ</string>
+    <string name="experience_hint">Kinh nghiệm</string>
+    <string name="salary_hint">Mức lương</string>
+    <string name="time_hint">Thời gian</string>
+    <string name="description_hint">Mô tả công việc</string>
+    <string name="deadline_hint">Hạn nộp hồ sơ (tùy chọn)</string>
+    <string name="contact_hint">Thông tin liên hệ</string>
+    <string name="post_button">Đăng tin</string>
+
+    <!-- Spinner mặc định -->
+    <string name="choose_job_type">Chọn loại công việc</string>
+    <string name="choose_field">Chọn lĩnh vực</string>
+    <string name="choose_deadline">Chọn hạn nộp</string>
+
+    <!-- Danh sách loại công việc -->
+    <string-array name="job_types">
+        <item>Chọn loại công việc</item>
+        <item>Part-time</item>
+        <item>Freelance / Gig</item>
+        <item>Internship</item>
+    </string-array>
+
+    <!-- Danh sách lĩnh vực -->
+    <string-array name="fields">
+        <item>Chọn lĩnh vực</item>
+        <item>Gia sư</item>
+        <item>Thiết kế</item>
+        <item>Phục vụ</item>
+        <item>Lập trình</item>
+        <item>Marketing</item>
+        <item>Khác</item>
+    </string-array>
+
+    <!-- Quản lý -->
+    <string name="title_manage_posts">Quản lí tin đăng</string>
+    <string name="recycler_view_desc">Danh sách mục</string>
+    <string name="app_title">Danh sách ứng viên</string>
+    <string name="candidates">Ứng viên</string>
+    <string name="dropdown_icon_desc">Biểu tượng menu thả xuống</string>
+    <string name="candidate_list_desc">Danh sách ứng viên</string>
+    <string name="chip_category">Danh mục</string>
+    <string name="chip_job_type">Hình thức</string>
+    <string name="edit_job">Sửa tin</string>
+    <string name="delete_job">Xóa tin</string>
+    <string name="status_hiring">Đang tuyển</string>
+    <string name="company_logo">Logo công ty</string>
 </resources>

@@ -1,18 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
-    android:layout_height="180dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="12dp"
     app:cardCornerRadius="24dp"
-    app:cardBackgroundColor="@color/primaryColor"
-    android:layout_marginEnd="16dp">
+    app:cardBackgroundColor="@color/primaryColor">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <!-- Card cho logo công ty -->
+        <!-- Logo -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/logoCard"
             android:layout_width="40dp"
@@ -20,27 +23,28 @@
             app:cardCornerRadius="8dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent">
+
             <ImageView
                 android:id="@+id/imageViewCompanyLogo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
                 android:src="@drawable/ic_business_24"
+
                 android:scaleType="centerCrop"/>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Tiêu đề công việc -->
+        <!-- Tiêu đề -->
         <TextView
             android:id="@+id/textViewJobTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Software Engineer"
+            android:layout_marginStart="12dp"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="@id/logoCard"
             app:layout_constraintStart_toEndOf="@id/logoCard"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginStart="12dp"/>
+            app:layout_constraintTop_toTopOf="@id/logoCard" />
 
         <!-- Tên công ty -->
         <TextView
@@ -53,14 +57,14 @@
             app:layout_constraintTop_toBottomOf="@id/textViewJobTitle"
             app:layout_constraintStart_toStartOf="@id/textViewJobTitle"/>
 
-        <!-- ChipGroup cho các tag công việc -->
+        <!-- Chips -->
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroupTags"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@id/textViewCompanyName"
-            app:layout_constraintStart_toStartOf="@id/textViewCompanyName"
-            android:layout_marginTop="8dp">
+            app:layout_constraintStart_toStartOf="@id/textViewCompanyName">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipCategory"
@@ -69,7 +73,8 @@
                 android:text="IT"
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 app:chipBackgroundColor="#4A90E2"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:text="@string/chip_category"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipJobType"
@@ -78,30 +83,48 @@
                 android:text="Full-Time"
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 app:chipBackgroundColor="#4A90E2"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:text="@string/chip_job_type"/>
         </com.google.android.material.chip.ChipGroup>
 
-        <!-- Mức lương -->
+        <!-- Status -->
+        <TextView
+            android:id="@+id/textViewStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/status_hiring"
+            android:textColor="#B2FF59"
+            android:textStyle="italic"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/chipGroupTags"
+            app:layout_constraintStart_toStartOf="@id/chipGroupTags"/>
+
+        <!-- Salary -->
         <TextView
             android:id="@+id/textViewSalary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="$180,00/year"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <!-- Vị trí công việc -->
+        <!-- Location -->
         <TextView
             android:id="@+id/textViewLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="California, USA"
             android:textColor="@color/white"
             android:alpha="0.8"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- Edit icon -->
+
+        <!-- Delete icon -->
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </com.google.android.material.card.MaterialCardView>
+

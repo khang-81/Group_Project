@@ -165,7 +165,6 @@ public class SearchActivity extends AppCompatActivity {
             query = query.whereEqualTo("jobType", currentFilter.getJobType());
             Log.d("SearchActivity", "Filtering by job type: " + currentFilter.getJobType());
         }
-
         if (!currentSearchText.isEmpty()) {
             Log.d("SearchActivity", "Applying search keyword: " + currentSearchText);
             // Sử dụng whereArrayContains cho các từ khóa tìm kiếm. Đảm bảo trường 'searchKeywords' là một mảng trong Firestore.

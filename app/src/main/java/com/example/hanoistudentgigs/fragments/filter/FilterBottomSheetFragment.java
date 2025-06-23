@@ -181,7 +181,7 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment {
         spinnerDateRange.setAdapter(dateRangeAdapter);
 
         // Khôi phục lựa chọn của spinnerDateRange nếu có trong currentFilter
-        // Logic này phức tạp hơn một chút vì bạn phải ánh xạ ngược từ min/maxMillis về chuỗi option
+// Logic này phức tạp hơn một chút vì bạn phải ánh xạ ngược từ min/maxMillis về chuỗi option
         if (currentFilter != null) {
             // ... (Logic khôi phục lựa chọn cho category, location, job type)
             if (currentFilter.getMinPostedDateMillis() == null && currentFilter.getMaxPostedDateMillis() == null) {
@@ -198,43 +198,25 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment {
     }
 
     private void loadDataForSpinner(String collectionPath, Spinner spinner, String defaultText) {
-        db.collection(collectionPath).orderBy("name").get().addOnCompleteListener(task -> {
+        db.collection(collectionPath).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 List<String> items = new ArrayList<>();
-                items.add(defaultText); // Thêm lựa chọn mặc định
+                items.add(defaultText);
+                int count = 0;
                 for (QueryDocumentSnapshot document : task.getResult()) {
-                    items.add(document.getString("name"));
+                    String displayName = document.contains("name") && document.getString("name") != null
+                        ? document.getString("name")
+                        : document.getId();
+                    items.add(displayName);
+                    count++;
                 }
+                Log.d("FirestoreDebug", "Số lượng rentals lấy được: " + count + ", collection: " + collectionPath);
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, items);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(adapter);
-
-                // Khôi phục lựa chọn của spinner nếu có trong currentFilter
-                if (currentFilter != null) {
-                    if (spinner.getId() == R.id.spinnerCategory && currentFilter.getCategory() != null) {
-                        setSpinnerSelection(spinner, items, currentFilter.getCategory());
-                    } else if (spinner.getId() == R.id.spinnerLocation && currentFilter.getLocation() != null) {
-                        setSpinnerSelection(spinner, items, currentFilter.getLocation());
-                    }
-                    // Khôi phục JobType (nếu có)
-                    if (spinner.getId() == R.id.spinnerJobType && currentFilter.getJobType() != null) {
-                        setSpinnerSelection(spinner, items, currentFilter.getJobType());
-                    }
-                }
             } else {
                 Toast.makeText(getContext(), "Lỗi tải dữ liệu lọc.", Toast.LENGTH_SHORT).show();
             }
         });
     }
-
-    // Helper method to set spinner selection
-    private void setSpinnerSelection(Spinner spinner, List<String> items, String value) {
-        int position = items.indexOf(value);
-        if (position >= 0) {
-            spinner.setSelection(position);
-        }
-    }
-
-    // XÓA PHƯƠNG THỨC NÀY VÀ MỌI LỜI GỌI ĐẾN NÓ
-    // private void showDateRangePicker() { ... }
 }

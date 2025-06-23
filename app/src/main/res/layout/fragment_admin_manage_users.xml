@@ -9,8 +9,22 @@
         android:id="@+id/tabLayoutUsers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabGravity="fill"
-        app:tabMode="fixed" />
+        android:orientation="horizontal"
+        android:gravity="center">
+        <Button
+            android:id="@+id/btnStudentTab"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Sinh Viên"/>
+        <Button
+            android:id="@+id/btnEmployerTab"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Nhà Tuyển Dụng"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPagerUsers"
