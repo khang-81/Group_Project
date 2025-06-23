@@ -52,11 +52,16 @@ public class JobManageAdapter extends FirestoreRecyclerAdapter<Job, JobManageAda
         });
 
         holder.btnView.setOnClickListener(v -> {
-            String jobId = getSnapshots().getSnapshot(position).getId();
             Intent intent = new Intent(context, XemTinActivity.class);
-            intent.putExtra("JOB_ID", jobId);
+            intent.putExtra("title", job.getTitle());
+            intent.putExtra("company", job.getCompanyName());
+            intent.putExtra("salary", job.getSalaryDescription());
+            intent.putExtra("location", job.getLocationName());
+            intent.putExtra("contact", job.getContact());
+            intent.putExtra("description", job.getDescription());
             context.startActivity(intent);
         });
+
 
     }
 

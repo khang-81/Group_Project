@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hanoistudentgigs.R;
 import com.example.hanoistudentgigs.models.Job;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -100,7 +101,9 @@ public class SuaTinActivity extends AppCompatActivity {
                 "description", etDescription.getText().toString(),
                 "contact", etContact.getText().toString(),
                 "jobType", spnJobType.getSelectedItem().toString(),
-                "categoryName", spnField.getSelectedItem().toString()
+                "categoryName", spnField.getSelectedItem().toString(),
+                "employerUid", FirebaseAuth.getInstance().getCurrentUser().getUid()
+
         ).addOnSuccessListener(unused -> {
             Toast.makeText(this, "Đã cập nhật công việc", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(SuaTinActivity.this, QLTinActivity.class);
@@ -122,5 +125,9 @@ public class SuaTinActivity extends AppCompatActivity {
                 break;
             }
         }
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

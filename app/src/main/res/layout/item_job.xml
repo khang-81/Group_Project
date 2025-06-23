@@ -19,7 +19,8 @@
             android:layout_height="wrap_content"
             android:text="Job Title"
             android:textStyle="bold"
-            android:textSize="18sp" />
+            android:textSize="22sp"
+            android:textColor="#F44336"/>
 
         <!-- Tên công ty -->
         <TextView
@@ -28,7 +29,7 @@
             android:layout_height="wrap_content"
             android:text="Company"
             android:textStyle="bold"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
         <!-- Mức lương -->
         <TextView
@@ -37,7 +38,7 @@
             android:layout_height="wrap_content"
             android:text="Salary"
             android:textStyle="bold"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
         <!-- Địa điểm -->
         <TextView
@@ -46,7 +47,7 @@
             android:layout_height="wrap_content"
             android:text="Location"
             android:textStyle="bold"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
         <!-- Hành động: Sửa & Xoá -->
         <LinearLayout
@@ -58,8 +59,8 @@
 
             <ImageView
                 android:id="@+id/btnView"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_marginStart="16dp"
                 android:contentDescription="Xem"
                 android:padding="4dp"
@@ -67,8 +68,8 @@
 
             <ImageView
                 android:id="@+id/btnEdit"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:contentDescription="Sửa"
                 android:layout_marginStart="16dp"
                 android:padding="4dp"
@@ -76,8 +77,8 @@
 
             <ImageView
                 android:id="@+id/btnDelete"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_marginStart="16dp"
                 android:src="@android:drawable/ic_menu_delete"
                 android:contentDescription="Xoá"

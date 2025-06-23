@@ -186,7 +186,7 @@
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
-                android:hint="Hạn nộp hồ sơ (tùy chọn)"
+                android:hint="Hạn nộp hồ sơ"
                 android:focusable="false"
                 android:clickable="true"
                 android:inputType="none"

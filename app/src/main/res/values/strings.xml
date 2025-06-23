@@ -12,6 +12,7 @@
 
 
 
+
     <!-- Đăng tin -->
     <string name="header_title">Hanoi Student Gigs</string>
     <string name="post_title">Đăng tin</string>
@@ -67,4 +68,8 @@
     <string name="delete_job">Xóa tin</string>
     <string name="status_hiring">Đang tuyển</string>
     <string name="company_logo">Logo công ty</string>
+
+    <string name="applicant_list_title">Danh sách sinh viên đang nộp CV</string>
+    <string name="recycler_applicant_list_desc">Danh sách các sinh viên đã nộp CV</string>
+
 </resources>
