@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                 } else if (itemId == R.id.nav_recruiter_profile) {
                     selectedFragment = new ProfileFragment();
                 }
-                // --- Admin Navigation ---
+// --- Admin Navigation ---
                 else if (itemId == R.id.nav_admin_dashboard) {
                     selectedFragment = new AdminDashboardFragment();
                 } else if (itemId == R.id.nav_admin_approve_jobs) {

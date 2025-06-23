@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header -->
+        <TextView
+            android:id="@+id/headerTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="HanoiStudentGigs"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:background="#DFF2FF"
+            android:padding="12dp" />
+
+        <!-- Tìm kiếm hoặc đăng tin -->
+        <EditText
+            android:id="@+id/editTextPostSearch"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="🔍 Đăng tin mới"
+            android:paddingStart="12dp"
+            android:layout_marginTop="16dp"
+            android:background="@android:drawable/edit_text"
+            android:focusable="false"
+            android:cursorVisible="false"
+            android:clickable="true"
+            android:longClickable="false"
+            />
+
+        <!-- TIN ĐĂNG -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp">
+
+            <TextView
+                android:id="@+id/textTitleJobs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tin đăng"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/btnSeeAllJobs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xem tất cả"
+                android:textSize="14sp"
+                android:textColor="@android:color/holo_blue_dark"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewJobs"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="8dp"
+            android:nestedScrollingEnabled="false"
+            android:contentDescription="jobs_list" />
+
+        <!-- ỨNG VIÊN -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp">
+
+            <TextView
+                android:id="@+id/textTitleApplicants"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ứng viên"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/btnSeeAllApplicants"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xem tất cả"
+                android:textSize="14sp"
+                android:textColor="@android:color/holo_blue_dark"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewApplicants"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="8dp"
+            android:nestedScrollingEnabled="false"
+            android:contentDescription="applicants_list" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
