@@ -78,27 +78,27 @@ public class StudentHomeFragment extends Fragment {
         return view;
     }
 
-//    private void openSearchActivity() {
-//        if (getActivity() != null) {
-//            Intent intent = new Intent(getActivity(), SearchActivity.class);
-//            startActivity(intent);
-//        }
-//    }
-private void openSearchActivity(@Nullable Filter filter, boolean openedFromFilterButton) {
-    if (getActivity() != null) {
-        Intent intent = new Intent(getActivity(), SearchActivity.class);
-        if (filter != null) {
-            intent.putExtra(Constants.KEY_FILTER_OBJECT, filter);
+    //    private void openSearchActivity() {
+    //        if (getActivity() != null) {
+    //            Intent intent = new Intent(getActivity(), SearchActivity.class);
+    //            startActivity(intent);
+    //        }
+    //    }
+    private void openSearchActivity(@Nullable Filter filter, boolean openedFromFilterButton) {
+        if (getActivity() != null) {
+            Intent intent = new Intent(getActivity(), SearchActivity.class);
+            if (filter != null) {
+                intent.putExtra(Constants.KEY_FILTER_OBJECT, filter);
+            }
+            // Thêm một extra để SearchActivity biết nó được mở từ nút filter
+            intent.putExtra(Constants.KEY_OPENED_FROM_FILTER_BUTTON, openedFromFilterButton);
+            startActivity(intent);
         }
-        // Thêm một extra để SearchActivity biết nó được mở từ nút filter
-        intent.putExtra(Constants.KEY_OPENED_FROM_FILTER_BUTTON, openedFromFilterButton);
-        startActivity(intent);
     }
-}
     private void loadUserName() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null && isAdded()) {
-            db.collection(Constants.USERS_COLLECTION).document(currentUser.getUid()).get()
+            db.collection(Constants.STUDENTS_COLLECTION).document(currentUser.getUid()).get()
                     .addOnSuccessListener(documentSnapshot -> {
                         if (getContext() != null && documentSnapshot.exists()) {
                             String fullName = documentSnapshot.getString("fullName");
@@ -117,10 +117,9 @@ private void openSearchActivity(@Nullable Filter filter, boolean openedFromFilte
     private void setupRecyclerViews() {
         // Query cho các công việc nổi bật (5 công việc mới nhất)
         Query featuredQuery = db.collection(Constants.JOBS_COLLECTION)
-                .whereEqualTo("isApproved", true)
-                .whereEqualTo("status", "Open")
-                .whereEqualTo("isFeatured", true)
-                .orderBy("createdAt._seconds", Query.Direction.DESCENDING)
+//                    .whereEqualTo("approved", false)
+                .whereEqualTo("featured", true)
+//                    .orderBy("createdAt", Query.Direction.DESCENDING)
                 .limit(5);
         recyclerViewFeaturedJobs.setHasFixedSize(true);
         FirestoreRecyclerOptions<Job> featuredOptions = new FirestoreRecyclerOptions.Builder<Job>()
@@ -133,10 +132,9 @@ private void openSearchActivity(@Nullable Filter filter, boolean openedFromFilte
 
         // Query cho các công việc phổ biến (tất cả các công việc còn lại)
         Query popularQuery = db.collection(Constants.JOBS_COLLECTION)
-                .whereEqualTo("isApproved", true)
-                .whereEqualTo("status", "Open")
-                .whereEqualTo("isFeatured", false)
-                .orderBy("createdAt._seconds", Query.Direction.DESCENDING);
+//                    .whereEqualTo("approved", false)
+                .whereEqualTo("featured", false);
+//                    .orderBy("createdAt", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<Job> popularOptions = new FirestoreRecyclerOptions.Builder<Job>()
                 .setQuery(popularQuery, Job.class)

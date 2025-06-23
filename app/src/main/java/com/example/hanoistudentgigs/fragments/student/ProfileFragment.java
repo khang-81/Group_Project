@@ -44,7 +44,7 @@ public class ProfileFragment extends Fragment {
     private LinearLayout studentInfoLayout;
     private TextView textViewSchool, textViewMajor, textViewSkills, textViewExperience, textViewCvStatus;
     private Button buttonUploadCv;
-    private ProgressBar progressBarCv;
+
 
     // Các Views dành riêng cho Nhà tuyển dụng
     private LinearLayout employerInfoLayout;
@@ -53,19 +53,9 @@ public class ProfileFragment extends Fragment {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
-    private FirebaseStorage storage;
+
     private FirebaseUser currentUser;
 
-    private final ActivityResultLauncher<Intent> filePickerLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                    Uri filePath = result.getData().getData();
-                    if (filePath != null) {
-                        uploadCv(filePath);
-                    }
-                }
-            });
 
     @Nullable
     @Override
@@ -74,7 +64,7 @@ public class ProfileFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-        storage = FirebaseStorage.getInstance();
+
         currentUser = mAuth.getCurrentUser();
 
         // Ánh xạ các View
@@ -88,8 +78,7 @@ public class ProfileFragment extends Fragment {
         textViewSkills = view.findViewById(R.id.textViewProfileSkills);
 //        textViewExperience = view.findViewById(R.id.textViewProfileExperience);
         textViewCvStatus = view.findViewById(R.id.textViewCvStatus);
-        buttonUploadCv = view.findViewById(R.id.buttonUploadCv);
-        progressBarCv = view.findViewById(R.id.progressBarCv);
+
         employerInfoLayout = view.findViewById(R.id.employerInfoLayout);
         textViewCompanyName = view.findViewById(R.id.textViewProfileCompanyName);
         textViewAddress = view.findViewById(R.id.textViewProfileAddress);
@@ -121,66 +110,143 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        buttonUploadCv.setOnClickListener(v -> {
-            // FIX: Cho phép chọn nhiều loại tệp văn bản
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("*/*"); // Cho phép chọn bất kỳ loại file nào
-            // Tạo một mảng chứa các loại MIME được chấp nhận
-            String[] mimeTypes = {"application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"};
-            intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
-            filePickerLauncher.launch(intent);
-        });
+
     }
 
     private void loadUserProfile() {
-        if (currentUser == null) return;
-        db.collection(Constants.USERS_COLLECTION).document(currentUser.getUid()).get()
-                .addOnCompleteListener(task -> {
-                    if (!isAdded() || getContext() == null || !task.isSuccessful() || task.getResult() == null) {
-                        if (isAdded() && getContext() != null) {
-                            Toast.makeText(getContext(), "Không thể tải hồ sơ.", Toast.LENGTH_SHORT).show();
-                        }
+        if (currentUser == null) {
+            // Người dùng chưa đăng nhập
+            textViewFullName.setText("Chưa đăng nhập");
+            textViewEmail.setText("Không có email");
+            studentInfoLayout.setVisibility(View.GONE);
+            employerInfoLayout.setVisibility(View.GONE);
+            return;
+        }
+
+        final String uid = currentUser.getUid();
+        textViewEmail.setText(currentUser.getEmail()); // Hiển thị email ngay lập tức
+
+        // BƯỚC 1: Đọc VAI TRÒ từ collection "users"
+        db.collection(Constants.USERS_COLLECTION).document(uid).get()
+                .addOnSuccessListener(userDoc -> {
+                    if (!isAdded() || getContext() == null) { // Đảm bảo Fragment còn gắn với Activity
                         return;
                     }
-                    DocumentSnapshot document = task.getResult();
-                    if (!document.exists()) {
-                        Toast.makeText(getContext(), "Không tìm thấy hồ sơ người dùng.", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    try {
-                        String role = document.getString("role");
-                        setText(textViewEmail, document, "email", "Không có email");
-                        if (Constants.ROLE_STUDENT.equals(role)) {
+
+                    if (userDoc.exists()) {
+                        String userRole = userDoc.getString("role");
+
+                        // Xử lý cho Sinh viên
+                        if (Constants.ROLE_STUDENT.equals(userRole)) {
                             studentInfoLayout.setVisibility(View.VISIBLE);
                             employerInfoLayout.setVisibility(View.GONE);
-                            setText(textViewFullName, document, "fullName");
-                            setText(textViewSchool, document, "schoolName");
-                            setText(textViewMajor, document, "major");
-                            setText(textViewSkills, document, "skillsDescription");
-                            setText(textViewExperience, document, "experience");
-                            if (document.contains("cvUrl") && document.getString("cvUrl") != null && !document.getString("cvUrl").isEmpty()) {
-                                textViewCvStatus.setText("Đã tải lên CV.");
-                                textViewCvStatus.setTextColor(ContextCompat.getColor(getContext(), R.color.successColor));
-                            } else {
-                                textViewCvStatus.setText("Chưa có CV.");
-                                textViewCvStatus.setTextColor(ContextCompat.getColor(getContext(), R.color.errorColor));
-                            }
-                        } else if (Constants.ROLE_EMPLOYER.equals(role)) {
+
+                            // BƯỚC 2: Nếu là sinh viên, ĐỌC PROFILE CHI TIẾT TỪ STUDENTS_COLLECTION
+                            db.collection(Constants.STUDENTS_COLLECTION).document(uid).get()
+                                    .addOnSuccessListener(studentProfileDoc -> {
+                                        if (!isAdded() || getContext() == null) return;
+
+                                        if (studentProfileDoc.exists()) {
+                                            Log.d("ProfileFragment", "Student Profile Data: " + studentProfileDoc.getData()); // Log để kiểm tra dữ liệu
+
+                                            setText(textViewFullName, studentProfileDoc, "fullName");
+                                            setText(textViewSchool, studentProfileDoc, "schoolName"); // Dùng schoolName cho nhất quán với RegisterActivity
+                                            setText(textViewMajor, studentProfileDoc, "major");
+                                            setText(textViewSkills, studentProfileDoc, "skillsDescription");
+                                            // Kiểm tra textViewExperience có được ánh xạ không trước khi dùng
+                                            // if (textViewExperience != null) {
+                                            //     setText(textViewExperience, studentProfileDoc, "experience");
+                                            // }
+
+                                            String cvFileName = studentProfileDoc.getString("cvFileName");
+                                            if (cvFileName != null && !cvFileName.isEmpty()) {
+                                                textViewCvStatus.setText("CV hiện tại: " + cvFileName);
+                                                textViewCvStatus.setTextColor(ContextCompat.getColor(getContext(), R.color.successColor));
+                                            } else {
+                                                textViewCvStatus.setText("Chưa có tệp CV nào được chọn.");
+                                                textViewCvStatus.setTextColor(ContextCompat.getColor(getContext(), R.color.errorColor));
+                                            }
+                                        } else {
+                                            Toast.makeText(getContext(), "Hồ sơ sinh viên chưa được thiết lập.", Toast.LENGTH_SHORT).show();
+                                            // Đặt lại các TextView thành "Chưa cập nhật" nếu không có dữ liệu
+                                            textViewFullName.setText("Chưa cập nhật");
+                                            textViewSchool.setText("Chưa cập nhật");
+                                            textViewMajor.setText("Chưa cập nhật");
+                                            textViewSkills.setText("Chưa cập nhật");
+                                            // if (textViewExperience != null) textViewExperience.setText("Chưa cập nhật");
+                                            textViewCvStatus.setText("Chưa có tệp CV nào được chọn.");
+                                        }
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        if (!isAdded() || getContext() == null) return;
+                                        Log.e("ProfileFragment", "Lỗi tải hồ sơ sinh viên: " + e.getMessage(), e);
+                                        Toast.makeText(getContext(), "Lỗi tải hồ sơ sinh viên.", Toast.LENGTH_SHORT).show();
+                                        textViewFullName.setText("Lỗi tải");
+                                        textViewSchool.setText("Lỗi tải");
+                                        textViewMajor.setText("Lỗi tải");
+                                        textViewSkills.setText("Lỗi tải");
+                                        // if (textViewExperience != null) textViewExperience.setText("Lỗi tải");
+                                        textViewCvStatus.setText("Lỗi tải");
+                                    });
+
+                        }
+                        // Xử lý cho Nhà tuyển dụng
+                        else if (Constants.ROLE_EMPLOYER.equals(userRole)) {
                             studentInfoLayout.setVisibility(View.GONE);
                             employerInfoLayout.setVisibility(View.VISIBLE);
-                            String companyName = document.getString("companyName");
-                            setText(textViewFullName, document, "companyName", "Tên công ty");
-                            setText(textViewCompanyName, document, "companyName");
-                            setText(textViewAddress, document, "address");
-                            setText(textViewPhone, document, "phone");
+
+                            // BƯỚC 2: Nếu là nhà tuyển dụng, ĐỌC PROFILE CHI TIẾT TỪ EMPLOYERS_COLLECTION
+                            db.collection(Constants.EMPLOYERS_COLLECTION).document(uid).get()
+                                    .addOnSuccessListener(employerProfileDoc -> {
+                                        if (!isAdded() || getContext() == null) return;
+
+                                        if (employerProfileDoc.exists()) {
+                                            Log.d("ProfileFragment", "Employer Profile Data: " + employerProfileDoc.getData()); // Log để kiểm tra dữ liệu
+
+                                            setText(textViewFullName, employerProfileDoc, "companyName"); // Hiển thị tên công ty là tên chính
+                                            setText(textViewCompanyName, employerProfileDoc, "companyName");
+                                            setText(textViewAddress, employerProfileDoc, "address");
+                                            setText(textViewPhone, employerProfileDoc, "phone");
+                                        } else {
+                                            Toast.makeText(getContext(), "Hồ sơ nhà tuyển dụng chưa được thiết lập.", Toast.LENGTH_SHORT).show();
+                                            textViewFullName.setText("Chưa cập nhật");
+                                            textViewCompanyName.setText("Chưa cập nhật");
+                                            textViewAddress.setText("Chưa cập nhật");
+                                            textViewPhone.setText("Chưa cập nhật");
+                                        }
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        if (!isAdded() || getContext() == null) return;
+                                        Log.e("ProfileFragment", "Lỗi tải hồ sơ nhà tuyển dụng: " + e.getMessage(), e);
+                                        Toast.makeText(getContext(), "Lỗi tải hồ sơ nhà tuyển dụng.", Toast.LENGTH_SHORT).show();
+                                        textViewFullName.setText("Lỗi tải");
+                                        textViewCompanyName.setText("Lỗi tải");
+                                        textViewAddress.setText("Lỗi tải");
+                                        textViewPhone.setText("Lỗi tải");
+                                    });
+                        } else {
+                            // Vai trò không xác định
+                            Toast.makeText(getContext(), "Không tìm thấy vai trò người dùng hợp lệ.", Toast.LENGTH_SHORT).show();
+                            textViewFullName.setText("Chưa cập nhật");
+                            studentInfoLayout.setVisibility(View.GONE);
+                            employerInfoLayout.setVisibility(View.GONE);
                         }
-                    } catch (Exception e) {
-                        Log.e("ProfileFragment", "Lỗi khi cập nhật giao diện hồ sơ", e);
-                        Toast.makeText(getContext(), "Đã xảy ra lỗi khi hiển thị hồ sơ.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "Không tìm thấy thông tin người dùng cơ bản.", Toast.LENGTH_SHORT).show();
+                        textViewFullName.setText("Chưa cập nhật");
+                        studentInfoLayout.setVisibility(View.GONE);
+                        employerInfoLayout.setVisibility(View.GONE);
                     }
+                })
+                .addOnFailureListener(e -> {
+                    if (!isAdded() || getContext() == null) return;
+                    Log.e("ProfileFragment", "Lỗi tải thông tin người dùng cơ bản: " + e.getMessage(), e);
+                    Toast.makeText(getContext(), "Lỗi tải thông tin người dùng.", Toast.LENGTH_SHORT).show();
+                    textViewFullName.setText("Lỗi tải");
+                    studentInfoLayout.setVisibility(View.GONE);
+                    employerInfoLayout.setVisibility(View.GONE);
                 });
     }
-
     private void setText(TextView textView, DocumentSnapshot document, String fieldKey) {
         setText(textView, document, fieldKey, "Chưa cập nhật");
     }
@@ -203,46 +269,4 @@ public class ProfileFragment extends Fragment {
             return mime.getExtensionFromMimeType(cR.getType(uri));
         }
         return null;
-    }
-
-    private void uploadCv(Uri filePath) {
-        if (currentUser == null || getContext() == null) {
-            Toast.makeText(getContext(), "Lỗi: Không thể xác định người dùng.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        progressBarCv.setVisibility(View.VISIBLE);
-        buttonUploadCv.setEnabled(false);
-
-        // FIX: Lấy phần mở rộng của file một cách linh hoạt
-        String fileExtension = getFileExtension(filePath);
-        if (fileExtension == null) {
-            // Nếu không thể xác định, dùng một giá trị mặc định hoặc báo lỗi
-            Toast.makeText(getContext(), "Không thể xác định loại tệp.", Toast.LENGTH_SHORT).show();
-            progressBarCv.setVisibility(View.GONE);
-            buttonUploadCv.setEnabled(true);
-            return;
-        }
-
-        // FIX: Tạo tên file với phần mở rộng chính xác
-        StorageReference cvRef = storage.getReference().child("cvs/" + currentUser.getUid() + "." + fileExtension);
-
-        cvRef.putFile(filePath)
-                .addOnSuccessListener(taskSnapshot ->
-                        cvRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                            String downloadUrl = uri.toString();
-                            db.collection(Constants.USERS_COLLECTION).document(currentUser.getUid()).update("cvUrl", downloadUrl)
-                                    .addOnSuccessListener(aVoid -> {
-                                        progressBarCv.setVisibility(View.GONE);
-                                        buttonUploadCv.setEnabled(true);
-                                        Toast.makeText(getContext(), "Tải lên CV thành công!", Toast.LENGTH_SHORT).show();
-                                        loadUserProfile();
-                                    });
-                        })
-                )
-                .addOnFailureListener(e -> {
-                    progressBarCv.setVisibility(View.GONE);
-                    buttonUploadCv.setEnabled(true);
-                    Toast.makeText(getContext(), "Tải lên thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
-    }
-}
+    }}

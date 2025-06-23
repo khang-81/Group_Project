@@ -23,7 +23,7 @@ import java.util.Map;
 public class ProfileEditActivity extends AppCompatActivity {
     // Views cho Sinh viên
     private LinearLayout studentFieldsLayout;
-    private TextInputEditText editTextEditStudentFullName, editTextEditSchool, editTextEditMajor, editTextEditSkills, editTextEditExperience;
+    private TextInputEditText editTextEditStudentFullName, editTextEditSchool, editTextEditMajor, editTextEditSkills, editTextEditExperience, editTextEditYear, editTextEditStudentPhone;
 
     private Uri cvFileUri;
 
@@ -49,20 +49,38 @@ public class ProfileEditActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private String userRole;
+    private String userIdToEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_edit);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
+
+        // Check if an admin is editing a user profile
+        if (getIntent().hasExtra("USER_ID")) {
+            userIdToEdit = getIntent().getStringExtra("USER_ID");
+        } else if (mAuth.getCurrentUser() != null) {
+            userIdToEdit = mAuth.getCurrentUser().getUid();
+        } else {
+            Toast.makeText(this, "Không tìm thấy người dùng.", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         // Ánh xạ các views
         studentFieldsLayout = findViewById(R.id.studentFieldsLayout);
         editTextEditStudentFullName = findViewById(R.id.editTextEditStudentFullName);
         editTextEditSchool = findViewById(R.id.editTextEditSchool);
         editTextEditMajor = findViewById(R.id.editTextEditMajor);
+        editTextEditYear = findViewById(R.id.editTextEditYear);
+        editTextEditStudentPhone = findViewById(R.id.editTextEditStudentPhone);
         editTextEditSkills = findViewById(R.id.editTextEditSkills);
         editTextEditExperience = findViewById(R.id.editTextEditExperience);
 
@@ -79,11 +97,16 @@ public class ProfileEditActivity extends AppCompatActivity {
         buttonSaveChanges.setOnClickListener(v -> saveChanges());
     }
 
-    private void loadCurrentProfile() {
-        if (mAuth.getCurrentUser() == null) return;
-        String uid = mAuth.getCurrentUser().getUid();
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
-        db.collection(Constants.USERS_COLLECTION).document(uid).get().addOnSuccessListener(document -> {
+    private void loadCurrentProfile() {
+        if (userIdToEdit == null) return;
+
+        db.collection(Constants.USERS_COLLECTION).document(userIdToEdit).get().addOnSuccessListener(document -> {
             if (document.exists()) {
                 userRole = document.getString("role");
                 if (Constants.ROLE_STUDENT.equals(userRole)) {
@@ -93,6 +116,8 @@ public class ProfileEditActivity extends AppCompatActivity {
                     editTextEditStudentFullName.setText(document.getString("fullName"));
                     editTextEditSchool.setText(document.getString("schoolName"));
                     editTextEditMajor.setText(document.getString("major"));
+                    editTextEditYear.setText(document.getString("year"));
+                    editTextEditStudentPhone.setText(document.getString("phone"));
                     editTextEditSkills.setText(document.getString("skillsDescription"));
                     editTextEditExperience.setText(document.getString("experience"));
                 } else if (Constants.ROLE_EMPLOYER.equals(userRole)) {
@@ -109,8 +134,7 @@ public class ProfileEditActivity extends AppCompatActivity {
     }
 
     private void saveChanges() {
-        if (mAuth.getCurrentUser() == null) return;
-        String uid = mAuth.getCurrentUser().getUid();
+        if (userIdToEdit == null) return;
 
         Map<String, Object> updates = new HashMap<>();
 
@@ -118,6 +142,8 @@ public class ProfileEditActivity extends AppCompatActivity {
             updates.put("fullName", editTextEditStudentFullName.getText().toString().trim());
             updates.put("schoolName", editTextEditSchool.getText().toString().trim());
             updates.put("major", editTextEditMajor.getText().toString().trim());
+            updates.put("year", editTextEditYear.getText().toString().trim());
+            updates.put("phone", editTextEditStudentPhone.getText().toString().trim());
             updates.put("skillsDescription", editTextEditSkills.getText().toString().trim());
             updates.put("experience", editTextEditExperience.getText().toString().trim());
         } else if (Constants.ROLE_EMPLOYER.equals(userRole)) {
@@ -127,9 +153,10 @@ public class ProfileEditActivity extends AppCompatActivity {
             updates.put("website", editTextEditWebsite.getText().toString().trim());
         }
 
-        db.collection(Constants.USERS_COLLECTION).document(uid).update(updates)
+        db.collection(Constants.USERS_COLLECTION).document(userIdToEdit).update(updates)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(this, "Cập nhật hồ sơ thành công!", Toast.LENGTH_SHORT).show();
+                    setResult(RESULT_OK);
                     finish(); // Đóng Activity sau khi lưu
                 })
                 .addOnFailureListener(e -> Toast.makeText(this, "Cập nhật thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show());

@@ -83,7 +83,6 @@
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hồ sơ CV" android:textStyle="bold" android:textSize="18sp"/>
                     <TextView android:id="@+id/textViewCvStatus" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="Chưa có CV."/>
                     <ProgressBar android:id="@+id/progressBarCv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:visibility="gone" android:layout_gravity="center" android:layout_marginTop="8dp"/>
-                    <Button android:id="@+id/buttonUploadCv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="Tải lên / Cập nhật CV"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>

@@ -1,53 +1,61 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="24dp"
-    android:background="#FFF">
+    android:gravity="center"
+    android:background="@color/backgroundColor">
 
     <TextView
-        android:id="@+id/tvWelcomeAdmin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CHÀO MỪNG BẠN ĐÃ QUAY LẠI!"
+        android:text="Chào Mừng Bạn Đã Quay Lại"
+        android:textSize="22sp"
         android:textStyle="bold"
-        android:textSize="18sp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="32dp"/>
+        android:textColor="@color/textColorPrimary"
+        android:layout_marginBottom="48dp"/>
 
     <Button
-        android:id="@+id/btnManageUsers"
+        android:id="@+id/buttonManageUsers"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Quản Lý Người Dùng"
-        android:layout_marginTop="8dp"/>
+        android:layout_height="60dp"
+        android:text="Quản Lý Người Dùng"/>
 
     <Button
-        android:id="@+id/btnManageCategories"
+        android:id="@+id/buttonManageCategories"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Quản Lý Danh Mục"
-        android:layout_marginTop="8dp"/>
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:text="Quản Lý Danh Mục"/>
 
     <Button
-        android:id="@+id/btnApproveJobs"
+        android:id="@+id/buttonApproveJobs"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Kiểm Duyệt Tin Đăng"
-        android:layout_marginTop="8dp"/>
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:text="Kiểm Duyệt Tin Đăng"/>
 
     <Button
-        android:id="@+id/btnSystemStats"
+        android:id="@+id/buttonViewStats"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Quản Lý Hệ Thống"
-        android:layout_marginTop="8dp"/>
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:text="Quản Lý Hệ Thống (Thống kê)"/>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
     <Button
-        android:id="@+id/btnLogout"
+        android:id="@+id/buttonAdminLogout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:text="Đăng xuất"
-        android:layout_marginTop="8dp"/>
+        android:backgroundTint="@color/errorColor"/>
 
 </LinearLayout>

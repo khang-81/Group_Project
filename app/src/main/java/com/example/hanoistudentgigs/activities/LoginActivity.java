@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.hanoistudentgigs.MainActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.example.hanoistudentgigs.R;
@@ -59,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Đăng nhập thành công.", Toast.LENGTH_SHORT).show();
 
                         // ✅ Sau khi đăng nhập thành công, chuyển sang TrangChuActivity
-                        Intent intent = new Intent(LoginActivity.this, TrangChuActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 
                         // Gửi email người dùng nếu cần
                         intent.putExtra("email", email);

@@ -3,22 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="24dp"
-    android:background="#FFF">
+    android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnManageUsersTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Quản Lý Người Dùng"
-        android:textStyle="bold"
-        android:enabled="false"
-        android:backgroundTint="#3B5A7A"
-        android:textColor="#FFF"
-        android:layout_marginBottom="16dp"/>
-
-    <LinearLayout
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayoutUsers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -28,40 +16,19 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Student"/>
+            android:text="Sinh Viên"/>
         <Button
             android:id="@+id/btnEmployerTab"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Employer"
+            android:text="Nhà Tuyển Dụng"
             android:layout_marginStart="8dp"/>
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/etSearchUser"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Tìm kiếm..."
-        android:drawableLeft="@drawable/ic_search_24"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/edit_text_background"
-        android:padding="12dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvUserList"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPagerUsers"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="16dp"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_add_24"
-        app:backgroundTint="#3B5A7A" />
-
+        android:layout_weight="1" />
 </LinearLayout>

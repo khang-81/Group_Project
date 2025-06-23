@@ -1,4 +1,4 @@
-// File: activities/RegisterActivity.java (ĐÃ FIX THEO YÊU CẦU)
+// File: activities/RegisterActivity.java (ĐÃ FIX)
 
 package com.example.hanoistudentgigs.activities;
 
@@ -24,7 +24,6 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    // Khai báo tất cả các View từ layout mới
     private TextInputEditText editTextEmail, editTextPassword;
     private TextInputEditText editTextStudentFullName, editTextSchool, editTextMajor;
     private TextInputEditText editTextCompanyName, editTextAddress, editTextPhone, editTextWebsite;
@@ -40,11 +39,9 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        // Khởi tạo Firebase
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        // Ánh xạ tất cả các view
         editTextEmail = findViewById(R.id.editTextEmailRegister);
         editTextPassword = findViewById(R.id.editTextPasswordRegister);
         radioGroupRole = findViewById(R.id.radioGroupRole);
@@ -60,7 +57,6 @@ public class RegisterActivity extends AppCompatActivity {
         editTextPhone = findViewById(R.id.editTextPhone);
         editTextWebsite = findViewById(R.id.editTextWebsite);
 
-        // Logic để hiển thị các trường phù hợp với vai trò
         radioGroupRole.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.radioStudent) {
                 studentFieldsLayout.setVisibility(View.VISIBLE);
@@ -75,7 +71,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
-        // Lấy dữ liệu từ các trường chung
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
@@ -85,55 +80,45 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        // Xác định vai trò và thu thập dữ liệu tương ứng
         String role = selectedRoleId == R.id.radioStudent ? Constants.ROLE_STUDENT : Constants.ROLE_EMPLOYER;
-        Map<String, String> userData = new HashMap<>();
 
-        if (role.equals(Constants.ROLE_STUDENT)) {
-            String fullName = editTextStudentFullName.getText().toString().trim();
-            String school = editTextSchool.getText().toString().trim();
-            String major = editTextMajor.getText().toString().trim();
-
-            if (TextUtils.isEmpty(fullName) || TextUtils.isEmpty(school)) {
-                Toast.makeText(this, "Vui lòng điền Họ tên và Trường học.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            userData.put("fullName", fullName);
-            userData.put("school", school);
-            userData.put("major", major);
-        } else { // EMPLOYER
-            String companyName = editTextCompanyName.getText().toString().trim();
-            String address = editTextAddress.getText().toString().trim();
-            String phone = editTextPhone.getText().toString().trim();
-            String website = editTextWebsite.getText().toString().trim();
-
-            if (TextUtils.isEmpty(companyName) || TextUtils.isEmpty(address) || TextUtils.isEmpty(phone)) {
-                Toast.makeText(this, "Vui lòng điền Tên, Địa chỉ và SĐT.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            // Thêm tên của người đại diện (nếu có)
-            userData.put("fullName", companyName);
-            userData.put("companyName", companyName);
-            userData.put("address", address);
-            userData.put("phone", phone);
-            userData.put("website", website);
-        }
+        // KHÔNG CẦN THU THẬP additionalData VÀO MAP CHUNG NỮA
+        // SẼ THU THẬP TRỰC TIẾP TRONG saveUserToFirestore DỰA TRÊN VAI TRÒ
 
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
             Toast.makeText(this, "Vui lòng điền Email và Mật khẩu.", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        // Kiểm tra các trường bắt buộc theo vai trò
+        if (role.equals(Constants.ROLE_STUDENT)) {
+            String fullName = editTextStudentFullName.getText().toString().trim();
+            String school = editTextSchool.getText().toString().trim();
+            if (TextUtils.isEmpty(fullName) || TextUtils.isEmpty(school)) {
+                Toast.makeText(this, "Vui lòng điền Họ tên và Trường học.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        } else { // EMPLOYER
+            String companyName = editTextCompanyName.getText().toString().trim();
+            String address = editTextAddress.getText().toString().trim();
+            String phone = editTextPhone.getText().toString().trim();
+            if (TextUtils.isEmpty(companyName) || TextUtils.isEmpty(address) || TextUtils.isEmpty(phone)) {
+                Toast.makeText(this, "Vui lòng điền Tên công ty, Địa chỉ và SĐT.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+
+
         progressBar.setVisibility(View.VISIBLE);
         buttonRegister.setEnabled(false);
 
-        // Tiến hành tạo tài khoản trên Firebase Authentication
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser firebaseUser = mAuth.getCurrentUser();
                         if (firebaseUser != null) {
-                            saveUserToFirestore(firebaseUser.getUid(), email, role, userData);
+                            // Gọi hàm lưu thông tin user cơ bản và thông tin profile chi tiết
+                            saveUserAndProfileToFirestore(firebaseUser.getUid(), email, role);
                         }
                     } else {
                         progressBar.setVisibility(View.GONE);
@@ -143,29 +128,63 @@ public class RegisterActivity extends AppCompatActivity {
                 });
     }
 
-    private void saveUserToFirestore(String userId, String email, String role, Map<String, String> additionalData) {
+    // Đổi tên hàm để phản ánh việc lưu cả user và profile
+    private void saveUserAndProfileToFirestore(String userId, String email, String role) {
+        // Bước 1: Lưu thông tin cơ bản vào collection 'users'
         Map<String, Object> userDocument = new HashMap<>();
         userDocument.put("uid", userId);
         userDocument.put("email", email);
-        userDocument.put("role", role);
-        userDocument.putAll(additionalData);
+        userDocument.put("role", role); // Chỉ lưu vai trò ở đây
 
         db.collection(Constants.USERS_COLLECTION).document(userId).set(userDocument)
                 .addOnSuccessListener(aVoid -> {
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(RegisterActivity.this, "Đăng ký thành công! Vui lòng đăng nhập lại.", Toast.LENGTH_LONG).show();
+                    // Bước 2: Lưu thông tin chi tiết vào collection 'students' hoặc 'employers'
+                    if (role.equals(Constants.ROLE_STUDENT)) {
+                        Map<String, Object> studentProfile = new HashMap<>();
+                        studentProfile.put("fullName", editTextStudentFullName.getText().toString().trim());
+                        studentProfile.put("schoolName", editTextSchool.getText().toString().trim()); // <-- Đã sửa key từ "school" sang "schoolName"
+                        studentProfile.put("major", editTextMajor.getText().toString().trim());
+                        studentProfile.put("role", Constants.ROLE_STUDENT); // Có thể thêm role vào đây để dễ truy vấn nếu cần
+                        // Thêm các trường khác nếu có
+                        studentProfile.put("experience", ""); // Khởi tạo rỗng
+                        studentProfile.put("skillsDescription", ""); // Khởi tạo rỗng
+                        studentProfile.put("cvFileName", null); // Khởi tạo rỗng
 
-                    // --- FIX: Chuyển về màn hình LoginActivity thay vì MainActivity ---
-                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                    // Xóa các activity trên cùng và đưa LoginActivity lên đầu, tránh việc người dùng nhấn back quay lại form đăng ký
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish(); // Đóng RegisterActivity
+                        db.collection(Constants.STUDENTS_COLLECTION).document(userId).set(studentProfile)
+                                .addOnSuccessListener(bVoid -> handleRegistrationSuccess())
+                                .addOnFailureListener(e -> handleRegistrationFailure("Lỗi khi lưu hồ sơ sinh viên: " + e.getMessage()));
+                    } else { // EMPLOYER
+                        Map<String, Object> employerProfile = new HashMap<>();
+                        employerProfile.put("companyName", editTextCompanyName.getText().toString().trim());
+                        employerProfile.put("address", editTextAddress.getText().toString().trim());
+                        employerProfile.put("phone", editTextPhone.getText().toString().trim());
+                        employerProfile.put("website", editTextWebsite.getText().toString().trim());
+                        employerProfile.put("fullName", editTextCompanyName.getText().toString().trim()); // Lưu tên công ty vào fullName cho đồng bộ
+                        employerProfile.put("role", Constants.ROLE_EMPLOYER); // Có thể thêm role vào đây
+                        // Thêm các trường khác nếu có
+
+                        db.collection(Constants.EMPLOYERS_COLLECTION).document(userId).set(employerProfile)
+                                .addOnSuccessListener(bVoid -> handleRegistrationSuccess())
+                                .addOnFailureListener(e -> handleRegistrationFailure("Lỗi khi lưu hồ sơ nhà tuyển dụng: " + e.getMessage()));
+                    }
                 })
-                .addOnFailureListener(e -> {
-                    progressBar.setVisibility(View.GONE);
-                    buttonRegister.setEnabled(true);
-                    Toast.makeText(RegisterActivity.this, "Lỗi khi lưu thông tin: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                });
+                .addOnFailureListener(e -> handleRegistrationFailure("Lỗi khi lưu thông tin người dùng cơ bản: " + e.getMessage()));
+    }
+
+    private void handleRegistrationSuccess() {
+        progressBar.setVisibility(View.GONE);
+        Toast.makeText(RegisterActivity.this, "Đăng ký thành công! Vui lòng đăng nhập.", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    private void handleRegistrationFailure(String errorMessage) {
+        progressBar.setVisibility(View.GONE);
+        buttonRegister.setEnabled(true);
+        Toast.makeText(RegisterActivity.this, "Đăng ký thất bại: " + errorMessage, Toast.LENGTH_LONG).show();
+        // Có thể thêm logic xóa user khỏi Auth nếu bước Firestore thất bại
+        // Ví dụ: mAuth.getCurrentUser().delete();
     }
 }
