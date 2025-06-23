@@ -117,9 +117,9 @@
         private void setupRecyclerViews() {
             // Query cho các công việc nổi bật (5 công việc mới nhất)
             Query featuredQuery = db.collection(Constants.JOBS_COLLECTION)
-                    .whereEqualTo("approved", false)
+//                    .whereEqualTo("approved", false)
                     .whereEqualTo("featured", true)
-                    .orderBy("createdAt", Query.Direction.DESCENDING)
+//                    .orderBy("createdAt", Query.Direction.DESCENDING)
                     .limit(5);
             recyclerViewFeaturedJobs.setHasFixedSize(true);
             FirestoreRecyclerOptions<Job> featuredOptions = new FirestoreRecyclerOptions.Builder<Job>()
@@ -132,9 +132,9 @@
 
             // Query cho các công việc phổ biến (tất cả các công việc còn lại)
             Query popularQuery = db.collection(Constants.JOBS_COLLECTION)
-                    .whereEqualTo("approved", false)
-                    .whereEqualTo("featured", false)
-                    .orderBy("createdAt", Query.Direction.DESCENDING);
+//                    .whereEqualTo("approved", false)
+                    .whereEqualTo("featured", false);
+//                    .orderBy("createdAt", Query.Direction.DESCENDING);
 
             FirestoreRecyclerOptions<Job> popularOptions = new FirestoreRecyclerOptions.Builder<Job>()
                     .setQuery(popularQuery, Job.class)

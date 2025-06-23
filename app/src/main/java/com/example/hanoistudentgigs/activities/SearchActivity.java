@@ -149,8 +149,8 @@ public class SearchActivity extends AppCompatActivity {
         Log.d("SearchActivity", "Starting performSearch() for keyword: '" + currentSearchText + "' and filter: " + currentFilter.toString());
 
         // Xây dựng truy vấn Firestore dựa trên từ khóa tìm kiếm và bộ lọc
-        Query query = db.collection(Constants.JOBS_COLLECTION)
-                .whereEqualTo("approved", false);
+        Query query = db.collection(Constants.JOBS_COLLECTION);
+//                .whereEqualTo("approved", false);
 
 
         if (currentFilter.getCategory() != null && !currentFilter.getCategory().isEmpty()) {
