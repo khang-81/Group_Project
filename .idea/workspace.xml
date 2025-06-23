@@ -75,6 +75,11 @@
           <theme>@style/Theme.HanoiStudentGigs</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_filter.xml">
+        <config>
+          <theme>@style/Theme.HanoiStudentGigs</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_forgot_password.xml">
         <config>
           <theme>@style/Theme.HanoiStudentGigs</theme>
@@ -141,11 +146,6 @@
         </config>
       </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_student_home.xml">
-        <config>
-          <theme>@style/Theme.HanoiStudentGigs</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_student_profile.xml">
         <config>
           <theme>@style/Theme.HanoiStudentGigs</theme>
         </config>
@@ -239,6 +239,9 @@
         <option value="layoutResourceFile" />
       </list>
     </option>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="origin/main" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -392,12 +395,12 @@
       <map>
         <entry key="com.example.hanoistudentgigs">
           <value>
-            <CheckInfo lastCheckTimestamp="1750591993681" />
+            <CheckInfo lastCheckTimestamp="1750692621415" />
           </value>
         </entry>
         <entry key="com.example.hanoistudentgigs.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1750591993680" />
+            <CheckInfo lastCheckTimestamp="1750692621413" />
           </value>
         </entry>
       </map>
