@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.hanoistudentgigs.R;
 import com.example.hanoistudentgigs.activities.LoginActivity;
+import com.example.hanoistudentgigs.activities.TrangChuActivity;
 import com.example.hanoistudentgigs.fragments.admin.AdminApproveJobsFragment;
 import com.example.hanoistudentgigs.fragments.admin.AdminDashboardFragment;
 //import com.example.hanoistudentgigs.fragments.admin.AdminManageUsersFragment;
@@ -141,7 +142,9 @@ public class MainActivity extends AppCompatActivity {
             case Constants.ROLE_STUDENT:
                 return new StudentHomeFragment();
             case Constants.ROLE_EMPLOYER:
-                return new EmployerDashboardFragment();
+                startActivity(new Intent(this, TrangChuActivity.class));
+                finish(); // Đóng Activity hiện tại để tránh quay lại Fragment cũ
+                return null; // Không trả về Fragment nữa
             case Constants.ROLE_ADMIN:
                 return new AdminDashboardFragment();
             default:

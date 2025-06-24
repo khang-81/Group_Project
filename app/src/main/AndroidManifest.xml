@@ -86,6 +86,11 @@
         <activity android:name=".activities.QLTinActivity" android:exported="false" />
         <activity android:name=".activities.XemTinActivity" android:exported="false" />
         <activity android:name=".activities.SuaTinActivity" android:exported="false" />
+        <activity android:name=".activities.TrangChuActivity" android:exported="false" />
+        <activity android:name=".activities.HoSoActivity" />
+        <activity android:name=".activities.HoSoEditActivity" />
+
+
 
 
     </application>

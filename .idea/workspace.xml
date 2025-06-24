@@ -75,12 +75,22 @@
           <theme>@style/Theme.HanoiStudentGigs</theme>
         </config>
       </layout>
-      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_all_applicants.xml">
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_search_large.xml">
         <config>
           <theme>@style/Theme.HanoiStudentGigs</theme>
         </config>
       </layout>
-      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_all_jobs.xml">
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_work_24.xml">
+        <config>
+          <theme>@style/Theme.HanoiStudentGigs</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/logo_background.xml">
+        <config>
+          <theme>@style/Theme.HanoiStudentGigs</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/search_bar_background.xml">
         <config>
           <theme>@style/Theme.HanoiStudentGigs</theme>
         </config>
@@ -91,6 +101,16 @@
         </config>
       </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_forgot_password.xml">
+        <config>
+          <theme>@style/Theme.HanoiStudentGigs</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_hoso.xml">
+        <config>
+          <theme>@style/Theme.HanoiStudentGigs</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_hosoedit.xml">
         <config>
           <theme>@style/Theme.HanoiStudentGigs</theme>
         </config>
@@ -130,7 +150,22 @@
           <theme>@style/Theme.HanoiStudentGigs</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_role_selection.xml">
+        <config>
+          <theme>@style/Theme.HanoiStudentGigs</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_splash.xml">
+        <config>
+          <theme>@style/Theme.HanoiStudentGigs</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_trangchu.xml">
+        <config>
+          <theme>@style/Theme.HanoiStudentGigs</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_xemtin.xml">
         <config>
           <theme>@style/Theme.HanoiStudentGigs</theme>
         </config>
@@ -151,6 +186,11 @@
         </config>
       </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_employer_dashboard.xml">
+        <config>
+          <theme>@style/Theme.HanoiStudentGigs</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_profile.xml">
         <config>
           <theme>@style/Theme.HanoiStudentGigs</theme>
         </config>
@@ -190,12 +230,27 @@
           <theme>@style/Theme.HanoiStudentGigs</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_employer_job.xml">
+        <config>
+          <theme>@style/Theme.HanoiStudentGigs</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_featured_job_card.xml">
+        <config>
+          <theme>@style/Theme.HanoiStudentGigs</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_job.xml">
         <config>
           <theme>@style/Theme.HanoiStudentGigs</theme>
         </config>
       </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_job_card.xml">
+        <config>
+          <theme>@style/Theme.HanoiStudentGigs</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_popular_job_card.xml">
         <config>
           <theme>@style/Theme.HanoiStudentGigs</theme>
         </config>
@@ -220,6 +275,11 @@
           <theme>@style/Theme.HanoiStudentGigs</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/menu/menu_bottom_nav.xml">
+        <config>
+          <theme>@style/Theme.HanoiStudentGigs</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/menu/student_bottom_navigation_menu.xml">
         <config>
           <theme>@style/Theme.HanoiStudentGigs</theme>
@@ -232,13 +292,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="12f09ce9-6b63-41e4-bd31-a9c8f7130f68" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/HoSoActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/HoSoEditActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_hoso.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_hosoedit.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_bottom_nav.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/DangTinActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/DangTinActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/DsUngVienActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/DsUngVienActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/QLTinActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/QLTinActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/SuaTinActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/SuaTinActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/TrangChuActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/TrangChuActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/XemTinActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/XemTinActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/adapters/JobManageAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/adapters/JobManageAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_trangchu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_trangchu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_xemtin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_xemtin.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_job.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_job.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/libs.versions.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -248,7 +319,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\Windows\.android\avd\Medium_Phone.avd)]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=PhysicalDevice, isTemplate=false, identifier=serial=ZP7949HEONSSVCHQ)]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -257,9 +328,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="resourceFile" />
         <option value="layoutResourceFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -267,20 +338,28 @@
     <option name="BRANCH" value="origin/NguyenKhanhDuy" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="TaDucKhang" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "NhungTuyetLe"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;khang-81&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/khang-81/Group_Project.git",
-    "accountId": "4967bc2b-2faa-4c90-a704-4b95204af28d"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/khang-81/Group_Project.git&quot;,
+    &quot;accountId&quot;: &quot;4967bc2b-2faa-4c90-a704-4b95204af28d&quot;
   }
-}]]></component>
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -300,16 +379,16 @@
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "LeThiTuyetNhung",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Windows/Desktop/clone/Group_Project",
+    "last_opened_file_path": "C:/Users/Windows/Desktop/clone/Group_Project_New",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.17",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "AndroidSdkUpdater"
+    "settings.editor.selected.configurable": "preferences.general"
   }
 }]]></component>
-  <component name="RunManager" selected="Android App.App">
+  <component name="RunManager" selected="Android App.app">
     <configuration name="App" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
       <module name="HanoiStudentGigs.App" />
       <option name="ANDROID_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
@@ -383,6 +462,7 @@
       </method>
     </configuration>
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="HanoiStudentGigs.app" />
       <option name="ANDROID_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
       <option name="DEPLOY" value="true" />
       <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
@@ -477,15 +557,6 @@
     </option>
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/DangTinActivity.java</url>
-          <line>22</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="com.google.firebase.firestore.Query" memberName="query" />
@@ -497,12 +568,12 @@
       <map>
         <entry key="com.example.hanoistudentgigs">
           <value>
-            <CheckInfo lastCheckTimestamp="1750692792096" />
+            <CheckInfo lastCheckTimestamp="1750779816175" />
           </value>
         </entry>
         <entry key="com.example.hanoistudentgigs.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1750692792097" />
+            <CheckInfo lastCheckTimestamp="1750779816175" />
           </value>
         </entry>
       </map>
