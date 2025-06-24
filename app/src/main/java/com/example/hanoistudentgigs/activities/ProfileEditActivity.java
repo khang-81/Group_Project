@@ -99,7 +99,7 @@ public class ProfileEditActivity extends AppCompatActivity {
                     editTextEditSchool.setText(document.getString("schoolName"));
                     editTextEditMajor.setText(document.getString("major"));
                     editTextEditYear.setText(document.getString("year"));
-                    editTextEditStudentPhone.setText(document.getString("phone"));
+                    editTextEditStudentPhone.setText(document.getString("phone") != null ? document.getString("phone") : document.getString("SDT"));
                     editTextEditSkills.setText(document.getString("skillsDescription"));
                     editTextEditExperience.setText(document.getString("experience"));
                 } else if (Constants.ROLE_EMPLOYER.equals(userRole)) {
@@ -110,7 +110,7 @@ public class ProfileEditActivity extends AppCompatActivity {
                     editTextEditEmployerEmail.setText(document.getString("email"));
                     editTextEditCompanyName.setText(document.getString("companyName"));
                     editTextEditAddress.setText(document.getString("address"));
-                    editTextEditPhone.setText(document.getString("phone"));
+                    editTextEditPhone.setText(document.getString("phone") != null ? document.getString("phone") : document.getString("SDT"));
                     editTextEditWebsite.setText(document.getString("website"));
                 }
             }

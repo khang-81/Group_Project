@@ -1,0 +1,83 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ========================
+    // FUNCTIONS (Hàm hỗ trợ)
+    // ========================
+    function isAdmin() {
+      return request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'ADMIN';
+    }
+    function isEmployer() {
+      return request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'EMPLOYER';
+    }
+    function isStudent() {
+      return request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'STUDENT';
+    }
+
+    // ========================
+    // USERS
+    // ========================
+    match /users/{userId} {
+      allow read: if request.auth != null || isAdmin();
+      allow create: if request.auth.uid == userId || isAdmin();
+      allow update: if request.auth.uid == userId || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ========================
+    // JOBS
+    // ========================
+    match /jobs/{jobId} {
+      allow read: if request.auth != null || isAdmin();
+      allow create: if (isEmployer() && request.resource.data.employerUid == request.auth.uid) || isAdmin();
+      allow update: if (isEmployer() && resource.data.employerUid == request.auth.uid) || isAdmin();
+      allow delete: if (isEmployer() && resource.data.employerUid == request.auth.uid) || isAdmin();
+    }
+
+    // ========================
+    // APPLICATIONS
+    // ========================
+    match /applications/{applicationId} {
+      allow read: if (isStudent() && resource.data.studentUid == request.auth.uid) ||
+                     (isEmployer() && get(/databases/$(database)/documents/jobs/$(resource.data.jobId)).data.employerUid == request.auth.uid) ||
+                     isAdmin();
+      allow create: if (isStudent() && request.resource.data.studentUid == request.auth.uid) || isAdmin();
+      allow update: if (isStudent() && resource.data.studentUid == request.auth.uid) ||
+                     (isEmployer() && get(/databases/$(database)/documents/jobs/$(resource.data.jobId)).data.employerUid == request.auth.uid) ||
+                     isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ========================
+    // CATEGORIES, SKILLS, LOCATIONS
+    // ========================
+    match /categories/{categoryId} {
+      allow read: if request.auth != null || isAdmin();
+      allow write: if isAdmin();
+    }
+    match /skills/{skillId} {
+      allow read: if request.auth != null || isAdmin();
+      allow write: if isAdmin();
+    }
+    match /locations/{locationId} {
+      allow read: if request.auth != null || isAdmin();
+      allow write: if isAdmin();
+    }
+
+    // ========================
+    // STUDENTS, EMPLOYERS (nếu còn dùng)
+    // ========================
+    match /students/{studentId} {
+      allow read: if request.auth != null || isAdmin();
+      allow create, update: if request.auth.uid == studentId || isAdmin();
+      allow delete: if isAdmin();
+    }
+    match /employers/{employerId} {
+      allow read: if request.auth != null || isAdmin();
+      allow create, update: if request.auth.uid == employerId || isAdmin();
+      allow delete: if isAdmin();
+    }
+  }
+}

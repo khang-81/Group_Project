@@ -48,7 +48,7 @@ public class AdminJobAdapter extends FirestoreRecyclerAdapter<Job, AdminJobAdapt
 
         // Cập nhật trạng thái nút "Duyệt"
         holder.btnApproveJob.setVisibility(View.VISIBLE); // Luôn hiển thị nút
-        if (job.isApproved()) {
+        if (job.getApproved()) {
             holder.btnApproveJob.setText("Đã duyệt");
             holder.btnApproveJob.setEnabled(false);
             holder.btnApproveJob.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#BDBDBD"))); // Màu xám

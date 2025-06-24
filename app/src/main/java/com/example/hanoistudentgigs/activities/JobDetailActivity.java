@@ -56,6 +56,7 @@ public class JobDetailActivity extends AppCompatActivity {
 
         // Nhận jobId từ Intent đã gửi từ JobAdapter
         jobId = getIntent().getStringExtra("JOB_ID");
+        android.util.Log.d("JobDetailActivity", "JOB_ID from Intent: " + jobId);
 
         // Ẩn nút Nộp đơn nếu là admin
         boolean isAdmin = getIntent().getBooleanExtra("IS_ADMIN", false);
@@ -96,10 +97,22 @@ public class JobDetailActivity extends AppCompatActivity {
                             textViewDetailJobType.setText(document.getString("jobType"));
                             textViewDetailCategory.setText(document.getString("categoryName"));
                             Glide.with(this).load(document.getString("companyLogoUrl")).placeholder(R.drawable.default_company_logo_placeholder).into(imageViewCompanyLogo);
-
-                            // Check if student has already applied
+                            // Hiển thị các trường bổ sung bằng log hoặc Toast
+                            android.util.Log.d("JobDetailActivity", "active: " + document.getBoolean("active"));
+                            android.util.Log.d("JobDetailActivity", "approved: " + document.getBoolean("approved"));
+                            android.util.Log.d("JobDetailActivity", "contact: " + document.getString("contact"));
+                            android.util.Log.d("JobDetailActivity", "createdAt: " + document.get("createdAt"));
+                            android.util.Log.d("JobDetailActivity", "featured: " + document.getBoolean("featured"));
+                            android.util.Log.d("JobDetailActivity", "id: " + document.getString("id"));
+                            android.util.Log.d("JobDetailActivity", "minSalary: " + document.getLong("minSalary"));
+                            android.util.Log.d("JobDetailActivity", "postedDate: " + document.getString("postedDate"));
+                            android.util.Log.d("JobDetailActivity", "requiredSkills: " + document.get("requiredSkills"));
+                            android.util.Log.d("JobDetailActivity", "searchKeywords: " + document.get("searchKeywords"));
+                            android.util.Log.d("JobDetailActivity", "status: " + document.getString("status"));
+                            // Nếu muốn hiển thị thêm trên UI, hãy tạo thêm TextView và setText tương tự
                             checkIfApplied();
                         } else {
+                            android.util.Log.e("JobDetailActivity", "Không tìm thấy dữ liệu cho jobId: " + jobId);
                             Toast.makeText(this, "Không tìm thấy dữ liệu.", Toast.LENGTH_SHORT).show();
                         }
                     } else {

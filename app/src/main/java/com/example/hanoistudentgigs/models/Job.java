@@ -19,8 +19,8 @@ public class Job {
     private String jobType; // PartTime, Freelance, Internship
     private String categoryName;
     private List<String> requiredSkills; // Các kỹ năng yêu cầu cho công việc
-    private boolean isApproved = false;
-    private boolean isFeatured;
+    private boolean approved = false;
+    private boolean featured = false;
     private String status;
 
     private List<String> searchKeywords; // Bổ sung: Mảng chứa các từ khóa để tìm kiếm
@@ -31,12 +31,20 @@ public class Job {
     public Job() {}
 
     // --- Getters và Setters ---
-    public boolean isApproved() {  // Thêm phương thức này để phù hợp với yêu cầu
-        return isApproved;
+    public boolean getApproved() {
+        return approved;
     }
 
     public void setApproved(boolean approved) {
-        isApproved = approved;
+        this.approved = approved;
+    }
+
+    public boolean getFeatured() {
+        return featured;
+    }
+
+    public void setFeatured(boolean featured) {
+        this.featured = featured;
     }
 
     public String getId() {
@@ -181,7 +189,8 @@ public class Job {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Job job = (Job) o;
-        return isApproved == job.isApproved &&
+        return approved == job.approved &&
+                featured == job.featured &&
                 minSalary == job.minSalary &&
                 Objects.equals(id, job.id) &&
                 Objects.equals(title, job.title) &&
@@ -202,7 +211,7 @@ public class Job {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, companyName, companyLogoUrl, locationName, salaryDescription, description, requirements, employerUid, jobType, categoryName, requiredSkills, isApproved, status, searchKeywords, minSalary, createdAt);
+        return Objects.hash(id, title, companyName, companyLogoUrl, locationName, salaryDescription, description, requirements, employerUid, jobType, categoryName, requiredSkills, approved, featured, status, searchKeywords, minSalary, createdAt);
     }
 
     // --- Override toString() ---
@@ -221,7 +230,8 @@ public class Job {
                 ", jobType='" + jobType + '\'' +
                 ", categoryName='" + categoryName + '\'' +
                 ", requiredSkills=" + requiredSkills +
-                ", isApproved=" + isApproved +
+                ", approved=" + approved +
+                ", featured=" + featured +
                 ", status='" + status + '\'' +
                 ", searchKeywords=" + searchKeywords +
                 ", minSalary=" + minSalary +

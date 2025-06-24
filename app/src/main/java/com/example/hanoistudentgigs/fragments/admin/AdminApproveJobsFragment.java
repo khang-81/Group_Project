@@ -84,11 +84,8 @@ public class AdminApproveJobsFragment extends Fragment {
     }
 
     private void setupRecyclerView(String searchText) {
+        // Query tất cả jobs không lọc
         Query query = db.collection(Constants.JOBS_COLLECTION);
-
-        if (searchText != null && !searchText.trim().isEmpty()) {
-            query = query.orderBy("companyName").startAt(searchText).endAt(searchText + '\uf8ff');
-        }
 
         FirestoreRecyclerOptions<Job> options = new FirestoreRecyclerOptions.Builder<Job>()
                 .setQuery(query, Job.class)

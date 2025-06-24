@@ -33,20 +33,17 @@ public class AdminStatsFragment extends Fragment {
             int count = snapshot.size();
             tvTotalJobs.setText("Tổng số tin đăng: " + count);
         });
-        // Tổng số ứng tuyển (applications)
-        db.collection("jobs").get().addOnSuccessListener(snapshot -> {
-            final int[] totalApplications = {0};
-            if (!snapshot.isEmpty()) {
-                for (com.google.firebase.firestore.DocumentSnapshot jobDoc : snapshot.getDocuments()) {
-                    db.collection("jobs").document(jobDoc.getId()).collection("applications").get().addOnSuccessListener(appSnap -> {
-                        totalApplications[0] += appSnap.size();
-                        tvTotalApplications.setText("Số lượng ứng tuyển: " + totalApplications[0]);
-                    });
-                }
-            } else {
-                tvTotalApplications.setText("Số lượng ứng tuyển: 0");
-            }
-        });
+        // Tổng số ứng tuyển (applications) có status = 'Submitted'
+        db.collection("applications")
+          .whereEqualTo("status", "Submitted")
+          .get()
+          .addOnSuccessListener(snapshot -> {
+              int count = snapshot.size();
+              tvTotalApplications.setText("Số lượng ứng tuyển: " + count);
+          })
+          .addOnFailureListener(e -> {
+              tvTotalApplications.setText("Số lượng ứng tuyển: ...");
+          });
         // Tổng số tài khoản student
         db.collection("users").whereEqualTo("role", "STUDENT").get().addOnSuccessListener(snapshot -> {
             int count = snapshot.size();
