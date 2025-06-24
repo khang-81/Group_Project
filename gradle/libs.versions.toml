@@ -22,7 +22,7 @@ firebase-bom = "33.15.0" # Sử dụng phiên bản BOM mới nhất
 firebase-ui-firestore = "8.0.2" # firebase-ui cần phiên bản riêng
 
 # Gradle Plugin
-agp = "8.9.2"
+agp = "8.10.1"
 
 [libraries]
 # Android Core & UI
