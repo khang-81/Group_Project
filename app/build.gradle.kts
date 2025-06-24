@@ -48,6 +48,8 @@ dependencies {
     // FirebaseUI for Firestore (cần chỉ định version nếu không dùng BOM cho nó)
     implementation(libs.firebase.ui.firestore)
 
+    implementation (libs.glide)
+    annotationProcessor (libs.compiler)
 
     // Thư viện AndroidX và Material Design
     implementation(libs.appcompat) // Sử dụng tên alias ngắn gọn nếu đã khai báo trong libs.versions.toml

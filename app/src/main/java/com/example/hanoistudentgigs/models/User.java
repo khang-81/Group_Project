@@ -6,36 +6,29 @@ public class User {
     private String email;
     private String role;
     private String cvUrl;
-    private String companyName;
-    private String school;
     private String phone;
-
     private boolean verified = false;
 
+    // --- TRƯỜNG BỊ THIẾU GÂY RA LỖI ---
+    private String profileImageUrl; // <-- ĐÃ THÊM
+
+    // --- Trường dành cho Student ---
     private String schoolName;
     private String major;
     private String year;
     private String experience;
     private String skillsDescription;
+
+    // --- Trường dành cho Employer ---
+    private String companyName;
     private String address;
     private String website;
 
     // Constructor rỗng
     public User() {}
 
-    // Constructor đầy đủ (optional, có thể sử dụng nếu cần khởi tạo đối tượng nhanh chóng)
-    public User(String uid, String fullName, String email, String role, String cvUrl, String companyName, String school, String phone) {
-        this.uid = uid;
-        this.fullName = fullName;
-        this.email = email;
-        this.role = role;
-        this.cvUrl = cvUrl;
-        this.companyName = companyName;
-        this.school = school;
-        this.phone = phone;
-    }
-
     // Getter và Setter cho từng trường
+
     public String getUid() {
         return uid;
     }
@@ -84,14 +77,6 @@ public class User {
         this.companyName = companyName;
     }
 
-    public String getSchool() {
-        return school;
-    }
-
-    public void setSchool(String school) {
-        this.school = school;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -100,27 +85,76 @@ public class User {
         this.phone = phone;
     }
 
-    public boolean isVerified() { return verified; }
-    public void setVerified(boolean verified) { this.verified = verified; }
+    public boolean isVerified() {
+        return verified;
+    }
 
-    public String getSchoolName() { return schoolName; }
-    public void setSchoolName(String schoolName) { this.schoolName = schoolName; }
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
 
-    public String getMajor() { return major; }
-    public void setMajor(String major) { this.major = major; }
+    public String getSchoolName() {
+        return schoolName;
+    }
 
-    public String getYear() { return year; }
-    public void setYear(String year) { this.year = year; }
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
+    }
 
-    public String getExperience() { return experience; }
-    public void setExperience(String experience) { this.experience = experience; }
+    public String getMajor() {
+        return major;
+    }
 
-    public String getSkillsDescription() { return skillsDescription; }
-    public void setSkillsDescription(String skillsDescription) { this.skillsDescription = skillsDescription; }
+    public void setMajor(String major) {
+        this.major = major;
+    }
 
-    public String getAddress() { return address; }
-    public void setAddress(String address) { this.address = address; }
+    public String getYear() {
+        return year;
+    }
 
-    public String getWebsite() { return website; }
-    public void setWebsite(String website) { this.website = website; }
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
+    }
+
+    public String getSkillsDescription() {
+        return skillsDescription;
+    }
+
+    public void setSkillsDescription(String skillsDescription) {
+        this.skillsDescription = skillsDescription;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    // --- GETTER VÀ SETTER BỊ THIẾU ĐÃ ĐƯỢC THÊM VÀO ---
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
 }

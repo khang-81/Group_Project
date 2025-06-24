@@ -1,190 +1,281 @@
 package com.example.hanoistudentgigs.activities;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView; // Thêm import cho TextView
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.bumptech.glide.Glide;
+import com.example.hanoistudentgigs.R;
+import com.example.hanoistudentgigs.models.User;
+import com.example.hanoistudentgigs.utils.Constants;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.example.hanoistudentgigs.R;
-import com.example.hanoistudentgigs.utils.Constants;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileEditActivity extends AppCompatActivity {
-    // Views cho Sinh viên
-    private LinearLayout studentFieldsLayout;
-    private TextInputEditText editTextEditStudentFullName, editTextEditSchool, editTextEditMajor, editTextEditSkills, editTextEditExperience, editTextEditYear, editTextEditStudentPhone;
+    private static final String TAG = "ProfileEditActivity";
 
-    private Uri cvFileUri;
-
-    // Views cho Nhà tuyển dụng
-    private LinearLayout employerFieldsLayout;
-    private TextInputEditText editTextEditCompanyName, editTextEditAddress, editTextEditPhone, editTextEditWebsite;
-
-    private ActivityResultLauncher<String> selectCvLauncher;
+    // Views chung
+    private CircleImageView imageViewProfile;
     private Button buttonSaveChanges;
-    private FirebaseFirestore db;
-    private FirebaseAuth mAuth;
-    private String userRole;
-    private String userIdToEdit;
+    private Uri imageUri, cvFileUri;
+
+    // Views cho Student
+    private LinearLayout studentFieldsContainer;
+    private TextInputEditText editTextStudentFullName, editTextSchool, editTextMajor, editTextYear, editTextSkills, editTextExperience;
+    private Button buttonUploadCv;
     private TextView textViewCvFileName;
+
+    // Views cho Employer
+    private LinearLayout employerFieldsContainer;
+    private TextInputEditText editTextCompanyName, editTextAddress, editTextPhone, editTextWebsite;
+
+    // Firebase
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+    private FirebaseStorage storage;
+
+    private String currentUserRole;
+    private User currentUserData;
+
+    // --- ActivityResultLaunchers để chọn ảnh và tệp ---
+    private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null && result.getData().getData() != null) {
+                    imageUri = result.getData().getData();
+                    imageViewProfile.setImageURI(imageUri);
+                }
+            });
+
+    private final ActivityResultLauncher<Intent> filePickerLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null && result.getData().getData() != null) {
+                    cvFileUri = result.getData().getData();
+                    textViewCvFileName.setText(getFileNameFromUri(cvFileUri));
+                }
+            });
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_edit);
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
-        db = FirebaseFirestore.getInstance();
+        // Khởi tạo Firebase
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
 
-        // Check if an admin is editing a user profile
-        if (getIntent().hasExtra("USER_ID")) {
-            userIdToEdit = getIntent().getStringExtra("USER_ID");
-        } else if (mAuth.getCurrentUser() != null) {
-            userIdToEdit = mAuth.getCurrentUser().getUid();
-        } else {
-            Toast.makeText(this, "Không tìm thấy người dùng.", Toast.LENGTH_SHORT).show();
+        // Ánh xạ Views
+        initViews();
+
+        // Lấy dữ liệu người dùng và thiết lập giao diện
+        loadUserData();
+
+        // Thiết lập sự kiện click
+        imageViewProfile.setOnClickListener(v -> openImagePicker());
+        buttonUploadCv.setOnClickListener(v -> openFilePicker());
+        buttonSaveChanges.setOnClickListener(v -> saveAllChanges());
+    }
+
+    private void initViews() {
+        // Views chung
+        imageViewProfile = findViewById(R.id.imageViewProfileEdit);
+        buttonSaveChanges = findViewById(R.id.buttonSaveChanges);
+
+        // Containers
+        studentFieldsContainer = findViewById(R.id.studentFieldsContainer);
+        employerFieldsContainer = findViewById(R.id.employerFieldsContainer);
+
+        // Student Views
+        editTextStudentFullName = findViewById(R.id.editTextEditStudentFullName);
+        editTextSchool = findViewById(R.id.editTextEditSchool);
+        editTextMajor = findViewById(R.id.editTextEditMajor);
+        editTextYear = findViewById(R.id.editTextEditYear); // Giả định ID này tồn tại
+        editTextSkills = findViewById(R.id.editTextEditSkills);
+        editTextExperience = findViewById(R.id.editTextEditExperience);
+        buttonUploadCv = findViewById(R.id.buttonUploadCv);
+        textViewCvFileName = findViewById(R.id.textViewCvFileName);
+
+        // Employer Views
+        editTextCompanyName = findViewById(R.id.editTextEditCompanyName);
+        editTextAddress = findViewById(R.id.editTextEditAddress);
+        editTextPhone = findViewById(R.id.editTextEditPhone);
+        editTextWebsite = findViewById(R.id.editTextEditWebsite);
+    }
+
+    private void loadUserData() {
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        if (firebaseUser == null) {
+            Toast.makeText(this, "Người dùng chưa đăng nhập.", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
-        studentFieldsLayout = findViewById(R.id.studentFieldsLayout);
-        editTextEditStudentFullName = findViewById(R.id.editTextEditStudentFullName);
-        editTextEditSchool = findViewById(R.id.editTextEditSchool);
-        editTextEditMajor = findViewById(R.id.editTextEditMajor);
-//        editTextEditYear = findViewById(R.id.editTextEditYear);
-//        editTextEditStudentPhone = findViewById(R.id.editTextEditStudentPhone);
-        editTextEditSkills = findViewById(R.id.editTextEditSkills);
-        editTextEditExperience = findViewById(R.id.editTextEditExperience);
 
-        employerFieldsLayout = findViewById(R.id.employerFieldsLayout);
-        editTextEditCompanyName = findViewById(R.id.editTextEditCompanyName);
-        editTextEditAddress = findViewById(R.id.editTextEditAddress);
-        editTextEditPhone = findViewById(R.id.editTextEditPhone);
-        editTextEditWebsite = findViewById(R.id.editTextEditWebsite);
-
-        buttonSaveChanges = findViewById(R.id.buttonSaveChanges);
-        textViewCvFileName = findViewById(R.id.textViewCvFileName);
-
-        // Khởi tạo selectCvLauncher sau khi đã ánh xạ textViewCvFileName
-        selectCvLauncher = registerForActivityResult(
-                new ActivityResultContracts.GetContent(),
-                uri -> {
-                    if (uri != null) {
-                        cvFileUri = uri;
-                        Log.d("CV_UPLOAD", "Selected CV URI: " + uri.toString());
-                        textViewCvFileName.setText(getFileNameFromUri(uri));
-                        // TODO: Xử lý upload file nếu cần
+        String uid = firebaseUser.getUid();
+        db.collection(Constants.USERS_COLLECTION).document(uid).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        currentUserData = documentSnapshot.toObject(User.class);
+                        if (currentUserData != null) {
+                            currentUserRole = currentUserData.getRole();
+                            populateUI();
+                        }
                     } else {
-                        cvFileUri = null;
-                        Log.d("CV_UPLOAD", "No CV selected or selection cancelled.");
-                        textViewCvFileName.setText("Chưa có tệp CV nào được chọn");
+                        Toast.makeText(this, "Không tìm thấy dữ liệu người dùng.", Toast.LENGTH_SHORT).show();
                     }
-                }
-        );
-
-        loadCurrentProfile();
-
-        buttonSaveChanges.setOnClickListener(v -> saveChanges());
-
+                })
+                .addOnFailureListener(e -> Toast.makeText(this, "Lỗi khi tải dữ liệu.", Toast.LENGTH_SHORT).show());
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
+    private void populateUI() {
+        if (currentUserData == null || currentUserRole == null) return;
+
+        // Điền ảnh đại diện
+        if (currentUserData.getProfileImageUrl() != null && !currentUserData.getProfileImageUrl().isEmpty()) {
+            Glide.with(this).load(currentUserData.getProfileImageUrl()).into(imageViewProfile);
+        }
+
+        // Hiển thị các trường dựa trên vai trò
+        if (Constants.ROLE_STUDENT.equals(currentUserRole)) {
+            studentFieldsContainer.setVisibility(View.VISIBLE);
+            employerFieldsContainer.setVisibility(View.GONE);
+
+            editTextStudentFullName.setText(currentUserData.getFullName());
+            editTextSchool.setText(currentUserData.getSchoolName());
+            editTextMajor.setText(currentUserData.getMajor());
+            editTextYear.setText(currentUserData.getYear());
+            editTextSkills.setText(currentUserData.getSkillsDescription());
+            editTextExperience.setText(currentUserData.getExperience());
+            textViewCvFileName.setText(currentUserData.getCvUrl() != null ? "CV đã được tải lên" : "Chưa có tệp CV nào được chọn");
+
+        } else if (Constants.ROLE_EMPLOYER.equals(currentUserRole)) {
+            studentFieldsContainer.setVisibility(View.GONE);
+            employerFieldsContainer.setVisibility(View.VISIBLE);
+
+            editTextCompanyName.setText(currentUserData.getCompanyName());
+            editTextAddress.setText(currentUserData.getAddress());
+            editTextPhone.setText(currentUserData.getPhone());
+            editTextWebsite.setText(currentUserData.getWebsite());
+        }
     }
 
-    private void loadCurrentProfile() {
-        if (userIdToEdit == null) return;
+    private void saveAllChanges() {
+        if (imageUri != null) {
+            uploadImageAndThenSaveData();
+        } else if (cvFileUri != null) {
+            uploadCvAndThenSaveData(null);
+        } else {
+            saveDataToFirestore(null, null);
+        }
+    }
 
-        db.collection(Constants.USERS_COLLECTION).document(userIdToEdit).get().addOnSuccessListener(document -> {
-            if (document.exists()) {
-                userRole = document.getString("role");
-                if (Constants.ROLE_STUDENT.equals(userRole)) {
-                    // Hiển thị form cho Sinh viên và điền dữ liệu
-                    studentFieldsLayout.setVisibility(View.VISIBLE);
-                    employerFieldsLayout.setVisibility(View.GONE);
-                    editTextEditStudentFullName.setText(document.getString("fullName"));
-                    editTextEditSchool.setText(document.getString("schoolName"));
-                    editTextEditMajor.setText(document.getString("major"));
-                    editTextEditYear.setText(document.getString("year"));
-                    editTextEditStudentPhone.setText(document.getString("phone"));
-                    editTextEditSkills.setText(document.getString("skillsDescription"));
-                    editTextEditExperience.setText(document.getString("experience"));
-                } else if (Constants.ROLE_EMPLOYER.equals(userRole)) {
-                    // Hiển thị form cho Nhà tuyển dụng và điền dữ liệu
-                    studentFieldsLayout.setVisibility(View.GONE);
-                    employerFieldsLayout.setVisibility(View.VISIBLE);
-                    editTextEditCompanyName.setText(document.getString("companyName"));
-                    editTextEditAddress.setText(document.getString("address"));
-                    editTextEditPhone.setText(document.getString("phone"));
-                    editTextEditWebsite.setText(document.getString("website"));
-                }
+    private void uploadImageAndThenSaveData() {
+        // Tải ảnh đại diện lên trước
+        final StorageReference imageRef = storage.getReference().child("profile_images/" + mAuth.getCurrentUser().getUid());
+        imageRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+            String imageUrl = uri.toString();
+            if (cvFileUri != null) {
+                uploadCvAndThenSaveData(imageUrl);
+            } else {
+                saveDataToFirestore(imageUrl, currentUserData.getCvUrl());
             }
-
-        });
+        })).addOnFailureListener(e -> Toast.makeText(this, "Lỗi tải ảnh đại diện", Toast.LENGTH_SHORT).show());
     }
 
-    private void saveChanges() {
-        if (userIdToEdit == null) return;
+    private void uploadCvAndThenSaveData(String imageUrl) {
+        // Tải tệp CV lên
+        final StorageReference cvRef = storage.getReference().child("cvs/" + mAuth.getCurrentUser().getUid() + "/" + getFileNameFromUri(cvFileUri));
+        cvRef.putFile(cvFileUri).addOnSuccessListener(taskSnapshot -> cvRef.getDownloadUrl().addOnSuccessListener(uri -> {
+            String cvUrl = uri.toString();
+            saveDataToFirestore(imageUrl, cvUrl);
+        })).addOnFailureListener(e -> Toast.makeText(this, "Lỗi tải tệp CV", Toast.LENGTH_SHORT).show());
+    }
 
+    private void saveDataToFirestore(String newImageUrl, String newCvUrl) {
+        String uid = mAuth.getCurrentUser().getUid();
         Map<String, Object> updates = new HashMap<>();
 
-        if (Constants.ROLE_STUDENT.equals(userRole)) {
-            updates.put("fullName", editTextEditStudentFullName.getText().toString().trim());
-            updates.put("schoolName", editTextEditSchool.getText().toString().trim());
-            updates.put("major", editTextEditMajor.getText().toString().trim());
-            updates.put("year", editTextEditYear.getText().toString().trim());
-            updates.put("phone", editTextEditStudentPhone.getText().toString().trim());
-            updates.put("skillsDescription", editTextEditSkills.getText().toString().trim());
-            updates.put("experience", editTextEditExperience.getText().toString().trim());
-        } else if (Constants.ROLE_EMPLOYER.equals(userRole)) {
-            updates.put("companyName", editTextEditCompanyName.getText().toString().trim());
-            updates.put("address", editTextEditAddress.getText().toString().trim());
-            updates.put("phone", editTextEditPhone.getText().toString().trim());
-            updates.put("website", editTextEditWebsite.getText().toString().trim());
+        if (newImageUrl != null) {
+            updates.put("profileImageUrl", newImageUrl);
+        }
+        if (newCvUrl != null) {
+            updates.put("cvUrl", newCvUrl);
         }
 
-        db.collection(Constants.USERS_COLLECTION).document(userIdToEdit).update(updates)
+        if (Constants.ROLE_STUDENT.equals(currentUserRole)) {
+            updates.put("fullName", editTextStudentFullName.getText().toString());
+            updates.put("schoolName", editTextSchool.getText().toString());
+            updates.put("major", editTextMajor.getText().toString());
+            updates.put("year", editTextYear.getText().toString());
+            updates.put("skillsDescription", editTextSkills.getText().toString());
+            updates.put("experience", editTextExperience.getText().toString());
+        } else if (Constants.ROLE_EMPLOYER.equals(currentUserRole)) {
+            updates.put("companyName", editTextCompanyName.getText().toString());
+            updates.put("address", editTextAddress.getText().toString());
+            updates.put("phone", editTextPhone.getText().toString());
+            updates.put("website", editTextWebsite.getText().toString());
+        }
+
+        db.collection(Constants.USERS_COLLECTION).document(uid).update(updates)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(this, "Cập nhật hồ sơ thành công!", Toast.LENGTH_SHORT).show();
-                    setResult(RESULT_OK);
-                    finish(); // Đóng Activity sau khi lưu
+                    finish();
                 })
-                .addOnFailureListener(e -> Toast.makeText(this, "Cập nhật thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show());
-
+                .addOnFailureListener(e -> Toast.makeText(this, "Cập nhật thất bại.", Toast.LENGTH_SHORT).show());
     }
 
+    private void openImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        imagePickerLauncher.launch(intent);
+    }
+
+    private void openFilePicker() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("application/pdf");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        filePickerLauncher.launch(intent);
+    }
+
+    @SuppressLint("Range")
     private String getFileNameFromUri(Uri uri) {
-        String result = null;
-        if (uri.getScheme().equals("content")) {
-            try (android.database.Cursor cursor = getContentResolver().query(uri, null, null, null, null)) {
-                if (cursor != null && cursor.moveToFirst()) {
-                    int nameIndex = cursor.getColumnIndex(android.provider.OpenableColumns.DISPLAY_NAME);
-                    if (nameIndex >= 0) {
-                        result = cursor.getString(nameIndex);
-                    }
-                }
+        if (uri == null) return "unknown_file";
+        String fileName = null;
+        try (Cursor cursor = getContentResolver().query(uri, null, null, null, null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                fileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
             }
         }
-        if (result == null) {
-            result = uri.getLastPathSegment();
-        }
-        return result;
+        return fileName != null ? fileName : uri.getLastPathSegment();
     }
 }

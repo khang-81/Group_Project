@@ -2,7 +2,6 @@ package com.example.hanoistudentgigs.models;
 
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.Objects;
 
 public class Job {
@@ -25,7 +24,6 @@ public class Job {
 
     private String status;
 
-
     private List<String> searchKeywords;
     private long minSalary;
     private String postedDate;
@@ -34,19 +32,23 @@ public class Job {
 
     private String fireStoreId;
 
-    private boolean active;
+    // Declare the active field only once here
+    private boolean active; // Fixed duplicate declaration issue
 
     // Constructor rỗng bắt buộc cho Firestore
     public Job() {
     }
 
+    // Getter & Setter for active
+    public boolean isActive() {
+        return active;
+    }
 
-    // 🔸 Firestore cần constructor rỗng
-   // public Job(String contact) {
-     //   this.contact = contact;
-   // }
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
-    // Getter & Setter
+    // Getter & Setter for other fields
     public String getId() {
         return id;
     }
@@ -71,7 +73,6 @@ public class Job {
         this.companyName = companyName;
     }
 
-
     public Map<String, Object> getCreatedAt() {
         return createdAt;
     }
@@ -83,7 +84,6 @@ public class Job {
     public String getCompanyLogoUrl() {
         return companyLogoUrl;
     }
-
 
     public void setCompanyLogoUrl(String companyLogoUrl) {
         this.companyLogoUrl = companyLogoUrl;
@@ -120,7 +120,6 @@ public class Job {
     public void setRequirements(String requirements) {
         this.requirements = requirements;
     }
-
 
     public String getEmployerUid() {
         return employerUid;
@@ -159,7 +158,7 @@ public class Job {
     }
 
     public void setApproved(boolean approved) {
-        this.isApproved = approved;
+        isApproved = approved;
     }
 
     public boolean isFeatured() {
@@ -167,7 +166,7 @@ public class Job {
     }
 
     public void setFeatured(boolean featured) {
-        this.isFeatured = featured;
+        isFeatured = featured;
     }
 
     public String getStatus() {
@@ -176,14 +175,6 @@ public class Job {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
     }
 
     public List<String> getSearchKeywords() {
@@ -224,10 +215,9 @@ public class Job {
 
     public void setFireStoreId(String fireStoreId) {
         this.fireStoreId = fireStoreId;
-
     }
 
-    // --- Override toString() ---
+    // Override toString method
     @Override
     public String toString() {
         return "Job{" +
@@ -245,7 +235,6 @@ public class Job {
                 ", requiredSkills=" + requiredSkills +
                 ", isApproved=" + isApproved +
                 ", isFeatured=" + isFeatured +
-
                 ", status='" + status + '\'' +
                 ", searchKeywords=" + searchKeywords +
                 ", minSalary=" + minSalary +
