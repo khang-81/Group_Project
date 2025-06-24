@@ -9,30 +9,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.hanoistudentgigs.R;
 import com.example.hanoistudentgigs.models.Job;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-
 public class DangTinActivity extends AppCompatActivity {
 
     EditText etTitle, etLocation, etSkills, etExperience, etEducation,
             etSalary, etTime, etDescription, etDeadline, etContact;
     Spinner spnJobType, spnField;
-    Button btnPost;
+   Button btnPost;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+   protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dangtin);
 
@@ -57,7 +53,6 @@ public class DangTinActivity extends AppCompatActivity {
         );
         jobTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnJobType.setAdapter(jobTypeAdapter);
-
         // Gắn adapter cho Spinner - LĨNH VỰC
         ArrayAdapter<CharSequence> fieldAdapter = ArrayAdapter.createFromResource(
                 this, R.array.fields, android.R.layout.simple_spinner_item
@@ -138,7 +133,6 @@ public class DangTinActivity extends AppCompatActivity {
         );
         datePickerDialog.show();
     }
-
     private boolean validateFields() {
         if (etTitle.getText().toString().trim().isEmpty()) {
             etTitle.setError("Bắt buộc");

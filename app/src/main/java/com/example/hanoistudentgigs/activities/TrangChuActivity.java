@@ -28,6 +28,7 @@ import com.example.hanoistudentgigs.models.Job;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -54,6 +55,7 @@ public class TrangChuActivity extends AppCompatActivity {
 
 
     private EditText newBlogEditText;
+    private BottomNavigationView bottomNav;
 
 
     @Override
@@ -78,6 +80,22 @@ public class TrangChuActivity extends AppCompatActivity {
         findViewById(R.id.btnSeeAllJobs).setOnClickListener(v -> {
             startActivity(new Intent(this, QLTinActivity.class));
         });
+
+        bottomNav = findViewById(R.id.bottomNav);
+        bottomNav.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+
+            if (id == R.id.nav_home) {
+                // ...
+                return true;
+            } else if (id == R.id.nav_profile) {
+                startActivity(new Intent(this, HoSoActivity.class));
+                return true;
+            }
+
+            return false;
+        });
+
     }
     private void setupJobsRecyclerView() {
 

@@ -8,10 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.hanoistudentgigs.R;
 import com.example.hanoistudentgigs.models.Job;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,22 +17,17 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SuaTinActivity extends AppCompatActivity {
-
     private EditText etTitle, etLocation, etSalary, etDescription, etContact;
     private Spinner spnJobType, spnField;
     private Button btnSave;
-
     private FirebaseFirestore db;
     private String jobId;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_suatin);
-
         // Firebase
         db = FirebaseFirestore.getInstance();
-
         // Liên kết UI
         etTitle = findViewById(R.id.etTitle);
         etLocation = findViewById(R.id.etLocation);
@@ -44,18 +37,15 @@ public class SuaTinActivity extends AppCompatActivity {
         spnJobType = findViewById(R.id.spnJobType);
         spnField = findViewById(R.id.spnField);
         btnSave = findViewById(R.id.btnUpdate);
-
         // Adapter spinner
         ArrayAdapter<CharSequence> jobTypeAdapter = ArrayAdapter.createFromResource(
                 this, R.array.job_types, android.R.layout.simple_spinner_item);
         jobTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnJobType.setAdapter(jobTypeAdapter);
-
         ArrayAdapter<CharSequence> fieldAdapter = ArrayAdapter.createFromResource(
                 this, R.array.fields, android.R.layout.simple_spinner_item);
         fieldAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnField.setAdapter(fieldAdapter);
-
         // Nhận jobId từ Intent
         jobId = getIntent().getStringExtra("JOB_ID");
         if (jobId != null) {
@@ -64,7 +54,6 @@ public class SuaTinActivity extends AppCompatActivity {
             Toast.makeText(this, "Không tìm thấy ID công việc", Toast.LENGTH_SHORT).show();
             finish();
         }
-
         // Cập nhật
         btnSave.setOnClickListener(v -> {
             if (jobId != null) {
@@ -72,7 +61,6 @@ public class SuaTinActivity extends AppCompatActivity {
             }
         });
     }
-
     // Tải dữ liệu công việc hiện tại
     private void loadJobData(String jobId) {
         db.collection("jobs").document(jobId).get()
@@ -90,7 +78,6 @@ public class SuaTinActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> Log.e("SuaTin", "Lỗi tải dữ liệu", e));
     }
-
     // Cập nhật công việc
     private void updateJob(String jobId) {
         DocumentReference docRef = db.collection("jobs").document(jobId);
@@ -103,7 +90,6 @@ public class SuaTinActivity extends AppCompatActivity {
                 "jobType", spnJobType.getSelectedItem().toString(),
                 "categoryName", spnField.getSelectedItem().toString(),
                 "employerUid", FirebaseAuth.getInstance().getCurrentUser().getUid()
-
         ).addOnSuccessListener(unused -> {
             Toast.makeText(this, "Đã cập nhật công việc", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(SuaTinActivity.this, QLTinActivity.class);
@@ -115,7 +101,6 @@ public class SuaTinActivity extends AppCompatActivity {
             Log.e("SuaTin", "Update fail", e);
         });
     }
-
     // Tìm vị trí item spinner khớp giá trị và set selection
     private void setSpinnerSelection(Spinner spinner, String value) {
         ArrayAdapter<?> adapter = (ArrayAdapter<?>) spinner.getAdapter();

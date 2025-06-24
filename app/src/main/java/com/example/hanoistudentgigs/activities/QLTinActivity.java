@@ -2,12 +2,10 @@ package com.example.hanoistudentgigs.activities;
 
 import android.os.Bundle;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.hanoistudentgigs.R;
 import com.example.hanoistudentgigs.adapters.JobManageAdapter;
 import com.example.hanoistudentgigs.models.Job;
@@ -16,11 +14,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-
 import java.util.Arrays;
 
 public class QLTinActivity extends AppCompatActivity {
-
     private RecyclerView recyclerViewActive, recyclerViewInactive;
     private JobManageAdapter activeAdapter, inactiveAdapter;
 
@@ -44,34 +40,52 @@ public class QLTinActivity extends AppCompatActivity {
             return;
         }
 
-        String uid = user.getUid();
+        String uid;
+        try {
+            uid = user.getUid();
+        } catch (Exception e) {
+            Toast.makeText(this, "Không lấy được thông tin người dùng", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
-        // ✅ Query 1: Đang tuyển
-        Query activeQuery = db.collection("jobs")
-                .whereEqualTo("status", "Đang tuyển")
-                .orderBy("createdAt.timestamp", Query.Direction.DESCENDING);
-        FirestoreRecyclerOptions<Job> activeOptions = new FirestoreRecyclerOptions.Builder<Job>()
-                .setQuery(activeQuery, Job.class)
-                .setLifecycleOwner(this)
-                .build();
+        try {
+            // Clear adapter trước khi gán mới
+           // recyclerViewActive.setAdapter(null);
+            // recyclerViewInactive.setAdapter(null);
 
-        activeAdapter = new JobManageAdapter(activeOptions, this);
-        recyclerViewActive.setAdapter(activeAdapter);
+            // ✅ Query 1: Đang tuyển
+            Query activeQuery = db.collection("jobs")
+                    .whereEqualTo("status", "Đang tuyển")
+                    .orderBy("createdAt.timestamp", Query.Direction.DESCENDING);
 
-        // ✅ Query 2: Đã tuyển hoặc Đã đóng
-        Query inactiveQuery = db.collection("jobs")
+            FirestoreRecyclerOptions<Job> activeOptions = new FirestoreRecyclerOptions.Builder<Job>()
+                    .setQuery(activeQuery, Job.class)
+                    .setLifecycleOwner(this)
+                    .build();
 
-                .whereIn("status", Arrays.asList("Đã tuyển", "Đã đóng"))
-                .orderBy("createdAt.timestamp", Query.Direction.DESCENDING);
+            activeAdapter = new JobManageAdapter(activeOptions, this);
+            recyclerViewActive.setAdapter(activeAdapter);
 
-        FirestoreRecyclerOptions<Job> inactiveOptions = new FirestoreRecyclerOptions.Builder<Job>()
-                .setQuery(inactiveQuery, Job.class)
-                .setLifecycleOwner(this)
-                .build();
+            // ✅ Query 2: Đã tuyển hoặc Đã đóng
+            Query inactiveQuery = db.collection("jobs")
+                    .whereIn("status", Arrays.asList("Đã tuyển", "Đã đóng"))
+                    .orderBy("createdAt.timestamp", Query.Direction.DESCENDING);
 
-        inactiveAdapter = new JobManageAdapter(inactiveOptions, this);
-        recyclerViewInactive.setAdapter(inactiveAdapter);
+            FirestoreRecyclerOptions<Job> inactiveOptions = new FirestoreRecyclerOptions.Builder<Job>()
+                    .setQuery(inactiveQuery, Job.class)
+                    .setLifecycleOwner(this)
+                    .build();
+
+            inactiveAdapter = new JobManageAdapter(inactiveOptions, this);
+            recyclerViewInactive.setAdapter(inactiveAdapter);
+
+        } catch (Exception e) {
+            Toast.makeText(this, "Lỗi khi tải dữ liệu", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
