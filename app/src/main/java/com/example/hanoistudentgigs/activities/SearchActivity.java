@@ -24,28 +24,34 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hanoistudentgigs.R;
-import com.example.hanoistudentgigs.adapters.PopularJobAdapter; // Chỉ cần PopularJobAdapter trong SearchActivity
+import com.example.hanoistudentgigs.adapters.PopularJobAdapter;
 import com.example.hanoistudentgigs.models.Filter;
 import com.example.hanoistudentgigs.models.Job;
 import com.example.hanoistudentgigs.utils.Constants;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.Timestamp; // Thêm import này
+import java.util.Date; // Thêm import này
+import java.text.Normalizer; // Thêm import này
+import java.util.regex.Pattern; // Thêm import này
 
 public class SearchActivity extends AppCompatActivity {
 
     private EditText editTextSearchQuery;
     private ImageButton buttonFilter;
     private RecyclerView recyclerViewSearchResults;
-    private PopularJobAdapter adapter; // Chỉ cần một adapter cho RecyclerView này
+    private PopularJobAdapter adapter;
     private FirebaseFirestore db;
-    private Filter currentFilter = new Filter();
+    private Filter currentFilter = new Filter(); // Đảm bảo đã khởi tạo
     private String currentSearchText = "";
 
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable searchRunnable;
 
     private TextView textViewNoResults;
+
+    private static final int YOUR_REQUEST_CODE_FOR_FILTER_ACTIVITY = 1; // Đảm bảo request code này khớp với FilterActivity
 
     private final ActivityResultLauncher<Intent> filterLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -82,7 +88,8 @@ public class SearchActivity extends AppCompatActivity {
                 if (searchRunnable != null) {
                     handler.removeCallbacks(searchRunnable); // Hủy tìm kiếm đang chờ
                 }
-                currentSearchText = editTextSearchQuery.getText().toString().trim().toLowerCase();
+                // Chuẩn hóa chuỗi tìm kiếm trước khi gán
+                currentSearchText = removeAccents(editTextSearchQuery.getText().toString()).trim().toLowerCase();
                 performSearch(); // Thực hiện tìm kiếm ngay lập tức
                 // Ẩn bàn phím sau khi tìm kiếm
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -114,7 +121,8 @@ public class SearchActivity extends AppCompatActivity {
                                 editTextSearchQuery.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width() +
                                 editTextSearchQuery.getCompoundDrawablePadding())) {
                     Log.d("SearchActivity", "Search icon clicked!");
-                    currentSearchText = editTextSearchQuery.getText().toString().trim().toLowerCase();
+                    // Chuẩn hóa chuỗi tìm kiếm trước khi gán
+                    currentSearchText = removeAccents(editTextSearchQuery.getText().toString()).trim().toLowerCase();
                     if (searchRunnable != null) {
                         handler.removeCallbacks(searchRunnable); // Hủy tìm kiếm đang chờ
                     }
@@ -131,7 +139,8 @@ public class SearchActivity extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                currentSearchText = s.toString().trim().toLowerCase();
+                // Chuẩn hóa chuỗi tìm kiếm trước khi gán
+                currentSearchText = removeAccents(s.toString()).trim().toLowerCase();
                 // Loại bỏ mọi callback tìm kiếm trước đó để chỉ thực hiện tìm kiếm sau khi người dùng ngừng nhập
                 if (searchRunnable != null) {
                     handler.removeCallbacks(searchRunnable);
@@ -150,29 +159,51 @@ public class SearchActivity extends AppCompatActivity {
 
         // Xây dựng truy vấn Firestore dựa trên từ khóa tìm kiếm và bộ lọc
         Query query = db.collection(Constants.JOBS_COLLECTION);
-//                .whereEqualTo("approved", false);
+//                .whereEqualTo("approved", false); // Bỏ comment nếu bạn muốn lọc theo trạng thái duyệt
 
-
-        if (currentFilter.getCategory() != null && !currentFilter.getCategory().isEmpty()) {
+        // Lọc theo Category
+        if (currentFilter.getCategory() != null && !currentFilter.getCategory().isEmpty() && !currentFilter.getCategory().equals("Tất cả ngành nghề")) {
             query = query.whereEqualTo("categoryName", currentFilter.getCategory());
             Log.d("SearchActivity", "Filtering by category: " + currentFilter.getCategory());
         }
-        if (currentFilter.getLocation() != null && !currentFilter.getLocation().isEmpty()) {
+        // Lọc theo Location
+        if (currentFilter.getLocation() != null && !currentFilter.getLocation().isEmpty() && !currentFilter.getLocation().equals("Tất cả địa điểm")) {
             query = query.whereEqualTo("locationName", currentFilter.getLocation());
             Log.d("SearchActivity", "Filtering by location: " + currentFilter.getLocation());
         }
-        if (currentFilter.getJobType() != null && !currentFilter.getJobType().isEmpty()) {
+        // Lọc theo Job Type
+        if (currentFilter.getJobType() != null && !currentFilter.getJobType().isEmpty() && !currentFilter.getJobType().equals("Tất cả loại hình")) {
             query = query.whereEqualTo("jobType", currentFilter.getJobType());
             Log.d("SearchActivity", "Filtering by job type: " + currentFilter.getJobType());
         }
+
+        // Lọc theo từ khóa tìm kiếm (searchKeywords)
         if (!currentSearchText.isEmpty()) {
             Log.d("SearchActivity", "Applying search keyword: " + currentSearchText);
-            // Sử dụng whereArrayContains cho các từ khóa tìm kiếm. Đảm bảo trường 'searchKeywords' là một mảng trong Firestore.
+            // Sử dụng whereArrayContains cho các từ khóa tìm kiếm.
+            // Đảm bảo trường 'searchKeywords' là một mảng trong Firestore
+            // và đã được chuẩn hóa (không dấu, chữ thường)
             query = query.whereArrayContains("searchKeywords", currentSearchText);
         }
 
-        // Luôn sắp xếp theo thời gian tạo để có kết quả nhất quán
-        query = query.orderBy("createdAt", Query.Direction.DESCENDING);
+        // ---------- THÊM LOGIC LỌC THỜI GIAN VÀO ĐÂY ----------
+        if (currentFilter.getMinPostedDateMillis() != null) {
+            Timestamp minTimestamp = new Timestamp(new Date(currentFilter.getMinPostedDateMillis()));
+            // Truy vấn theo đường dẫn "createdAt.timestamp"
+            query = query.whereGreaterThanOrEqualTo("createdAt.timestamp", minTimestamp);
+            Log.d("SearchActivity", "Filtering by min createdAt.timestamp: " + minTimestamp.toDate().toString());
+        }
+        if (currentFilter.getMaxPostedDateMillis() != null) {
+            Timestamp maxTimestamp = new Timestamp(new Date(currentFilter.getMaxPostedDateMillis()));
+            // Truy vấn theo đường dẫn "createdAt.timestamp"
+            query = query.whereLessThanOrEqualTo("createdAt.timestamp", maxTimestamp);
+            Log.d("SearchActivity", "Filtering by max createdAt.timestamp: " + maxTimestamp.toDate().toString());
+        }
+        // --------------------------------------------------------
+
+        // Luôn sắp xếp theo 'createdAt.timestamp' để có kết quả nhất quán
+        // và quan trọng cho việc tạo chỉ mục.
+        query = query.orderBy("createdAt.timestamp", Query.Direction.DESCENDING);
 
         // Xây dựng FirestoreRecyclerOptions mới với truy vấn đã cập nhật
         FirestoreRecyclerOptions<Job> newOptions = new FirestoreRecyclerOptions.Builder<Job>()
@@ -194,7 +225,7 @@ public class SearchActivity extends AppCompatActivity {
         recyclerViewSearchResults.setLayoutManager(new LinearLayoutManager(this)); // Đặt lại LayoutManager
         recyclerViewSearchResults.setAdapter(adapter); // Gán adapter mới
 
-        // Bắt đầu lắng nghe dữ liệu ngay lập tức với adapter mới
+        // Bắt đầu lắng nghe dữ liệu ngay lập lập tức với adapter mới
         adapter.startListening();
         Log.d("SearchActivity", "New adapter created, set, and started listening.");
 
@@ -221,6 +252,15 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
-    // Bạn có thể thêm phương thức onResume/onPause nếu cần các hành vi cụ thể khác
-    // nhưng với FirestoreRecyclerAdapter, onStart/onStop là đủ để quản lý lắng nghe.
+    // Phương thức để chuyển đổi chuỗi tiếng Việt có dấu thành không dấu
+    public static String removeAccents(String text) {
+        if (text == null || text.isEmpty()) {
+            return text;
+        }
+        text = Normalizer.normalize(text, Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        text = pattern.matcher(text).replaceAll("");
+        text = text.replace('đ', 'd').replace('Đ', 'D');
+        return text;
+    }
 }
