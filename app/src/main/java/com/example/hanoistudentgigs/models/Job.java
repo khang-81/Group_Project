@@ -34,6 +34,8 @@ public class Job {
 
     private String fireStoreId;
 
+    private boolean active;
+
     // Constructor rỗng bắt buộc cho Firestore
     public Job() {
     }

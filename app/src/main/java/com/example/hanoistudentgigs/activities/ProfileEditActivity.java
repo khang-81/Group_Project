@@ -32,27 +32,13 @@ public class ProfileEditActivity extends AppCompatActivity {
     private LinearLayout employerFieldsLayout;
     private TextInputEditText editTextEditCompanyName, editTextEditAddress, editTextEditPhone, editTextEditWebsite;
 
-    private ActivityResultLauncher<String> selectCvLauncher = registerForActivityResult(
-            new ActivityResultContracts.GetContent(),
-            uri -> {
-                if (uri != null) {
-                    cvFileUri = uri; // Đảm bảo gán đúng
-                    Log.d("CV_UPLOAD", "Selected CV URI: " + uri.toString()); // Log để kiểm tra
-                    // Cập nhật UI để hiển thị tên file CV
-                    textViewCvFileName.setText(getFileNameFromUri(uri));
-                    // TODO: Bạn có thể cần xử lý tải file CV lên Firebase Storage ở đây
-                } else {
-                    cvFileUri = null;
-                    Log.d("CV_UPLOAD", "No CV selected or selection cancelled.");
-                    textViewCvFileName.setText("Chưa có tệp CV nào được chọn");
-                }
-            }
-    );
+    private ActivityResultLauncher<String> selectCvLauncher;
     private Button buttonSaveChanges;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private String userRole;
     private String userIdToEdit;
+    private TextView textViewCvFileName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +78,24 @@ public class ProfileEditActivity extends AppCompatActivity {
         editTextEditWebsite = findViewById(R.id.editTextEditWebsite);
 
         buttonSaveChanges = findViewById(R.id.buttonSaveChanges);
+        textViewCvFileName = findViewById(R.id.textViewCvFileName);
+
+        // Khởi tạo selectCvLauncher sau khi đã ánh xạ textViewCvFileName
+        selectCvLauncher = registerForActivityResult(
+                new ActivityResultContracts.GetContent(),
+                uri -> {
+                    if (uri != null) {
+                        cvFileUri = uri;
+                        Log.d("CV_UPLOAD", "Selected CV URI: " + uri.toString());
+                        textViewCvFileName.setText(getFileNameFromUri(uri));
+                        // TODO: Xử lý upload file nếu cần
+                    } else {
+                        cvFileUri = null;
+                        Log.d("CV_UPLOAD", "No CV selected or selection cancelled.");
+                        textViewCvFileName.setText("Chưa có tệp CV nào được chọn");
+                    }
+                }
+        );
 
         loadCurrentProfile();
 
@@ -164,5 +168,23 @@ public class ProfileEditActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> Toast.makeText(this, "Cập nhật thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show());
 
+    }
+
+    private String getFileNameFromUri(Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            try (android.database.Cursor cursor = getContentResolver().query(uri, null, null, null, null)) {
+                if (cursor != null && cursor.moveToFirst()) {
+                    int nameIndex = cursor.getColumnIndex(android.provider.OpenableColumns.DISPLAY_NAME);
+                    if (nameIndex >= 0) {
+                        result = cursor.getString(nameIndex);
+                    }
+                }
+            }
+        }
+        if (result == null) {
+            result = uri.getLastPathSegment();
+        }
+        return result;
     }
 }

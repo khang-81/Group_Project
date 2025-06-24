@@ -256,7 +256,15 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12f09ce9-6b63-41e4-bd31-a9c8f7130f68" name="Changes" comment="" />
+    <list default="true" id="12f09ce9-6b63-41e4-bd31-a9c8f7130f68" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/ProfileEditActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/ProfileEditActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/admin/AdminDashboardFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/admin/AdminDashboardFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/admin/AdminManageUsersFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/admin/AdminManageUsersFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/admin/UserListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/admin/UserListFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/models/Job.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/models/Job.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_user.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_user.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -322,7 +330,7 @@
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "#31 on main",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/Group_Project",
     "project.structure.last.edited": "Modules",

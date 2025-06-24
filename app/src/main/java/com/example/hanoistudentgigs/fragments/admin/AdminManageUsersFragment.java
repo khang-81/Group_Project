@@ -182,10 +182,10 @@ public class AdminManageUsersFragment extends Fragment {
         View dialogView = inflater.inflate(R.layout.dialog_add_user, null);
         builder.setView(dialogView);
 
-        final EditText etFullName = dialogView.findViewById(R.id.etFullName);
+        final EditText etFullName = dialogView.findViewById(R.id.etName);
         final EditText etEmail = dialogView.findViewById(R.id.etEmail);
         final EditText etPhone = dialogView.findViewById(R.id.etPhone);
-        final EditText etSchoolName = dialogView.findViewById(R.id.etSchoolName);
+        final EditText etSchoolName = dialogView.findViewById(R.id.etSchoolOrCompany);
         final EditText etCompanyName = dialogView.findViewById(R.id.etCompanyName);
 
         builder.setPositiveButton("Thêm", (dialog, which) -> {
@@ -272,8 +272,8 @@ public class AdminManageUsersFragment extends Fragment {
         View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_user, null, false);
         builder.setView(dialogView);
         // Sinh viên
-        EditText etFullName = dialogView.findViewById(R.id.etFullName);
-        EditText etSchoolName = dialogView.findViewById(R.id.etSchoolName);
+        EditText etFullName = dialogView.findViewById(R.id.etName);
+        EditText etSchoolName = dialogView.findViewById(R.id.etSchoolOrCompany);
         EditText etMajor = dialogView.findViewById(R.id.etMajor);
         EditText etYear = dialogView.findViewById(R.id.etYear);
         EditText etExperience = dialogView.findViewById(R.id.etExperience);
