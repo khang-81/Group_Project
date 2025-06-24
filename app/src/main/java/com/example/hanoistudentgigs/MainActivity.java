@@ -12,7 +12,7 @@ import com.example.hanoistudentgigs.R;
 import com.example.hanoistudentgigs.activities.LoginActivity;
 import com.example.hanoistudentgigs.fragments.admin.AdminApproveJobsFragment;
 import com.example.hanoistudentgigs.fragments.admin.AdminDashboardFragment;
-import com.example.hanoistudentgigs.fragments.admin.AdminManageUsersFragment;
+//import com.example.hanoistudentgigs.fragments.admin.AdminManageUsersFragment;
 import com.example.hanoistudentgigs.fragments.employer.EmployerDashboardFragment;
 import com.example.hanoistudentgigs.fragments.student.ProfileFragment;
 import com.example.hanoistudentgigs.fragments.student.StudentApplicationsFragment;
@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
                 } else if (itemId == R.id.nav_admin_approve_jobs) {
                     selectedFragment = new AdminApproveJobsFragment();
                 } else if (itemId == R.id.nav_admin_manage_users) {
-                    selectedFragment = new AdminManageUsersFragment();
+//                    selectedFragment = new AdminManageUsersFragment();
                 }
 
                 return loadFragment(selectedFragment);

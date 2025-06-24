@@ -36,8 +36,8 @@ public class AdminApproveJobsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_admin_approve_jobs, container, false);
-        rvJobList = view.findViewById(R.id.rvJobList);
-        etSearchJob = view.findViewById(R.id.etSearchJob);
+//        rvJobList = view.findViewById(R.id.rvJobList);
+//        etSearchJob = view.findViewById(R.id.etSearchJob);
         db = FirebaseFirestore.getInstance();
 
         setupRecyclerView(""); // Initial load
