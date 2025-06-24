@@ -2,49 +2,82 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp"
-    android:gravity="center"
-    android:background="@color/backgroundColor">
+    android:background="#FFFFFF">
+
+    <!-- Header xanh -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#1976D2"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HanoiStudentGigs"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:layout_marginStart="16dp"/>
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Chào Mừng Bạn Đã Quay Lại"
-        android:textSize="22sp"
+        android:text="CHÀO MỪNG BẠN ĐÃ QUAY LẠI!"
+        android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="@color/textColorPrimary"
-        android:layout_marginBottom="48dp"/>
+        android:textColor="#222222"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"/>
 
     <Button
         android:id="@+id/buttonManageUsers"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="Quản Lý Người Dùng"/>
+        android:layout_height="48dp"
+        android:text="QUẢN LÝ NGƯỜI DÙNG"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#1976D2"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/rounded_button"/>
 
     <Button
         android:id="@+id/buttonManageCategories"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="16dp"
-        android:text="Quản Lý Danh Mục"/>
+        android:layout_height="48dp"
+        android:text="QUẢN LÝ DANH MỤC"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#1976D2"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/rounded_button"/>
 
     <Button
         android:id="@+id/buttonApproveJobs"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="16dp"
-        android:text="Kiểm Duyệt Tin Đăng"/>
+        android:layout_height="48dp"
+        android:text="KIỂM DUYỆT TIN ĐĂNG"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#1976D2"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/rounded_button"/>
 
     <Button
         android:id="@+id/buttonViewStats"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="16dp"
-        android:text="Quản Lý Hệ Thống (Thống kê)"/>
+        android:layout_height="48dp"
+        android:text="QUẢN LÝ HỆ THỐNG"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#1976D2"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/rounded_button"/>
 
     <Space
         android:layout_width="0dp"
@@ -54,8 +87,13 @@
     <Button
         android:id="@+id/buttonAdminLogout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="Đăng xuất"
-        android:backgroundTint="@color/errorColor"/>
+        android:layout_height="48dp"
+        android:text="ĐĂNG XUẤT"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#F44336"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/rounded_button"/>
 
 </LinearLayout>

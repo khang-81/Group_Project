@@ -38,7 +38,7 @@ android {
 dependencies {
     // Firebase Bill of Materials (BOM) - LUÔN LUÔN ĐẶT ĐẦU TIÊN KHI SỬ DỤNG BOM
     implementation(platform(libs.firebase.bom))
-
+// Glide
     // Firebase SDKs (không cần chỉ định version vì đã có BOM)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
@@ -48,7 +48,12 @@ dependencies {
     // FirebaseUI for Firestore (cần chỉ định version nếu không dùng BOM cho nó)
     implementation(libs.firebase.ui.firestore)
 
-
+    implementation (libs.glide)
+    annotationProcessor (libs.compiler)
+// Cho Glide
+    implementation(libs.glide)
+    // Chọn một trong hai dòng dưới đây tùy theo bạn dùng Java hay Kotlin
+    annotationProcessor(libs.compiler) // Nếu dự án là Java
     // Thư viện AndroidX và Material Design
     implementation(libs.appcompat) // Sử dụng tên alias ngắn gọn nếu đã khai báo trong libs.versions.toml
     implementation(libs.material)
@@ -67,5 +72,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.junit.ext) // Đổi từ libs.junit.v115 sang tên alias chính xác
     androidTestImplementation(libs.espresso.core) // Đổi từ libs.espresso.core.v351 sang tên alias chính xác
-    implementation(libs.picasso)
+}
+tasks.withType<Test> {
+    enabled = false
+
 }

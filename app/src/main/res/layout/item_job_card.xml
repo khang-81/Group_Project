@@ -28,8 +28,9 @@
                 android:id="@+id/imageViewCompanyLogo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@mipmap/ic_launcher"
-                android:scaleType="centerCrop"/>
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_business_24"
+                android:contentDescription="@string/company_logo"/>
         </com.google.android.material.card.MaterialCardView>
 
         <!-- Tiêu đề -->
@@ -121,5 +122,4 @@
         <!-- Delete icon -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </com.google.android.material.card.MaterialCardView>

@@ -1,49 +1,67 @@
 package com.example.hanoistudentgigs.activities;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hanoistudentgigs.R;
+import com.example.hanoistudentgigs.models.Job;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class XemTinActivity extends AppCompatActivity {
+    private TextView txtTitle, txtCompany, txtSalary, txtLocation, txtContact, txtDescription;
+    private Button btnBack;
 
-    private TextView txtDescription;
-    private Button btnBack, btnShare;
-
-    @SuppressLint("MissingInflatedId")
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xemtin);
 
-        // Liên kết với ID trong layout
+        txtTitle = findViewById(R.id.txtTitle);
+        txtCompany = findViewById(R.id.txtCompany);
+        txtSalary = findViewById(R.id.txtSalary);
+        txtLocation = findViewById(R.id.txtLocation);
+        txtContact = findViewById(R.id.txtContact);
         txtDescription = findViewById(R.id.txtDescription);
-        btnBack = findViewById(R.id.btnSave);
+        btnBack = findViewById(R.id.btnBack);
 
-
-        // Nhận nội dung từ Intent
-        String postContent = getIntent().getStringExtra("post_content");
-        if (postContent != null) {
-            txtDescription.setText(postContent);
+        // Nhận ID của công việc
+        String jobId = getIntent().getStringExtra("JOB_ID");
+        if (jobId == null) {
+            Toast.makeText(this, "Không tìm thấy thông tin công việc", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
         }
 
-        // Nút quay lại
-        btnBack.setOnClickListener(v -> {
-            Intent intent = new Intent(XemTinActivity.this, QLTinActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);
+        // Lấy dữ liệu từ Firestore theo ID
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference jobRef = db.collection("jobs").document(jobId);
+
+        jobRef.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                Job job = documentSnapshot.toObject(Job.class);
+                if (job != null) {
+                    txtTitle.setText(job.getTitle());
+                    txtCompany.setText(job.getCompanyName());
+                    txtSalary.setText(job.getSalaryDescription());
+                    txtLocation.setText(job.getLocationName());
+                    txtContact.setText(job.getContact());
+                    txtDescription.setText(job.getDescription());
+                }
+            } else {
+                Toast.makeText(this, "Không tìm thấy công việc", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }).addOnFailureListener(e -> {
+            Toast.makeText(this, "Lỗi khi tải dữ liệu", Toast.LENGTH_SHORT).show();
             finish();
         });
 
-
-
+        btnBack.setOnClickListener(v -> finish());
     }
-
-
 }

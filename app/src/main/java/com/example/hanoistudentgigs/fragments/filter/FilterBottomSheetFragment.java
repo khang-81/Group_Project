@@ -181,7 +181,7 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment {
         spinnerDateRange.setAdapter(dateRangeAdapter);
 
         // Khôi phục lựa chọn của spinnerDateRange nếu có trong currentFilter
-        // Logic này phức tạp hơn một chút vì bạn phải ánh xạ ngược từ min/maxMillis về chuỗi option
+// Logic này phức tạp hơn một chút vì bạn phải ánh xạ ngược từ min/maxMillis về chuỗi option
         if (currentFilter != null) {
             // ... (Logic khôi phục lựa chọn cho category, location, job type)
             if (currentFilter.getMinPostedDateMillis() == null && currentFilter.getMaxPostedDateMillis() == null) {
