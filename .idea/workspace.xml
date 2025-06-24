@@ -145,6 +145,11 @@
           <theme>@style/Theme.HanoiStudentGigs</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_xemtin.xml">
+        <config>
+          <theme>@style/Theme.HanoiStudentGigs</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_admin_approve_jobs.xml">
         <config>
           <theme>@style/Theme.HanoiStudentGigs</theme>
@@ -257,52 +262,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="12f09ce9-6b63-41e4-bd31-a9c8f7130f68" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/color/tab_text_selector.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/default_avatar.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/rounded_tab_center.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/rounded_tab_left.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/rounded_tab_right.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/tab_selector_center.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/tab_selector_left.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/tab_selector_right.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/dialog_edit_job.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/FilterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/FilterActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/JobDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/JobDetailActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/ProfileEditActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/ProfileEditActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/adapters/AdminJobAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/adapters/AdminJobAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/adapters/AdminViewPagerAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/adapters/AdminViewPagerAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/adapters/CategoryAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/adapters/CategoryAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/adapters/UserAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/adapters/UserAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/admin/AdminApproveJobsFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/admin/AdminApproveJobsFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/admin/AdminDashboardFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/admin/AdminDashboardFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/admin/AdminManageCategoriesFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/admin/AdminManageCategoriesFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/admin/AdminManageUsersFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/admin/AdminManageUsersFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/admin/AdminStatsFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/admin/AdminStatsFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/admin/UserListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/admin/UserListFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/student/StudentHomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/student/StudentHomeFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/models/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/models/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/models/Job.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/models/Job.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/models/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/utils/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/utils/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/rounded_button.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/rounded_button.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_filter.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_filter.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_job_detail.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_job_detail.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/dialog_add_user.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/dialog_add_user.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_admin_approve_jobs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_admin_approve_jobs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_admin_dashboard.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_admin_dashboard.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_admin_manage_users.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_admin_manage_users.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_admin_manager_categories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_admin_manager_categories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_admin_stats.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_admin_stats.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_admin_job_card.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_admin_job_card.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_category.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_category.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_job_card.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_job_card.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_user.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_user.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/QLTinActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/QLTinActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/SuaTinActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/SuaTinActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/TrangChuActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/TrangChuActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/XemTinActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/XemTinActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_qltin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_qltin.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_xemtin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_xemtin.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_job.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_job.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/libs.versions.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -313,7 +282,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\Lenovo\.android\avd\Medium_Phone.avd)]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\ASUS\.android\avd\Pixel_9_Pro_2.avd)]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -370,7 +339,7 @@
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "Merging main",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/Group_Project",
     "project.structure.last.edited": "Modules",

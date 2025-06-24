@@ -87,6 +87,8 @@
         <activity android:name=".activities.XemTinActivity" android:exported="false" />
         <activity android:name=".activities.SuaTinActivity" android:exported="false" />
 
+        <activity android:name=".activities.TrangChuActivity" android:exported="false" />
+
 
     </application>
 

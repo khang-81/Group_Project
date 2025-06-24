@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.hanoistudentgigs.R;
 
 import com.example.hanoistudentgigs.adapters.ApplicantAdapter;
+
 import com.example.hanoistudentgigs.adapters.JobAdapter;
 
 import com.example.hanoistudentgigs.models.Application;
@@ -96,7 +97,6 @@ public class TrangChuActivity extends AppCompatActivity {
         jobAdapter = new JobAdapter(options, this);
 
         recyclerViewJobs.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-
         recyclerViewJobs.setAdapter(jobAdapter);
 
     }

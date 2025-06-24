@@ -1,72 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#FFFFFF"
-    android:padding="16dp">
+    android:background="#FFFFFF">
 
-    <!-- Header -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#B3E5FC"
-        android:gravity="center"
-        android:padding="16dp"
-        android:text="Hanoi Student Gigs"
-        android:textColor="#000000"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:importantForAccessibility="yes" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <!-- Tiêu đề chính -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Quản lí tin đăng"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:importantForAccessibility="yes" />
+        <!-- Header -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#B3E5FC"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="Hanoi Student Gigs"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-    <!-- Nhãn Đang tuyển -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Đang tuyển"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:textSize="16sp"
-        android:importantForAccessibility="yes" />
+        <!-- Tiêu đề -->
 
-    <!-- Danh sách tin Đang tuyển -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewActive"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="8dp"
-        android:contentDescription="Danh sách tin đang tuyển dụng"
-        android:nestedScrollingEnabled="false" />
 
-    <!-- Nhãn Đã đóng -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Đã tuyển / Đã đóng"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:textSize="16sp"
-        android:importantForAccessibility="yes" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Quản lí tin đăng"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
-    <!-- Danh sách tin Đã đóng -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewInactive"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="8dp"
-        android:contentDescription="Danh sách tin đã đóng hoặc đã tuyển"
-        android:nestedScrollingEnabled="false" />
+        <TextView
+            android:id="@+id/labelActive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đang tuyển"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"
+            android:labelFor="@id/recyclerViewActive" />
 
-</LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewActive"
+            android:layout_width="match_parent"
+            android:layout_height="228dp"
+            android:layout_marginTop="8dp"
+            android:background="#FFEBEE"
+            android:padding="8dp" />
+
+        <!-- Divider -->
+
+
+        <TextView
+            android:id="@+id/labelInactive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đã tuyển / Đã đóng"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"
+            android:labelFor="@id/recyclerViewInactive" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewInactive"
+            android:layout_width="match_parent"
+            android:layout_height="260dp"
+            android:layout_marginTop="8dp"
+            android:background="#EEEEEE"
+            android:padding="8dp" />
+
+    </LinearLayout>
+</ScrollView>
