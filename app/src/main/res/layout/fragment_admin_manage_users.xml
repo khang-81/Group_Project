@@ -1,34 +1,129 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="#FFFFFF">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayoutUsers"
+    <!-- Header xanh -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#1976D2"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HanoiStudentGigs"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:layout_marginStart="16dp"/>
+    </LinearLayout>
+
+    <!-- Header phụ -->
+    <TextView
+        android:id="@+id/tvHeaderUser"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="QUẢN LÝ NGƯỜI DÙNG"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:background="#37474F"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginHorizontal="32dp"
+        android:elevation="2dp"
+        android:padding="8dp"
+        android:clipToOutline="true"/>
+
+    <!-- Tab chuyển đổi -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginHorizontal="24dp">
         <Button
-            android:id="@+id/btnStudentTab"
+            android:id="@+id/btnTabStudent"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Sinh Viên"/>
+            android:layout_height="40dp"
+            android:text="SINH VIÊN"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:background="@drawable/tab_selector_left"
+            android:textColor="@color/tab_text_selector"
+            android:layout_marginEnd="8dp"
+            android:paddingVertical="6dp"
+            android:paddingHorizontal="0dp"/>
         <Button
-            android:id="@+id/btnEmployerTab"
+            android:id="@+id/btnTabEmployer"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Nhà Tuyển Dụng"
+            android:layout_height="40dp"
+            android:text="NHÀ TUYỂN DỤNG"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:background="@drawable/tab_selector_right"
+            android:textColor="@color/tab_text_selector"
+            android:paddingVertical="6dp"
+            android:paddingHorizontal="0dp"/>
+    </LinearLayout>
+
+    <!-- Tìm kiếm -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_search_24"
+            android:tint="#757575"/>
+        <EditText
+            android:id="@+id/editTextSearchUser"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:hint="Tìm kiếm..."
+            android:background="@drawable/bg_input_rounded"
+            android:paddingHorizontal="12dp"
+            android:textColor="#222222"
+            android:textSize="15sp"
             android:layout_marginStart="8dp"/>
     </LinearLayout>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPagerUsers"
+    <!-- Danh sách user -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewUsers"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:layout_marginHorizontal="8dp"
+        android:clipToPadding="false"/>
+
+    <!-- FloatingActionButton thêm user -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/buttonAddUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_24"
+            android:backgroundTint="#1976D2"
+            android:tint="#FFFFFF"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="24dp"/>
+    </FrameLayout>
+
 </LinearLayout>

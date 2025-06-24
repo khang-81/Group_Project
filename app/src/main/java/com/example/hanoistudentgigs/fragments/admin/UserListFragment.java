@@ -14,57 +14,75 @@ import com.example.hanoistudentgigs.R;
 import com.example.hanoistudentgigs.adapters.UserAdapter;
 import com.example.hanoistudentgigs.models.User;
 import com.example.hanoistudentgigs.utils.Constants;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserListFragment extends Fragment {
-    private static final String ARG_ROLE = "role";
-    private String userRole;
-    private UserAdapter adapter;
+   private static final String ARG_ROLE = "role";
+   private String userRole;
+   private UserAdapter adapter;
+   private List<User> userList = new ArrayList<>();
 
-    public static UserListFragment newInstance(String role) {
-        UserListFragment fragment = new UserListFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_ROLE, role);
-        fragment.setArguments(args);
-        return fragment;
-    }
+   public static UserListFragment newInstance(String role) {
+       UserListFragment fragment = new UserListFragment();
+       Bundle args = new Bundle();
+       args.putString(ARG_ROLE, role);
+       fragment.setArguments(args);
+       return fragment;
+   }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            userRole = getArguments().getString(ARG_ROLE);
-        }
-    }
+   @Override
+   public void onCreate(Bundle savedInstanceState) {
+       super.onCreate(savedInstanceState);
+       if (getArguments() != null) {
+           userRole = getArguments().getString(ARG_ROLE);
+       }
+   }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_user_list, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewUsers);
+   @Override
+   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+       View view = inflater.inflate(R.layout.fragment_user_list, container, false);
+       RecyclerView recyclerView = view.findViewById(R.id.recyclerViewUsers);
 
-        Query query = FirebaseFirestore.getInstance()
-                .collection(Constants.USERS_COLLECTION)
-                .whereEqualTo("role", userRole);
+       adapter = new UserAdapter(userList, new UserAdapter.OnUserActionListener() {
+           @Override
+           public void onDelete(User user) {}
+           @Override
+           public void onView(User user) {}
+           @Override
+           public void onVerify(User user) {}
+           @Override
+           public void onEdit(User user) {}
+       });
+       recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+       recyclerView.setAdapter(adapter);
 
-        FirestoreRecyclerOptions<User> options = new FirestoreRecyclerOptions.Builder<User>()
-                .setQuery(query, User.class)
-                .build();
+       // Lấy dữ liệu từ Firestore
+       FirebaseFirestore.getInstance()
+               .collection(Constants.USERS_COLLECTION)
+               .whereEqualTo("role", userRole)
+               .get()
+               .addOnCompleteListener(task -> {
+                   if (task.isSuccessful() && task.getResult() != null) {
+                       userList.clear();
+                       for (com.google.firebase.firestore.DocumentSnapshot document : task.getResult()) {
+                           User user = document.toObject(User.class);
+                           userList.add(user);
+                       }
+                       adapter.notifyDataSetChanged();
+                   }
+               });
 
-        adapter = new UserAdapter(options, getContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
+       return view;
+   }
 
-        return view;
-    }
+   @Override
+   public void onStart() {
+       super.onStart();
+   }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        adapter.startListening();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        adapter.stopListening();
-    }
+   @Override
+   public void onStop() {
+       super.onStop();
+   }
 }

@@ -214,4 +214,6 @@ public class JobDetailActivity extends AppCompatActivity {
                     Toast.makeText(JobDetailActivity.this, "Lỗi khi lấy thông tin người dùng.", Toast.LENGTH_SHORT).show();
                 });
     }
+
 }
+

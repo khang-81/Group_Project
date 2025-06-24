@@ -70,4 +70,5 @@
         android:layout_marginTop="24dp"
         android:text="Áp dụng bộ lọc"/>
 
+
 </LinearLayout>

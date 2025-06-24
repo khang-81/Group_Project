@@ -78,6 +78,7 @@ public class StudentHomeFragment extends Fragment {
         return view;
     }
 
+
     //    private void openSearchActivity() {
     //        if (getActivity() != null) {
     //            Intent intent = new Intent(getActivity(), SearchActivity.class);
@@ -108,11 +109,13 @@ public class StudentHomeFragment extends Fragment {
                                 textViewUserName.setText("Hi, " + names[names.length - 1] + " 👋");
                             } else {
                                 textViewUserName.setText("Discover Jobs 🔥");
+
                             }
                         }
                     });
         }
     }
+
 
     private void setupRecyclerViews() {
         // Query cho các công việc nổi bật (5 công việc mới nhất)
@@ -126,9 +129,11 @@ public class StudentHomeFragment extends Fragment {
                 .setQuery(featuredQuery, Job.class)
                 .build();
 
+
         featuredAdapter = new FeaturedJobAdapter(featuredOptions, requireContext(), recyclerViewFeaturedJobs, textViewNoFeaturedResults);
         recyclerViewFeaturedJobs.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerViewFeaturedJobs.setAdapter(featuredAdapter);
+
 
         // Query cho các công việc phổ biến (tất cả các công việc còn lại)
         Query popularQuery = db.collection(Constants.JOBS_COLLECTION)

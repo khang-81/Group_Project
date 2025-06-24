@@ -8,7 +8,9 @@ public class Application {
     private String jobId;
     private String studentUid;
     private String studentName;
+
     //    private String cvUrl;
+
     private String status;
     private String cvFileName;
     @ServerTimestamp
@@ -62,7 +64,7 @@ public class Application {
         this.studentName = studentName;
     }
 
-    //    public String getCvUrl() {
+
 //        return cvUrl;
 //    }
 //
@@ -72,6 +74,7 @@ public class Application {
     public String getCvFileName() {
         return cvFileName;
     }
+
 
     public void setCvFileName(String cvFileName) {
         this.cvFileName = cvFileName;

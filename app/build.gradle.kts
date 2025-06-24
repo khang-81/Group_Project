@@ -48,6 +48,8 @@ dependencies {
     // FirebaseUI for Firestore (cần chỉ định version nếu không dùng BOM cho nó)
     implementation(libs.firebase.ui.firestore)
 
+    implementation (libs.glide)
+    annotationProcessor (libs.compiler)
 
     // Thư viện AndroidX và Material Design
     implementation(libs.appcompat) // Sử dụng tên alias ngắn gọn nếu đã khai báo trong libs.versions.toml
@@ -68,7 +70,7 @@ dependencies {
     androidTestImplementation(libs.junit.ext) // Đổi từ libs.junit.v115 sang tên alias chính xác
     androidTestImplementation(libs.espresso.core) // Đổi từ libs.espresso.core.v351 sang tên alias chính xác
 }
-
 tasks.withType<Test> {
     enabled = false
+
 }

@@ -28,10 +28,9 @@
                 android:id="@+id/imageViewCompanyLogo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
+                android:scaleType="centerCrop"
                 android:src="@drawable/ic_business_24"
-
-                android:scaleType="centerCrop"/>
+                android:contentDescription="@string/company_logo"/>
         </com.google.android.material.card.MaterialCardView>
 
         <!-- Tiêu đề -->
@@ -73,8 +72,7 @@
                 android:text="IT"
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 app:chipBackgroundColor="#4A90E2"
-                android:textColor="@color/white"
-                android:text="@string/chip_category"/>
+                android:textColor="@color/white"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipJobType"
@@ -83,8 +81,7 @@
                 android:text="Full-Time"
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 app:chipBackgroundColor="#4A90E2"
-                android:textColor="@color/white"
-                android:text="@string/chip_job_type"/>
+                android:textColor="@color/white"/>
         </com.google.android.material.chip.ChipGroup>
 
         <!-- Status -->
@@ -125,6 +122,4 @@
         <!-- Delete icon -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </com.google.android.material.card.MaterialCardView>
-

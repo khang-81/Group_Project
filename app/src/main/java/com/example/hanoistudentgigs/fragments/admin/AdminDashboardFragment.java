@@ -15,6 +15,10 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.hanoistudentgigs.R;
 import com.example.hanoistudentgigs.activities.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.example.hanoistudentgigs.fragments.admin.AdminManageUsersFragment;
+import com.example.hanoistudentgigs.fragments.admin.AdminManageCategoriesFragment;
+import com.example.hanoistudentgigs.fragments.admin.AdminApproveJobsFragment;
+import com.example.hanoistudentgigs.fragments.admin.AdminStatsFragment;
 
 // FIX: Đảm bảo class này kế thừa từ `androidx.fragment.app.Fragment`
 public class AdminDashboardFragment extends Fragment {

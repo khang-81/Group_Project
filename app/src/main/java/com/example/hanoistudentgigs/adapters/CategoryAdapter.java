@@ -14,6 +14,8 @@ import java.util.List;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
     public interface OnCategoryActionListener {
         void onDelete(Category category);
+        void onEdit(Category category);
+
     }
 
     private List<Category> categoryList;
@@ -36,6 +38,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         Category category = categoryList.get(position);
         holder.tvCategoryName.setText(category.getName());
         holder.btnDeleteCategory.setOnClickListener(v -> listener.onDelete(category));
+        holder.btnEditCategory.setOnClickListener(v -> listener.onEdit(category));
     }
 
     @Override
@@ -45,11 +48,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     public static class CategoryViewHolder extends RecyclerView.ViewHolder {
         TextView tvCategoryName;
-        Button btnDeleteCategory;
+        Button btnDeleteCategory, btnEditCategory;
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvCategoryName = itemView.findViewById(R.id.tvCategoryName);
+            tvCategoryName = itemView.findViewById(R.id.textViewCategoryName);
             btnDeleteCategory = itemView.findViewById(R.id.btnDeleteCategory);
+            btnEditCategory = itemView.findViewById(R.id.btnEditCategory);
+
         }
     }
 }
