@@ -37,13 +37,6 @@
                     android:textStyle="bold"
                     android:textColor="@color/textColorPrimary"/>
             </LinearLayout>
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_image_home"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/ic_person_24"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"/>
         </RelativeLayout>
 
         <LinearLayout
