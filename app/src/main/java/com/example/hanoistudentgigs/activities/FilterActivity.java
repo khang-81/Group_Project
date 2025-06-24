@@ -119,8 +119,9 @@ public class FilterActivity extends AppCompatActivity {
         // Thiết lập dữ liệu cố định cho Spinner Loại hình công việc
         List<String> jobTypes = new ArrayList<>();
         jobTypes.add("Tất cả loại hình");
-        jobTypes.add("PartTime");
+        jobTypes.add("Part-time");
         jobTypes.add("Freelance");
+        jobTypes.add("Full-time");
         jobTypes.add("Internship");
         ArrayAdapter<String> jobTypeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, jobTypes);
         jobTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
