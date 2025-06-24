@@ -1,72 +1,115 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundColor">
+    android:background="#F8F9FA"
+    tools:context=".fragments.employer.EmployerDashboardFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingBottom="80dp">
 
-            <!-- Tiêu đề màn hình -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Quản lý tin đăng"
-                android:textSize="28sp"
+                android:textSize="24sp"
                 android:textStyle="bold"
-                android:textColor="@color/textColorPrimary"
+                android:textColor="@color/black"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginBottom="16dp"/>
 
-            <!-- Phần việc làm đang tuyển -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Việc làm đang tuyển"
-                android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/textColorPrimary"
-                android:layout_marginTop="16dp"/>
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="8dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewActiveJobs"
+                android:id="@+id/recyclerViewOpenJobs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"/>
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/item_employer_job"
+                tools:itemCount="2"/>
 
-            <!-- Phần việc làm đã đóng -->
+            <TextView
+                android:id="@+id/textViewNoOpenJobs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Không có việc làm nào đang tuyển."
+                android:gravity="center"
+                android:padding="16dp"
+                android:visibility="gone"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E0E0E0"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginHorizontal="16dp"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Việc làm đã đóng"
-                android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/textColorPrimary"
-                android:layout_marginTop="24dp"/>
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="8dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewClosedJobs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"/>
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/item_employer_job"
+                tools:itemCount="1"/>
+
+            <TextView
+                android:id="@+id/textViewNoClosedJobs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Không có việc làm nào đã đóng."
+                android:gravity="center"
+                android:padding="16dp"
+                android:visibility="gone"/>
 
         </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabPostJob"
+        android:id="@+id/fab_add_job"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_add_24"
-        app:tint="@color/white"/>
+        android:src="@drawable/ic_add"
+        app:backgroundTint="?attr/colorPrimary"
+        app:tint="@color/white"
+        android:contentDescription="Đăng tin mới" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
