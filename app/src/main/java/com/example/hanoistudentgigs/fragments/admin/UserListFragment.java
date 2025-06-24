@@ -49,7 +49,7 @@ public class UserListFragment extends Fragment {
                 .setQuery(query, User.class)
                 .build();
 
-        adapter = new UserAdapter(options, getContext());
+//        adapter = new UserAdapter(options, getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
@@ -59,12 +59,12 @@ public class UserListFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        adapter.startListening();
+//        adapter.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        adapter.stopListening();
+//        adapter.stopListening();
     }
 }

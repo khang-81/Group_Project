@@ -53,8 +53,10 @@ public class JobAdapter extends FirestoreRecyclerAdapter<Job, JobAdapter.JobView
 
     // Cho phép lớp này được dùng ngoài JobAdapter
     public static class JobViewHolder extends RecyclerView.ViewHolder {
-        private final TextView textViewJobTitle, textViewCompanyName, textViewSalary, textViewLocation, textViewStatus;
+//        private final TextView textViewJobTitle, textViewCompanyName, textViewSalary, textViewLocation, textViewStatus;
+        private final TextView textViewJobTitle, textViewCompanyName, textViewSalary, textViewLocation;
         private final ImageView imageViewCompanyLogo;
+
 
         public JobViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,9 +64,9 @@ public class JobAdapter extends FirestoreRecyclerAdapter<Job, JobAdapter.JobView
             textViewCompanyName = itemView.findViewById(R.id.textViewCompanyName);
             textViewSalary = itemView.findViewById(R.id.textViewSalary);
             textViewLocation = itemView.findViewById(R.id.textViewLocation);
-            textViewStatus = itemView.findViewById(R.id.textViewStatus);
+//            textViewStatus = itemView.findViewById(R.id.textViewStatus);
             imageViewCompanyLogo = itemView.findViewById(R.id.imageViewCompanyLogo);
-        }
+        };
 
         public void bind(Job job) {
             textViewJobTitle.setText(job.getTitle());
@@ -73,22 +75,22 @@ public class JobAdapter extends FirestoreRecyclerAdapter<Job, JobAdapter.JobView
             textViewLocation.setText(job.getLocationName());
 
             // Hiển thị trạng thái tuyển dụng
-            String status = job.getStatus();
-            if (status != null) {
-                textViewStatus.setText(status);
-                switch (status.toLowerCase()) {
-                    case "đang tuyển":
-                        textViewStatus.setTextColor(Color.parseColor("#4CAF50")); // xanh lá
-                        break;
-                    case "đã đóng":
-                    case "đã tuyển":
-                        textViewStatus.setTextColor(Color.RED);
-                        break;
-                    default:
-                        textViewStatus.setTextColor(Color.GRAY);
-                        break;
-                }
-            }
+//            String status = job.getStatus();
+//            if (status != null) {
+//                textViewStatus.setText(status);
+//                switch (status.toLowerCase()) {
+//                    case "đang tuyển":
+//                        textViewStatus.setTextColor(Color.parseColor("#4CAF50")); // xanh lá
+//                        break;
+//                    case "đã đóng":
+//                    case "đã tuyển":
+//                        textViewStatus.setTextColor(Color.RED);
+//                        break;
+//                    default:
+//                        textViewStatus.setTextColor(Color.GRAY);
+//                        break;
+//                }
+//            }
 
             // Load logo công ty bằng Picasso
             String logoUrl = job.getCompanyLogoUrl();

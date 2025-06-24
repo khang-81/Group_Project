@@ -31,12 +31,30 @@ public class Job {
 
     private String postedDate;
 
-
+    private boolean active; // Nếu trường active là boolean
+    private String contact; // Nếu trường contact là String
     // Constructor rỗng
     public Job() {}
 
     // --- Getters và Setters ---
     // Getter và Setter cho isFeatured
+    // Getter và Setter cho active
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    // Getter và Setter cho contact
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
     public boolean isFeatured() { return featured; }
 
     public void setFeatured(boolean featured) {
@@ -119,7 +137,8 @@ public class Job {
                 Objects.equals(status, job.status) &&
                 Objects.equals(searchKeywords, job.searchKeywords) &&
                 Objects.equals(createdAt, job.createdAt)  &&
-                Objects.equals(postedDate, job.postedDate);    }
+                Objects.equals(postedDate, job.postedDate) &&
+                Objects.equals(contact, job.contact);}
 
     @Override
     public int hashCode() {

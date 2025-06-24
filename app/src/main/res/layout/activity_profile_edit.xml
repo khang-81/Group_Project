@@ -19,23 +19,20 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="24dp"/>
 
-        <!-- KHUNG DÀNH CHO SINH VIÊN -->
         <LinearLayout
             android:id="@+id/studentFieldsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone"> <!-- Mặc định ẩn -->
-
-            <com.google.android.material.textfield.TextInputLayout
+            android:visibility="gone"> <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Họ và tên">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextEditStudentFullName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Họ và tên">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextEditStudentFullName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -63,6 +60,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:hint="Năm học (VD: 2025)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextEditYear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="4"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Số điện thoại">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextEditStudentPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"/>
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:hint="Mô tả Kỹ năng">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextEditSkills"
@@ -85,7 +106,6 @@
                     android:gravity="top"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- BỔ SUNG NÚT CHỌN CV VÀ TEXTVIEW HIỂN THỊ TÊN FILE -->
             <Button
                 android:id="@+id/buttonSelectCv"
                 android:layout_width="match_parent"
@@ -101,27 +121,22 @@
                 android:text="Chưa có tệp CV nào được chọn"
                 android:textColor="@color/textColorSecondary"
                 android:textSize="14sp"/>
-            <!-- KẾT THÚC BỔ SUNG -->
-
         </LinearLayout>
 
-        <!-- KHUNG DÀNH CHO NHÀ TUYỂN DỤNG -->
         <LinearLayout
             android:id="@+id/employerFieldsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone"> <!-- Mặc định ẩn -->
-
-            <com.google.android.material.textfield.TextInputLayout
+            android:visibility="gone"> <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tên công ty / Cá nhân">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextEditCompanyName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Tên công ty / Cá nhân">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextEditCompanyName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"

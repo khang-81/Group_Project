@@ -162,6 +162,7 @@ public class FilterActivity extends AppCompatActivity {
             if (task.isSuccessful()) {
                 List<String> items = new ArrayList<>();
                 items.add(defaultText);
+                items.add(defaultText);
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     items.add(document.getString("name"));
                 }
