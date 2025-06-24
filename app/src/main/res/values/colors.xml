@@ -15,7 +15,6 @@
     <color name="lightGray">#D3D3D3</color>
     <color name="chipBackground">#4A90E2</color>
     <color name="purple_500">#6200EE</color>
-
-
+    <color name="tab_unselected_bg">#ECECEC</color>
 
 </resources>

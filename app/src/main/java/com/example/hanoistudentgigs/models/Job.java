@@ -29,6 +29,8 @@ public class Job {
 
     private String contact;
 
+    private String fireStoreId;
+
     // Constructor rỗng bắt buộc cho Firestore
     public Job() {
     }
@@ -206,6 +208,14 @@ public class Job {
 
     public void setContact(String contact) {
         this.contact = contact;
+    }
+
+    public String getFireStoreId() {
+        return fireStoreId;
+    }
+
+    public void setFireStoreId(String fireStoreId) {
+        this.fireStoreId = fireStoreId;
     }
 
     @Override

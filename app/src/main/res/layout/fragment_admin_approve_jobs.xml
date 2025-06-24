@@ -1,8 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/recyclerViewApproveJobs"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
-    android:clipToPadding="false"/>
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+
+    <!-- Header xanh -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#1976D2"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HanoiStudentGigs"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:layout_marginStart="16dp"/>
+    </LinearLayout>
+
+    <!-- Header phụ -->
+    <TextView
+        android:id="@+id/tvHeaderApproveJobs"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="KIỂM DUYỆT TIN ĐĂNG"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:background="#37474F"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginHorizontal="32dp"
+        android:elevation="2dp"
+        android:padding="8dp"
+        android:clipToOutline="true"/>
+
+    <!-- Tìm kiếm -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_search_24"
+            android:tint="#757575"/>
+        <EditText
+            android:id="@+id/editTextSearchJob"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:hint="Tìm kiếm công ty..."
+            android:background="@drawable/bg_input_rounded"
+            android:paddingHorizontal="12dp"
+            android:textColor="#222222"
+            android:textSize="15sp"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
+    <!-- Danh sách job -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewApproveJobs"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginHorizontal="8dp"
+        android:clipToPadding="false"/>
+
+</LinearLayout>

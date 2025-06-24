@@ -29,6 +29,7 @@ public class AdminJobAdapter extends FirestoreRecyclerAdapter<Job, AdminJobAdapt
         void onApprove(Job job);
         void onView(Job job);
         void onDelete(Job job);
+        void onEdit(Job job);
     }
 
     public AdminJobAdapter(@NonNull FirestoreRecyclerOptions<Job> options, Context context, OnJobActionListener listener) {
@@ -39,65 +40,38 @@ public class AdminJobAdapter extends FirestoreRecyclerAdapter<Job, AdminJobAdapt
 
     @Override
     protected void onBindViewHolder(@NonNull JobViewHolder holder, int position, @NonNull Job job) {
+        // Lấy id Firestore thực sự
+        String fireStoreId = getSnapshots().getSnapshot(position).getId();
+        job.setFireStoreId(fireStoreId);
         holder.tvCompanyName.setText(job.getCompanyName());
         holder.tvPostedDate.setText("Ngày đăng: " + job.getPostedDate());
 
-        // Set trạng thái nút Duyệt
+        // Chỉ set màu động cho btnApproveJob
         if (job.isApproved()) {
+            holder.btnApproveJob.setText("ĐÃ DUYỆT");
+            holder.btnApproveJob.setBackgroundTintList(android.content.res.ColorStateList.valueOf(0xFFBDBDBD));
             holder.btnApproveJob.setEnabled(false);
-            holder.btnApproveJob.setText("Đã duyệt");
         } else {
+            holder.btnApproveJob.setText("DUYỆT");
+            holder.btnApproveJob.setBackgroundTintList(android.content.res.ColorStateList.valueOf(0xFF4CAF50));
             holder.btnApproveJob.setEnabled(true);
-            holder.btnApproveJob.setText("Duyệt");
         }
 
-
         holder.btnApproveJob.setOnClickListener(v -> {
-            if (!job.isApproved()) {
-                new AlertDialog.Builder(context)
-                        .setTitle("Xác nhận duyệt")
-                        .setMessage("Bạn có chắc chắn muốn duyệt tin đăng này?")
-                        .setPositiveButton("Duyệt", (dialog, which) -> {
-                            db.collection(Constants.JOBS_COLLECTION)
-                                    .document(job.getId())
-                                    .update("approved", true)
-                                    .addOnSuccessListener(aVoid -> {
-                                        Toast.makeText(context, "Đã duyệt tin đăng!", Toast.LENGTH_SHORT).show();
-                                    })
-                                    .addOnFailureListener(e ->
-                                            Toast.makeText(context, "Lỗi khi duyệt tin: " + e.getMessage(), Toast.LENGTH_SHORT).show()
-                                    );
-                        })
-                        .setNegativeButton("Hủy", null)
-                        .show();
-            }
-        });
-
-        // Xử lý sự kiện nút Xem
-        holder.btnViewJob.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onView(job);
-            }
+            if (!job.isApproved() && listener != null) listener.onApprove(job);
         });
 
         // Xử lý sự kiện nút Xóa
         holder.btnDeleteJob.setOnClickListener(v -> {
-            new AlertDialog.Builder(context)
-                    .setTitle("Xác nhận xóa")
-                    .setMessage("Bạn có chắc chắn muốn xóa tin đăng này?")
-                    .setPositiveButton("Xóa", (dialog, which) -> {
-                        db.collection(Constants.JOBS_COLLECTION)
-                                .document(job.getId())
-                                .delete()
-                                .addOnSuccessListener(aVoid -> {
-                                    Toast.makeText(context, "Đã xóa tin đăng!", Toast.LENGTH_SHORT).show();
-                                })
-                                .addOnFailureListener(e ->
-                                        Toast.makeText(context, "Lỗi khi xóa tin: " + e.getMessage(), Toast.LENGTH_SHORT).show()
-                                );
-                    })
-                    .setNegativeButton("Hủy", null)
-                    .show();
+            if (listener != null) listener.onDelete(job);
+        });
+
+        holder.btnViewJob.setOnClickListener(v -> {
+            if (listener != null) listener.onView(job);
+        });
+
+        holder.btnEditJob.setOnClickListener(v -> {
+            if (listener != null) listener.onEdit(job);
         });
     }
 
@@ -110,15 +84,16 @@ public class AdminJobAdapter extends FirestoreRecyclerAdapter<Job, AdminJobAdapt
 
     public static class JobViewHolder extends RecyclerView.ViewHolder {
         TextView tvCompanyName, tvPostedDate;
-        Button btnApproveJob, btnViewJob, btnDeleteJob;
+        Button btnApproveJob, btnDeleteJob, btnViewJob, btnEditJob;
 
         public JobViewHolder(@NonNull View itemView) {
             super(itemView);
             tvCompanyName = itemView.findViewById(R.id.tvCompanyName);
             tvPostedDate = itemView.findViewById(R.id.tvPostedDate);
             btnApproveJob = itemView.findViewById(R.id.btnApproveJob);
-            btnViewJob = itemView.findViewById(R.id.btnViewJob);
             btnDeleteJob = itemView.findViewById(R.id.btnDeleteJob);
+            btnViewJob = itemView.findViewById(R.id.btnViewJob);
+            btnEditJob = itemView.findViewById(R.id.btnEditJob);
         }
     }
 }
