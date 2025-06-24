@@ -5,7 +5,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.hanoistudentgigs.R;
 import com.example.hanoistudentgigs.adapters.ApplicantAdapter;
 import com.example.hanoistudentgigs.models.Application;
@@ -14,7 +13,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 public class DsUngVienActivity extends AppCompatActivity {
-
     private RecyclerView recyclerView;
     private ApplicantAdapter adapter;
 
@@ -26,7 +24,6 @@ public class DsUngVienActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewAllApplicants);
         setupRecyclerView();
     }
-
     private void setupRecyclerView() {
         Query query = FirebaseFirestore.getInstance()
                 .collection("applications")
@@ -36,7 +33,6 @@ public class DsUngVienActivity extends AppCompatActivity {
                 .setQuery(query, Application.class)
                 .setLifecycleOwner(this)
                 .build();
-
         adapter = new ApplicantAdapter(options, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);

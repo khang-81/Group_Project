@@ -37,25 +37,34 @@ public class JobManageAdapter extends FirestoreRecyclerAdapter<Job, JobManageAda
 
 
         holder.btnDelete.setOnClickListener(v -> {
-            getSnapshots().getSnapshot(position).getReference().delete()
-                    .addOnSuccessListener(unused ->
-                            Toast.makeText(context, "Đã xoá công việc", Toast.LENGTH_SHORT).show())
-                    .addOnFailureListener(e ->
-                            Toast.makeText(context, "Lỗi khi xoá", Toast.LENGTH_SHORT).show());
-        });
+            int adapterPosition = holder.getBindingAdapterPosition();
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                getSnapshots().getSnapshot(position).getReference().delete()
+                        .addOnSuccessListener(unused ->
+                                Toast.makeText(context, "Đã xoá công việc", Toast.LENGTH_SHORT).show())
+                        .addOnFailureListener(e ->
+                                Toast.makeText(context, "Lỗi khi xoá", Toast.LENGTH_SHORT).show());
+            }
+            });
 
         holder.btnEdit.setOnClickListener(v -> {
-            String jobId = getSnapshots().getSnapshot(position).getId();
-            Intent intent = new Intent(v.getContext(), SuaTinActivity.class);
-            intent.putExtra("JOB_ID", jobId);
-            v.getContext().startActivity(intent);
+            int adapterPosition = holder.getBindingAdapterPosition();
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                String jobId = getSnapshots().getSnapshot(adapterPosition).getId();
+                Intent intent = new Intent(v.getContext(), SuaTinActivity.class);
+                intent.putExtra("JOB_ID", jobId);
+                v.getContext().startActivity(intent);
+            }
         });
 
         holder.btnView.setOnClickListener(v -> {
-            String jobId = getSnapshots().getSnapshot(position).getId();
-            Intent intent = new Intent(context, XemTinActivity.class);
-            intent.putExtra("JOB_ID", jobId);
-            context.startActivity(intent);
+            int adapterPosition = holder.getBindingAdapterPosition();
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                String jobId = getSnapshots().getSnapshot(adapterPosition).getId();
+                Intent intent = new Intent(context, XemTinActivity.class);
+                intent.putExtra("JOB_ID", jobId);
+                context.startActivity(intent);
+            }
         });
 
     }

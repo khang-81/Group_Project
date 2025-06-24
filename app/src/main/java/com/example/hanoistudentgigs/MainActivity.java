@@ -13,7 +13,7 @@ import com.example.hanoistudentgigs.activities.LoginActivity;
 import com.example.hanoistudentgigs.activities.TrangChuActivity;
 import com.example.hanoistudentgigs.fragments.admin.AdminApproveJobsFragment;
 import com.example.hanoistudentgigs.fragments.admin.AdminDashboardFragment;
-import com.example.hanoistudentgigs.fragments.admin.AdminManageUsersFragment;
+//import com.example.hanoistudentgigs.fragments.admin.AdminManageUsersFragment;
 import com.example.hanoistudentgigs.fragments.employer.EmployerDashboardFragment;
 import com.example.hanoistudentgigs.fragments.student.ProfileFragment;
 import com.example.hanoistudentgigs.fragments.student.StudentApplicationsFragment;
@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
             case Constants.ROLE_EMPLOYER:
                 startActivity(new Intent(this, TrangChuActivity.class));
                 finish(); // Đóng Activity hiện tại để tránh quay lại Fragment cũ
-                return null;
+                return null; // Không trả về Fragment nữa
             case Constants.ROLE_ADMIN:
                 return new AdminDashboardFragment();
             default:
@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
                 } else if (itemId == R.id.nav_admin_approve_jobs) {
                     selectedFragment = new AdminApproveJobsFragment();
                 } else if (itemId == R.id.nav_admin_manage_users) {
-                    selectedFragment = new AdminManageUsersFragment();
+//                    selectedFragment = new AdminManageUsersFragment();
                 }
 
                 return loadFragment(selectedFragment);

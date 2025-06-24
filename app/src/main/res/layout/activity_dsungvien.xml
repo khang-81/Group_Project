@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Danh sách ứng viên đã nộp"
+        android:text="@string/applicant_list_title"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginBottom="12dp" />
@@ -17,5 +17,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewAllApplicants"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:contentDescription="@string/recycler_applicant_list_desc" />
+
 </LinearLayout>
