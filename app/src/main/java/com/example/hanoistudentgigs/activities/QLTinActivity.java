@@ -2,12 +2,10 @@ package com.example.hanoistudentgigs.activities;
 
 import android.os.Bundle;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.hanoistudentgigs.R;
 import com.example.hanoistudentgigs.adapters.JobManageAdapter;
 import com.example.hanoistudentgigs.models.Job;
@@ -16,11 +14,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-
 import java.util.Arrays;
 
 public class QLTinActivity extends AppCompatActivity {
-
     private RecyclerView recyclerViewActive, recyclerViewInactive;
     private JobManageAdapter activeAdapter, inactiveAdapter;
 

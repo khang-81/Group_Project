@@ -75,6 +75,16 @@
           <theme>@style/Theme.HanoiStudentGigs</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_all_applicants.xml">
+        <config>
+          <theme>@style/Theme.HanoiStudentGigs</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_all_jobs.xml">
+        <config>
+          <theme>@style/Theme.HanoiStudentGigs</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_filter.xml">
         <config>
           <theme>@style/Theme.HanoiStudentGigs</theme>
@@ -106,6 +116,11 @@
         </config>
       </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_profile_edit.xml">
+        <config>
+          <theme>@style/Theme.HanoiStudentGigs</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_qltin.xml">
         <config>
           <theme>@style/Theme.HanoiStudentGigs</theme>
         </config>
@@ -175,6 +190,11 @@
           <theme>@style/Theme.HanoiStudentGigs</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_job.xml">
+        <config>
+          <theme>@style/Theme.HanoiStudentGigs</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_job_card.xml">
         <config>
           <theme>@style/Theme.HanoiStudentGigs</theme>
@@ -213,25 +233,12 @@
   <component name="ChangeListManager">
     <list default="true" id="12f09ce9-6b63-41e4-bd31-a9c8f7130f68" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/DangTinActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/DangTinActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/FilterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/FilterActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/JobDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/JobDetailActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/LoginActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/SearchActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/SearchActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/DsUngVienActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/DsUngVienActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/QLTinActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/QLTinActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/SuaTinActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/SuaTinActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/TrangChuActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/TrangChuActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/adapters/ApplicantAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/adapters/ApplicantAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/adapters/ApplicantStaticAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/adapters/ApplicantStaticAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/filter/FilterBottomSheetFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/filter/FilterBottomSheetFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/student/ProfileFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/student/ProfileFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/student/StudentHomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/fragments/student/StudentHomeFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/models/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/models/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/models/Filter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/models/Filter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/utils/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/utils/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_filter.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_filter.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_student_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_student_home.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/libs.versions.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/XemTinActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/XemTinActivity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -241,7 +248,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\ASUS\.android\avd\Pixel_9_Pro_2.avd)]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\Windows\.android\avd\Medium_Phone.avd)]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -262,6 +269,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "NhungTuyetLe"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/khang-81/Group_Project.git",
+    "accountId": "4967bc2b-2faa-4c90-a704-4b95204af28d"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -281,9 +300,9 @@
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "TaDucKhang",
+    "git-widget-placeholder": "LeThiTuyetNhung",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Windows/Desktop/clone/Group_Project_New",
+    "last_opened_file_path": "C:/Users/Windows/Desktop/clone/Group_Project",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.17",
     "project.structure.side.proportion": "0.2",
@@ -458,6 +477,15 @@
     </option>
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/hanoistudentgigs/activities/DangTinActivity.java</url>
+          <line>22</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="com.google.firebase.firestore.Query" memberName="query" />
