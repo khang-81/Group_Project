@@ -1,4 +1,3 @@
-
 package com.example.hanoistudentgigs.activities;
 
 import android.content.Intent;

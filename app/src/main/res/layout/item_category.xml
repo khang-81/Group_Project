@@ -1,25 +1,52 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFF"
-    android:padding="12dp"
-    android:layout_marginBottom="8dp"
-    android:elevation="2dp"
-    android:clipToPadding="false">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvCategoryName"
-        android:layout_width="0dp"
-        android:layout_weight="1"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tên danh mục"
-        android:textStyle="bold"
-        android:textSize="16sp"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="8dp">
+        <TextView
+            android:id="@+id/textViewCategoryName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Tên danh mục"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:textColor="#222222"/>
 
-    <Button
-        android:id="@+id/btnDeleteCategory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Xóa"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnEditCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="SỬA"
+            android:textAllCaps="true"
+            android:textColor="#FFFFFF"
+            app:backgroundTint="#FF9800"
+            android:background="@drawable/rounded_button"
+            android:layout_marginEnd="8dp"
+            style="@style/Widget.MaterialComponents.Button"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDeleteCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            app:backgroundTint="#F44336"
+            android:textColor="#FFFFFF"
+            android:text="XÓA"
+            android:textAllCaps="true"
+            android:background="@drawable/rounded_button"
+            style="@style/Widget.MaterialComponents.Button"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E0E0E0"/>
 </LinearLayout>

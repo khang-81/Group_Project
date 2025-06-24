@@ -65,7 +65,7 @@
         <activity
             android:name=".activities.ProfileEditActivity"
             android:exported="false"
-            android:parentActivityName=".activities.TrangChuActivity" />
+            android:parentActivityName=".activities.ProfileEditActivity" />
 
         <activity
             android:name=".activities.SearchActivity"

@@ -193,18 +193,13 @@ public class ProfileEditActivity extends AppCompatActivity {
         });
     }
 
+    // Giữ nguyên các phần code khác của ProfileEditActivity
+
     private void saveChanges() {
         if (userIdToEdit == null || userRole == null) {
             Toast.makeText(this, "Không thể lưu. Thiếu thông tin người dùng hoặc vai trò.", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        // Bước này có thể không cần nếu vai trò không thay đổi,
-        // nhưng để an toàn, bạn có thể cập nhật vai trò lại vào USERS_COLLECTION nếu cần
-        // Map<String, Object> userUpdates = new HashMap<>();
-        // userUpdates.put("role", userRole);
-        // db.collection(Constants.USERS_COLLECTION).document(userIdToEdit).update(userUpdates);
-
 
         if (Constants.ROLE_STUDENT.equals(userRole)) {
             Map<String, Object> studentUpdates = new HashMap<>();
@@ -216,21 +211,19 @@ public class ProfileEditActivity extends AppCompatActivity {
             studentUpdates.put("skillsDescription", editTextEditSkills.getText().toString().trim());
             studentUpdates.put("experience", editTextEditExperience.getText().toString().trim());
 
-            // TODO: Xử lý lưu CV fileUri lên Firebase Storage và lấy URL để lưu vào Firestore
+            // CHỈ LƯU TÊN FILE VÀO FIRESTORE (KHÔNG TẢI LÊN STORAGE)
             if (cvFileUri != null) {
-                // Đây là nơi bạn sẽ upload cvFileUri lên Firebase Storage
-                // Sau khi upload thành công, lấy URL và lưu vào profileUpdates
-                // Ví dụ: uploadCvAndSaveUrl(cvFileUri, userIdToEdit, studentUpdates);
-                // Tạm thời, nếu bạn đã có tên file trong document, giữ lại
-                // Hoặc nếu bạn muốn lưu tên file mới khi chọn:
-                // studentUpdates.put("cvFileName", getFileNameFromUri(cvFileUri));
-                Toast.makeText(this, "Chức năng tải CV chưa được triển khai hoàn chỉnh!", Toast.LENGTH_LONG).show();
-                Log.w("ProfileEdit", "CV file selected but upload logic is not implemented.");
+                String fileName = getFileNameFromUri(cvFileUri);
+                studentUpdates.put("cvFileName", fileName); // Lưu tên file vào Firestore
+                Log.d("CV_SAVE", "Saving CV file name: " + fileName + " to Firestore.");
+                Toast.makeText(this, "Tải Cv thành công.", Toast.LENGTH_SHORT).show();
             } else {
-                // Nếu người dùng không chọn CV mới và trước đó có CV, có thể giữ lại tên cũ
-                // Hoặc xóa nếu muốn tùy chọn
+                // Tùy chọn: Nếu người dùng không chọn file mới và trước đó có file, bạn có thể xóa trường này
+                // hoặc giữ nguyên giá trị cũ. Để đơn giản, nếu cvFileUri là null, chúng ta sẽ không cập nhật trường này.
+                // Nếu bạn muốn xóa trường khi không có file mới được chọn, hãy dùng:
+                // studentUpdates.put("cvFileName", FieldValue.delete());
+                Log.d("CV_SAVE", "No new CV file selected. Retaining existing or leaving blank.");
             }
-
 
             // Lưu dữ liệu vào STUDENTS_COLLECTION
             db.collection(Constants.STUDENTS_COLLECTION).document(userIdToEdit).update(studentUpdates)

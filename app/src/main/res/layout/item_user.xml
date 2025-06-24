@@ -9,35 +9,65 @@
     android:elevation="2dp"
     android:clipToPadding="false">
 
-    <TextView
-        android:id="@+id/tvUserName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tên user (email)"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:layout_marginBottom="8dp"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/btnViewUser"
-            android:layout_width="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvUserName"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Xem"
-            android:layout_marginEnd="8dp"/>
-        <Button
-            android:id="@+id/btnVerifyUser"
-            android:layout_width="wrap_content"
+            android:text="Tên người dùng"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:textColor="#222222"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Xác thực"
-            android:layout_marginEnd="8dp"/>
-        <Button
-            android:id="@+id/btnDeleteUser"
-            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
+            <Button
+                android:id="@+id/btnViewUser"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Xem"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#2196F3"
+                android:layout_marginEnd="4dp"/>
+            <Button
+                android:id="@+id/btnEditUser"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Sửa"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#FF9800"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Xóa"/>
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btnVerifyUser"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Duyệt"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#4CAF50"
+                android:layout_marginEnd="4dp"/>
+            <Button
+                android:id="@+id/btnDeleteUser"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Xóa"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#F44336"/>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
