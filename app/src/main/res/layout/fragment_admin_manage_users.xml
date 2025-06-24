@@ -1,34 +1,87 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:padding="24dp"
+    android:background="#FFF">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayoutUsers"
+    <Button
+        android:id="@+id/btnManageCategoriesTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Quản Lý Danh Mục"
+        android:textStyle="bold"
+        android:enabled="false"
+        android:backgroundTint="#3B5A7A"
+        android:textColor="#FFF"
+        android:layout_marginBottom="16dp"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center">
         <Button
-            android:id="@+id/btnStudentTab"
+            android:id="@+id/btnTabIndustry"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Sinh Viên"/>
+            android:text="Ngành nghề"
+            android:singleLine="true"
+            android:textSize="12sp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"/>
         <Button
-            android:id="@+id/btnEmployerTab"
+            android:id="@+id/btnTabSkill"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Nhà Tuyển Dụng"
+            android:text="Kỹ Năng"
+            android:singleLine="true"
+            android:textSize="12sp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_marginStart="8dp"/>
+        <Button
+            android:id="@+id/btnTabLocation"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Địa Điểm"
+            android:singleLine="true"
+            android:textSize="12sp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:layout_marginStart="8dp"/>
     </LinearLayout>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPagerUsers"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCategoryList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:layout_marginTop="16dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+        <EditText
+            android:id="@+id/etNewCategory"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="Nhập ..."
+            android:inputType="text"
+            android:background="@drawable/edit_text_background"
+            android:padding="12dp"/>
+        <Button
+            android:id="@+id/btnAddCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thêm mới"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
 </LinearLayout>

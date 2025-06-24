@@ -1,7 +1,6 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor">
@@ -40,44 +39,30 @@
                         android:scaleType="centerCrop"/>
                 </com.google.android.material.card.MaterialCardView>
 
-        <TextView
-            android:id="@+id/textViewDetailJobTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            tools:text="Job Title"
-            android:textSize="22sp"
-            android:layout_marginBottom="24dp"/>
+                <TextView
+                    android:id="@+id/textViewDetailJobTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Product Designer"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="16dp"/>
+                <TextView
+                    android:id="@+id/textViewDetailCompanyName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Google"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"/>
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mức lương"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp"/>
-        <TextView
-            android:id="@+id/textViewDetailSalary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="25.000 - 28.000 VNĐ/giờ"
-            android:textSize="16sp"
-            android:layout_marginBottom="16dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Địa điểm"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp"/>
-        <TextView
-            android:id="@+id/textViewDetailLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="Cầu Giấy"
-            android:textSize="16sp"
-            android:layout_marginBottom="16dp"/>
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"/>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -140,5 +125,4 @@
         android:layout_margin="16dp"
         app:cornerRadius="8dp"/>
 
-    </LinearLayout>
-</ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

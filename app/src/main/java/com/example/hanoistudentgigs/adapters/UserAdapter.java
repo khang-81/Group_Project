@@ -68,7 +68,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         Button btnView, btnVerify, btnDelete;
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvName = itemView.findViewById(R.id.tvUserName);
+//            tvName = itemView.findViewById(R.id.tvUserName);
             btnView = itemView.findViewById(R.id.btnViewUser);
             btnVerify = itemView.findViewById(R.id.btnVerifyUser);
             btnDelete = itemView.findViewById(R.id.btnDeleteUser);

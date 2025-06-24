@@ -79,8 +79,8 @@ public class ProfileEditActivity extends AppCompatActivity {
         editTextEditStudentFullName = findViewById(R.id.editTextEditStudentFullName);
         editTextEditSchool = findViewById(R.id.editTextEditSchool);
         editTextEditMajor = findViewById(R.id.editTextEditMajor);
-        editTextEditYear = findViewById(R.id.editTextEditYear);
-        editTextEditStudentPhone = findViewById(R.id.editTextEditStudentPhone);
+//        editTextEditYear = findViewById(R.id.editTextEditYear);
+//        editTextEditStudentPhone = findViewById(R.id.editTextEditStudentPhone);
         editTextEditSkills = findViewById(R.id.editTextEditSkills);
         editTextEditExperience = findViewById(R.id.editTextEditExperience);
 
