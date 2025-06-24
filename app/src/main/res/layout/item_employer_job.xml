@@ -1,45 +1,96 @@
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
     android:layout_marginBottom="12dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="4dp"
-    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
     app:strokeWidth="1dp"
-    app:strokeColor="@color/dividerColor">
+    app:strokeColor="#EEEEEE">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:gravity="center_vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <!-- Hình ảnh biểu tượng công việc -->
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_work_24"
-            android:layout_marginEnd="16dp"
-            app:tint="@color/primaryColor"/>
-
-        <!-- Tiêu đề công việc -->
         <TextView
             android:id="@+id/textViewJobTitle"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Tuyển thực tập game cho sinh viên..."
-            android:textColor="@color/textColorPrimary"
-            android:textSize="16sp"/>
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="Nhân viên Phục vụ Nhà hàng Full-time" />
 
-        <!-- Biểu tượng mũi tên -->
-        <ImageView
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/textViewJobLocation"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_chevron_right_24"
-            app:tint="@color/textColorSecondary"/>
+            android:layout_marginTop="4dp"
+            android:drawableStart="@drawable/ic_location_on"
+            android:drawablePadding="4dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/textColorSecondary"
+            android:textSize="14sp"
+            app:drawableTint="@color/textColorSecondary"
+            tools:text="Quận Cầu Giấy, Hà Nội" />
+
+        <TextView
+            android:id="@+id/textViewJobSalary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:drawableStart="@drawable/ic_salary"
+            android:drawablePadding="4dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/textColorSecondary"
+            android:textSize="14sp"
+            app:drawableTint="@color/textColorSecondary"
+            tools:text="9 - 12 triệu/tháng + thưởng" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:background="#F0F0F0" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonEdit"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:text="Sửa" />
+
+            <Button
+                android:id="@+id/buttonToggleStatus"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                tools:text="Đóng tin" />
+
+            <Button
+                android:id="@+id/buttonViewApplicants"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.3"
+                android:text="Xem ứng viên" />
+        </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
