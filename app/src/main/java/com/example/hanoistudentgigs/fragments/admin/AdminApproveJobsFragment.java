@@ -29,6 +29,7 @@ import com.google.firebase.firestore.Query;
 public class AdminApproveJobsFragment extends Fragment {
     private RecyclerView recyclerViewApproveJobs;
     private EditText editTextSearchJob;
+
     private AdminJobAdapter jobAdapter;
     private FirebaseFirestore db;
 
@@ -38,6 +39,7 @@ public class AdminApproveJobsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_admin_approve_jobs, container, false);
         editTextSearchJob = view.findViewById(R.id.editTextSearchJob);
         recyclerViewApproveJobs = view.findViewById(R.id.recyclerViewApproveJobs);
+
         db = FirebaseFirestore.getInstance();
 
         setupRecyclerView(""); // Initial load

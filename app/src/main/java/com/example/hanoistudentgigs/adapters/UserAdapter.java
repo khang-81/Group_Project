@@ -23,6 +23,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         void onView(User user);
         void onVerify(User user);
         void onEdit(User user);
+
     }
 
     public UserAdapter(List<User> userList, OnUserActionListener listener) {
@@ -86,6 +87,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             btnVerify = itemView.findViewById(R.id.btnVerifyUser);
             btnDelete = itemView.findViewById(R.id.btnDeleteUser);
             btnEdit = itemView.findViewById(R.id.btnEditUser);
+
         }
     }
 }

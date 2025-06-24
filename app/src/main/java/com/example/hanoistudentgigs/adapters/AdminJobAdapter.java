@@ -72,6 +72,7 @@ public class AdminJobAdapter extends FirestoreRecyclerAdapter<Job, AdminJobAdapt
 
         holder.btnEditJob.setOnClickListener(v -> {
             if (listener != null) listener.onEdit(job);
+
         });
     }
 
@@ -84,7 +85,9 @@ public class AdminJobAdapter extends FirestoreRecyclerAdapter<Job, AdminJobAdapt
 
     public static class JobViewHolder extends RecyclerView.ViewHolder {
         TextView tvCompanyName, tvPostedDate;
+
         Button btnApproveJob, btnDeleteJob, btnViewJob, btnEditJob;
+
 
         public JobViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -94,6 +97,7 @@ public class AdminJobAdapter extends FirestoreRecyclerAdapter<Job, AdminJobAdapt
             btnDeleteJob = itemView.findViewById(R.id.btnDeleteJob);
             btnViewJob = itemView.findViewById(R.id.btnViewJob);
             btnEditJob = itemView.findViewById(R.id.btnEditJob);
+
         }
     }
 }

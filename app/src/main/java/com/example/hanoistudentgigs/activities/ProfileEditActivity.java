@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView; // Thêm import cho TextView
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -37,11 +38,13 @@ public class ProfileEditActivity extends AppCompatActivity {
                 if (uri != null) {
                     cvFileUri = uri; // Đảm bảo gán đúng
                     Log.d("CV_UPLOAD", "Selected CV URI: " + uri.toString()); // Log để kiểm tra
-                    // ... cập nhật UI ...
+                    // Cập nhật UI để hiển thị tên file CV
+                    textViewCvFileName.setText(getFileNameFromUri(uri));
+                    // TODO: Bạn có thể cần xử lý tải file CV lên Firebase Storage ở đây
                 } else {
                     cvFileUri = null;
                     Log.d("CV_UPLOAD", "No CV selected or selection cancelled.");
-                    // ... cập nhật UI ...
+                    textViewCvFileName.setText("Chưa có tệp CV nào được chọn");
                 }
             }
     );
@@ -73,8 +76,6 @@ public class ProfileEditActivity extends AppCompatActivity {
             finish();
             return;
         }
-
-        // Ánh xạ các views
         studentFieldsLayout = findViewById(R.id.studentFieldsLayout);
         editTextEditStudentFullName = findViewById(R.id.editTextEditStudentFullName);
         editTextEditSchool = findViewById(R.id.editTextEditSchool);
@@ -95,6 +96,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         loadCurrentProfile();
 
         buttonSaveChanges.setOnClickListener(v -> saveChanges());
+
     }
 
     @Override
@@ -130,6 +132,7 @@ public class ProfileEditActivity extends AppCompatActivity {
                     editTextEditWebsite.setText(document.getString("website"));
                 }
             }
+
         });
     }
 
@@ -160,5 +163,6 @@ public class ProfileEditActivity extends AppCompatActivity {
                     finish(); // Đóng Activity sau khi lưu
                 })
                 .addOnFailureListener(e -> Toast.makeText(this, "Cập nhật thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+
     }
 }

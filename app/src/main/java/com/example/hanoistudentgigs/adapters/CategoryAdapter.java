@@ -15,6 +15,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     public interface OnCategoryActionListener {
         void onDelete(Category category);
         void onEdit(Category category);
+
     }
 
     private List<Category> categoryList;
@@ -53,6 +54,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             tvCategoryName = itemView.findViewById(R.id.textViewCategoryName);
             btnDeleteCategory = itemView.findViewById(R.id.btnDeleteCategory);
             btnEditCategory = itemView.findViewById(R.id.btnEditCategory);
+
         }
     }
 }

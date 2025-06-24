@@ -10,13 +10,13 @@
 
     <!-- Sinh viên -->
     <EditText
-        android:id="@+id/etFullName"
+        android:id="@+id/etName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Họ tên"
+        android:hint="Họ tên hoặc tên công ty"
         android:inputType="textPersonName|textCapWords" />
     <EditText
-        android:id="@+id/etSchoolName"
+        android:id="@+id/etSchoolOrCompany"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

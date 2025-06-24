@@ -68,7 +68,7 @@ dependencies {
     androidTestImplementation(libs.junit.ext) // Đổi từ libs.junit.v115 sang tên alias chính xác
     androidTestImplementation(libs.espresso.core) // Đổi từ libs.espresso.core.v351 sang tên alias chính xác
 }
-
 tasks.withType<Test> {
     enabled = false
+
 }

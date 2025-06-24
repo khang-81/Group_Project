@@ -2,6 +2,7 @@ package com.example.hanoistudentgigs.models;
 
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class Job {
@@ -9,19 +10,21 @@ public class Job {
     private String title;
     private String companyName;
     private Map<String, Object> createdAt;
-    private String companyLogoUrl;
+    private String companyLogoUrl; // Link ảnh logo công ty
     private String locationName;
     private String salaryDescription;
     private String description;
     private String requirements;
     private String employerUid;
-    private String jobType;
+    private String jobType; // PartTime, Freelance, Internship
     private String categoryName;
+
     private List<String> requiredSkills;
     private boolean isApproved;
     private boolean isFeatured;
+
     private String status;
-    private boolean active;
+
 
     private List<String> searchKeywords;
     private long minSalary;
@@ -66,6 +69,7 @@ public class Job {
         this.companyName = companyName;
     }
 
+
     public Map<String, Object> getCreatedAt() {
         return createdAt;
     }
@@ -77,6 +81,7 @@ public class Job {
     public String getCompanyLogoUrl() {
         return companyLogoUrl;
     }
+
 
     public void setCompanyLogoUrl(String companyLogoUrl) {
         this.companyLogoUrl = companyLogoUrl;
@@ -113,6 +118,7 @@ public class Job {
     public void setRequirements(String requirements) {
         this.requirements = requirements;
     }
+
 
     public String getEmployerUid() {
         return employerUid;
@@ -216,18 +222,19 @@ public class Job {
 
     public void setFireStoreId(String fireStoreId) {
         this.fireStoreId = fireStoreId;
+
     }
 
+    // --- Override toString() ---
     @Override
     public String toString() {
         return "Job{" +
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", companyName='" + companyName + '\'' +
-                ", createdAt=" + createdAt +
                 ", companyLogoUrl='" + companyLogoUrl + '\'' +
-                ", locationName='" + locationName + '\'' +
-                ", salaryDescription='" + salaryDescription + '\'' +
+                ", location='" + locationName + '\'' +
+                ", salary='" + salaryDescription + '\'' +
                 ", description='" + description + '\'' +
                 ", requirements='" + requirements + '\'' +
                 ", employerUid='" + employerUid + '\'' +
@@ -236,8 +243,8 @@ public class Job {
                 ", requiredSkills=" + requiredSkills +
                 ", isApproved=" + isApproved +
                 ", isFeatured=" + isFeatured +
+
                 ", status='" + status + '\'' +
-                ", active=" + active +
                 ", searchKeywords=" + searchKeywords +
                 ", minSalary=" + minSalary +
                 ", postedDate='" + postedDate + '\'' +

@@ -50,6 +50,7 @@
             android:id="@+id/textViewCompanyName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:text="Facebook"
             android:textColor="@color/white"
             android:alpha="0.8"
             app:layout_constraintTop_toBottomOf="@id/textViewJobTitle"
@@ -68,19 +69,19 @@
                 android:id="@+id/chipCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="IT"
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 app:chipBackgroundColor="#4A90E2"
-                android:textColor="@color/white"
-                android:text="@string/chip_category"/>
+                android:textColor="@color/white"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipJobType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Full-Time"
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 app:chipBackgroundColor="#4A90E2"
-                android:textColor="@color/white"
-                android:text="@string/chip_job_type"/>
+                android:textColor="@color/white"/>
         </com.google.android.material.chip.ChipGroup>
 
         <!-- Status -->
