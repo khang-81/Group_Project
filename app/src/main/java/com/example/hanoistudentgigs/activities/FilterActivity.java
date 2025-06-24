@@ -1,4 +1,3 @@
-
 package com.example.hanoistudentgigs.activities;
 
 import android.content.Intent;
@@ -161,6 +160,7 @@ public class FilterActivity extends AppCompatActivity {
         db.collection(collectionPath).orderBy("name").get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 List<String> items = new ArrayList<>();
+                items.add(defaultText);
                 items.add(defaultText);
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     items.add(document.getString("name"));

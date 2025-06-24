@@ -9,6 +9,7 @@
         public static final String LOCATIONS_COLLECTION = "locations";
         public static final String JOBTYPES_COLLECTION = "jobtypes";
 
+
     public static final String STUDENTS_COLLECTION = "students";
     public static final String EMPLOYERS_COLLECTION = "employers";
     public static final String ROLE_STUDENT = "STUDENT";

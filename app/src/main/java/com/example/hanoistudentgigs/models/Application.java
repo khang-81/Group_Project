@@ -8,25 +8,24 @@ public class Application {
     private String jobId;
     private String studentUid;
     private String studentName;
-    //    private String cvUrl;
     private String status;
-    private String cvFileName;
+    private String cvFileName; // Khai báo trường cvFileName
     @ServerTimestamp
     private Date appliedDate;
 
-    // Constructor rỗng
+    // Constructor rỗng (BẮT BUỘC cho Firestore)
     public Application() {}
 
-    // Constructor đầy đủ (optional, có thể sử dụng nếu cần khởi tạo đối tượng nhanh chóng)
-    public Application(String id, String jobId, String studentUid, String studentName, String cvUrl, String status, Date appliedDate) {
+    // Constructor đầy đủ (đã sửa lỗi)
+    // Đã loại bỏ 'cvUrl' và thêm 'cvFileName' vào danh sách tham số
+    public Application(String id, String jobId, String studentUid, String studentName, String status, String cvFileName, Date appliedDate) {
         this.id = id;
         this.jobId = jobId;
         this.studentUid = studentUid;
         this.studentName = studentName;
-//        this.cvUrl = cvUrl;
         this.status = status;
+        this.cvFileName = cvFileName; // Gán đúng tham số cvFileName
         this.appliedDate = appliedDate;
-        this.cvFileName = cvFileName;
     }
 
     // Getter và Setter cho từng trường
@@ -62,17 +61,12 @@ public class Application {
         this.studentName = studentName;
     }
 
-    //    public String getCvUrl() {
-//        return cvUrl;
-//    }
-//
-//    public void setCvUrl(String cvUrl) {
-//        this.cvUrl = cvUrl;
-//    }
+    // Getter cho cvFileName
     public String getCvFileName() {
         return cvFileName;
     }
 
+    // Setter cho cvFileName
     public void setCvFileName(String cvFileName) {
         this.cvFileName = cvFileName;
     }

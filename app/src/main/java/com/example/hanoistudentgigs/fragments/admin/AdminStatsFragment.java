@@ -44,8 +44,10 @@ public class AdminStatsFragment extends Fragment {
             }
         });
 
-        // Đếm tổng số đơn ứng tuyển
-        db.collectionGroup(Constants.APPLICATIONS_COLLECTION).get().addOnCompleteListener(task -> {
+        // Đếm tổng số đơn ứng tuyển có status = Submitted
+        db.collection(Constants.APPLICATIONS_COLLECTION)
+            .whereEqualTo("status", "Submitted")
+            .get().addOnCompleteListener(task -> {
             if (isAdded() && getContext() != null && task.isSuccessful()) {
                 textViewTotalApplications.setText("Số lượng ứng tuyển: " + task.getResult().size());
             }

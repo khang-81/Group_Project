@@ -29,6 +29,10 @@ public class JobDetailActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private ImageView imageViewJob;
 
+    // Tag cho Logcat
+    private static final String TAG = "JobDetailActivity";
+    private static final String APPLY_JOB_DEBUG_TAG = "ApplyJobDebug"; // Tag riêng cho debug applyForJob
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,19 +93,19 @@ public class JobDetailActivity extends AppCompatActivity {
                                         .placeholder(R.drawable.ic_business_24) // Ảnh placeholder khi đang tải
                                         .error(R.drawable.ic_error_24)       // Ảnh lỗi nếu tải thất bại
                                         .into(imageViewJob); // Tải vào imageViewJob
-                                Log.d("JobDetailActivity", "URL ảnh công việc: " + imageUrl);
+                                Log.d(TAG, "URL ảnh công việc: " + imageUrl);
                             } else {
                                 imageViewJob.setImageResource(R.drawable.ic_business_24); // Hiển thị ảnh mặc định
-                                Log.w("JobDetailActivity", "URL ảnh công việc rỗng hoặc null cho Job ID: " + jobId);
+                                Log.w(TAG, "URL ảnh công việc rỗng hoặc null cho Job ID: " + jobId);
                             }
 
                         } else {
                             Toast.makeText(this, "Không tìm thấy dữ liệu công việc.", Toast.LENGTH_SHORT).show();
-                            Log.w("JobDetailActivity", "Document không tồn tại cho Job ID: " + jobId);
+                            Log.w(TAG, "Document không tồn tại cho Job ID: " + jobId);
                         }
                     } else {
                         Toast.makeText(this, "Lỗi khi tải dữ liệu công việc.", Toast.LENGTH_SHORT).show();
-                        Log.e("JobDetailActivity", "Lỗi khi tải dữ liệu công việc: ", task.getException());
+                        Log.e(TAG, "Lỗi khi tải dữ liệu công việc: ", task.getException());
                     }
                 });
     }
@@ -130,7 +134,7 @@ public class JobDetailActivity extends AppCompatActivity {
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e("JobDetailActivity", "Lỗi khi kiểm tra đơn ứng tuyển: " + e.getMessage());
+                    Log.e(TAG, "Lỗi khi kiểm tra đơn ứng tuyển: " + e.getMessage());
                     // Vẫn để nút ứng tuyển hoạt động trong trường hợp lỗi
                     buttonApplyNow.setEnabled(true);
                     buttonApplyNow.setText("Ứng tuyển ngay");
@@ -144,13 +148,18 @@ public class JobDetailActivity extends AppCompatActivity {
             return;
         }
 
+        Log.d(APPLY_JOB_DEBUG_TAG, "Bắt đầu quy trình ứng tuyển cho Job ID: " + jobId + ", Student UID: " + currentUser.getUid());
+
         // BƯỚC 1: Lấy VAI TRÒ của người dùng
         db.collection(Constants.USERS_COLLECTION).document(currentUser.getUid()).get()
                 .addOnSuccessListener(userDocSnapshot -> {
                     if (userDocSnapshot.exists()) {
                         String userRole = userDocSnapshot.getString("role");
+                        Log.d(APPLY_JOB_DEBUG_TAG, "Vai trò người dùng: " + userRole);
+
                         if (!Constants.ROLE_STUDENT.equals(userRole)) {
                             Toast.makeText(JobDetailActivity.this, "Bạn phải là sinh viên để ứng tuyển.", Toast.LENGTH_SHORT).show();
+                            Log.w(APPLY_JOB_DEBUG_TAG, "Người dùng không phải sinh viên, hủy ứng tuyển.");
                             return;
                         }
 
@@ -160,11 +169,14 @@ public class JobDetailActivity extends AppCompatActivity {
                                     if (studentProfileSnapshot.exists()) {
                                         String studentName = studentProfileSnapshot.getString("fullName");
                                         String cvFileName = studentProfileSnapshot.getString("cvFileName");
-                                        // BỎ DÒNG LẤY cvUrl NÀY ĐI
-                                        // String cvUrl = studentProfileSnapshot.getString("cvUrl");
+
+                                        // LOG: Kiểm tra giá trị của cvFileName từ Firestore
+                                        Log.d(APPLY_JOB_DEBUG_TAG, "studentName từ Firestore: " + studentName + ", cvFileName từ Firestore: " + cvFileName);
+
 
                                         if (cvFileName == null || cvFileName.isEmpty()) {
                                             Toast.makeText(JobDetailActivity.this, "Vui lòng tải lên CV trong hồ sơ của bạn trước khi ứng tuyển.", Toast.LENGTH_LONG).show();
+                                            Log.w(APPLY_JOB_DEBUG_TAG, "CVFileName rỗng hoặc null, hủy ứng tuyển.");
                                             return;
                                         }
 
@@ -176,11 +188,12 @@ public class JobDetailActivity extends AppCompatActivity {
                                         application.setJobId(jobId); // Vẫn cần jobId để biết đơn này ứng tuyển cho job nào
                                         application.setStudentUid(currentUser.getUid());
                                         application.setStudentName(studentName);
-                                        // BỎ DÒNG GÁN cvUrl NÀY ĐI
-                                        // application.setCvUrl(cvUrl);
+                                        application.setCvFileName(cvFileName); // Gán cvFileName
 
-                                        // THÊM DÒNG GÁN cvFileName VÀO ĐÂY
-                                        application.setCvFileName(cvFileName); // Giả sử bạn có setter setCvFileName trong model Application
+                                        // LOG: Kiểm tra giá trị trong đối tượng Application trước khi lưu
+                                        Log.d(APPLY_JOB_DEBUG_TAG, "Application object cvFileName before saving: " + application.getCvFileName());
+                                        Log.d(APPLY_JOB_DEBUG_TAG, "Application ID sẽ được lưu: " + applicationId);
+
 
                                         application.setStatus("Submitted");
 
@@ -188,30 +201,34 @@ public class JobDetailActivity extends AppCompatActivity {
                                         db.collection(Constants.APPLICATIONS_COLLECTION).document(applicationId)
                                                 .set(application)
                                                 .addOnSuccessListener(aVoid -> {
+                                                    Log.d(APPLY_JOB_DEBUG_TAG, "Đơn ứng tuyển được lưu thành công vào Firestore với ID: " + applicationId);
                                                     Toast.makeText(JobDetailActivity.this, "Ứng tuyển thành công!", Toast.LENGTH_SHORT).show();
                                                     buttonApplyNow.setEnabled(false);
                                                     buttonApplyNow.setText("Đã ứng tuyển");
                                                     checkIfAlreadyApplied();
                                                 })
                                                 .addOnFailureListener(e -> {
-                                                    Log.e("JobDetailActivity", "Lỗi khi lưu đơn ứng tuyển: " + e.getMessage(), e);
+                                                    Log.e(APPLY_JOB_DEBUG_TAG, "Lỗi khi lưu đơn ứng tuyển vào Firestore cho ID: " + applicationId, e);
                                                     Toast.makeText(JobDetailActivity.this, "Ứng tuyển thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                                                 });
                                     } else {
                                         Toast.makeText(JobDetailActivity.this, "Không tìm thấy hồ sơ sinh viên của bạn. Vui lòng cập nhật hồ sơ.", Toast.LENGTH_LONG).show();
+                                        Log.w(APPLY_JOB_DEBUG_TAG, "Không tìm thấy hồ sơ sinh viên cho UID: " + currentUser.getUid());
                                     }
                                 })
                                 .addOnFailureListener(e -> {
-                                    Log.e("JobDetailActivity", "Lỗi khi tải hồ sơ sinh viên: " + e.getMessage(), e);
+                                    Log.e(APPLY_JOB_DEBUG_TAG, "Lỗi khi tải hồ sơ sinh viên: " + e.getMessage(), e);
                                     Toast.makeText(JobDetailActivity.this, "Lỗi khi tải hồ sơ sinh viên.", Toast.LENGTH_SHORT).show();
                                 });
                     } else {
                         Toast.makeText(JobDetailActivity.this, "Không tìm thấy thông tin vai trò người dùng.", Toast.LENGTH_SHORT).show();
+                        Log.w(APPLY_JOB_DEBUG_TAG, "Không tìm thấy thông tin vai trò người dùng cho UID: " + currentUser.getUid());
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e("JobDetailActivity", "Lỗi khi kiểm tra vai trò người dùng: " + e.getMessage(), e);
+                    Log.e(APPLY_JOB_DEBUG_TAG, "Lỗi khi kiểm tra vai trò người dùng: " + e.getMessage(), e);
                     Toast.makeText(JobDetailActivity.this, "Lỗi khi lấy thông tin người dùng.", Toast.LENGTH_SHORT).show();
                 });
     }
+
 }

@@ -58,6 +58,20 @@
         android:paddingStart="8dp"
         android:paddingEnd="8dp"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thời gian đăng"
+        android:layout_marginTop="16dp"
+        style="@style/TextAppearance.MaterialComponents.Subtitle1"/>
+
+    <Spinner
+        android:id="@+id/spinnerDateRange"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/edit_text_background"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"/>
     <Space
         android:layout_width="0dp"
         android:layout_height="0dp"

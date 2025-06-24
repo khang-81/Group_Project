@@ -84,7 +84,7 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment {
         spinnerCategory = view.findViewById(R.id.spinnerCategory);
         spinnerLocation = view.findViewById(R.id.spinnerLocation);
         spinnerJobType = view.findViewById(R.id.spinnerJobType);
-//        spinnerDateRange = view.findViewById(R.id.spinnerDateRange); // ÁNH XẠ SPINNER MỚI
+        spinnerDateRange = view.findViewById(R.id.spinnerDateRange); // ÁNH XẠ SPINNER MỚI
         buttonApplyFilter = view.findViewById(R.id.buttonApplyFilter);
 
         // KHÔNG CẦN setOnClickListener cho EditText nữa

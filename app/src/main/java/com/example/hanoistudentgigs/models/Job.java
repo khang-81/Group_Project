@@ -9,19 +9,20 @@ public class Job {
     private String title;
     private String companyName;
     private Map<String, Object> createdAt;
-    private String companyLogoUrl;
+    private String companyLogoUrl; // Link ảnh logo công ty
     private String locationName;
     private String salaryDescription;
     private String description;
     private String requirements;
     private String employerUid;
-    private String jobType;
+    private String jobType; // PartTime, Freelance, Internship
     private String categoryName;
+
     private List<String> requiredSkills;
     private boolean isApproved;
     private boolean isFeatured;
+
     private String status;
-    private boolean active;
 
     private List<String> searchKeywords;
     private long minSalary;
@@ -29,17 +30,25 @@ public class Job {
 
     private String contact;
 
+    private String fireStoreId;
+
+    // Declare the active field only once here
+    private boolean active; // Fixed duplicate declaration issue
+
     // Constructor rỗng bắt buộc cho Firestore
     public Job() {
     }
 
+    // Getter & Setter for active
+    public boolean isActive() {
+        return active;
+    }
 
-    // 🔸 Firestore cần constructor rỗng
-   // public Job(String contact) {
-     //   this.contact = contact;
-   // }
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
-    // Getter & Setter
+    // Getter & Setter for other fields
     public String getId() {
         return id;
     }
@@ -149,7 +158,7 @@ public class Job {
     }
 
     public void setApproved(boolean approved) {
-        this.isApproved = approved;
+        isApproved = approved;
     }
 
     public boolean isFeatured() {
@@ -157,7 +166,7 @@ public class Job {
     }
 
     public void setFeatured(boolean featured) {
-        this.isFeatured = featured;
+        isFeatured = featured;
     }
 
     public String getStatus() {
@@ -166,14 +175,6 @@ public class Job {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
     }
 
     public List<String> getSearchKeywords() {
@@ -208,16 +209,24 @@ public class Job {
         this.contact = contact;
     }
 
+    public String getFireStoreId() {
+        return fireStoreId;
+    }
+
+    public void setFireStoreId(String fireStoreId) {
+        this.fireStoreId = fireStoreId;
+    }
+
+    // Override toString method
     @Override
     public String toString() {
         return "Job{" +
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", companyName='" + companyName + '\'' +
-                ", createdAt=" + createdAt +
                 ", companyLogoUrl='" + companyLogoUrl + '\'' +
-                ", locationName='" + locationName + '\'' +
-                ", salaryDescription='" + salaryDescription + '\'' +
+                ", location='" + locationName + '\'' +
+                ", salary='" + salaryDescription + '\'' +
                 ", description='" + description + '\'' +
                 ", requirements='" + requirements + '\'' +
                 ", employerUid='" + employerUid + '\'' +
@@ -227,7 +236,6 @@ public class Job {
                 ", isApproved=" + isApproved +
                 ", isFeatured=" + isFeatured +
                 ", status='" + status + '\'' +
-                ", active=" + active +
                 ", searchKeywords=" + searchKeywords +
                 ", minSalary=" + minSalary +
                 ", postedDate='" + postedDate + '\'' +

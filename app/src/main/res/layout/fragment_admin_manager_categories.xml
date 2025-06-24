@@ -2,50 +2,118 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:background="#FFFFFF">
 
+    <!-- AppBar xanh -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#1976D2"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HanoiStudentGigs"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:layout_marginStart="16dp"/>
+    </LinearLayout>
+
+    <!-- Header phụ -->
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Quản lý Danh mục"
-        android:textSize="24sp"
+        android:id="@+id/tvHeaderCategory"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="QUẢN LÝ DANH MỤC"
+        android:gravity="center"
+        android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="16dp"/>
+        android:textColor="#FFFFFF"
+        android:background="#37474F"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginHorizontal="32dp"
+        android:elevation="2dp"
+        android:padding="8dp"
+        android:clipToOutline="true"/>
 
-    <RadioGroup
-        android:id="@+id/radioGroupCategoryType"
+    <!-- Tab chuyển đổi -->
+    <LinearLayout
+        android:id="@+id/layoutTabCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginBottom="16dp">
-        <RadioButton android:id="@+id/radioCategoryJob" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Ngành nghề" android:checked="true" android:layout_marginEnd="8dp"/>
-        <RadioButton android:id="@+id/radioCategorySkill" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Kỹ năng" android:layout_marginEnd="8dp"/>
-        <RadioButton android:id="@+id/radioCategoryLocation" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Địa điểm"/>
-    </RadioGroup>
+        android:layout_marginBottom="8dp"
+        android:layout_marginHorizontal="32dp">
+        <Button
+            android:id="@+id/btnTabJob"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:text="NGÀNH NGHỀ"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:background="@drawable/tab_selector_left"
+            android:textColor="@color/tab_text_selector"/>
+        <Button
+            android:id="@+id/btnTabSkill"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:text="KỸ NĂNG"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:background="@drawable/tab_selector_center"
+            android:textColor="@color/tab_text_selector"/>
+        <Button
+            android:id="@+id/btnTabLocation"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:text="ĐỊA ĐIỂM"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:background="@drawable/tab_selector_right"
+            android:textColor="@color/tab_text_selector"/>
+    </LinearLayout>
 
+    <!-- Danh sách category -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCategories"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:layout_marginHorizontal="0dp"
+        android:clipToPadding="false"/>
 
+    <!-- Thêm mới -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="16dp">
+        android:layout_margin="32dp">
         <EditText
             android:id="@+id/editTextNewCategory"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
-            android:hint="Nhập tên mới..."/>
+            android:hint="Nhập ngành nghề..."
+            android:background="@drawable/bg_input_rounded"
+            android:paddingHorizontal="12dp"
+            android:textColor="#222222"
+            android:textSize="15sp"/>
         <Button
             android:id="@+id/buttonAddCategory"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Thêm"/>
+            android:layout_height="48dp"
+            android:text="THÊM MỚI"
+            android:textAllCaps="true"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#1976D2"
+            android:background="@drawable/rounded_button"
+            android:layout_marginStart="8dp"/>
     </LinearLayout>
+
 </LinearLayout>

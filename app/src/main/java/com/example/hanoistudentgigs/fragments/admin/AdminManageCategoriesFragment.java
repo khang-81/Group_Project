@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,9 +31,10 @@ import android.util.Log;
 import java.util.regex.Pattern;
 
 public class AdminManageCategoriesFragment extends Fragment implements CategoryAdapter.OnCategoryActionListener {
-    private Button btnTabIndustry, btnTabSkill, btnTabLocation, btnAddCategory;
-    private EditText etNewCategory;
-    private RecyclerView rvCategoryList;
+    private Button btnTabJob, btnTabSkill, btnTabLocation;
+    private Button buttonAddCategory;
+    private EditText editTextNewCategory;
+    private RecyclerView recyclerViewCategories;
     private CategoryAdapter categoryAdapter;
     private List<Category> allIndustries = new ArrayList<>();
     private List<Category> allSkills = new ArrayList<>();
@@ -44,45 +47,49 @@ public class AdminManageCategoriesFragment extends Fragment implements CategoryA
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_admin_manager_categories, container, false);
-        btnTabIndustry = view.findViewById(R.id.btnTabIndustry);
+        btnTabJob = view.findViewById(R.id.btnTabJob);
         btnTabSkill = view.findViewById(R.id.btnTabSkill);
         btnTabLocation = view.findViewById(R.id.btnTabLocation);
-        btnAddCategory = view.findViewById(R.id.btnAddCategory);
-        etNewCategory = view.findViewById(R.id.etNewCategory);
-        rvCategoryList = view.findViewById(R.id.rvCategoryList);
+        buttonAddCategory = view.findViewById(R.id.buttonAddCategory);
+        editTextNewCategory = view.findViewById(R.id.editTextNewCategory);
+        recyclerViewCategories = view.findViewById(R.id.recyclerViewCategories);
 
         db = FirebaseFirestore.getInstance();
         categoryAdapter = new CategoryAdapter(currentList, this);
-        rvCategoryList.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvCategoryList.setAdapter(categoryAdapter);
+        recyclerViewCategories.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewCategories.setAdapter(categoryAdapter);
 
-        btnTabIndustry.setOnClickListener(v -> switchTab(0));
+        btnTabJob.setOnClickListener(v -> switchTab(0));
         btnTabSkill.setOnClickListener(v -> switchTab(1));
         btnTabLocation.setOnClickListener(v -> switchTab(2));
-        btnAddCategory.setOnClickListener(v -> addCategory());
+        buttonAddCategory.setOnClickListener(v -> addCategory());
 
+        // Mặc định chọn ngành nghề
+        btnTabJob.setSelected(true);
         switchTab(0);
         return view;
     }
 
     private void switchTab(int tab) {
         currentTab = tab;
-        btnTabIndustry.setEnabled(tab != 0);
+        btnTabJob.setEnabled(tab != 0);
         btnTabSkill.setEnabled(tab != 1);
         btnTabLocation.setEnabled(tab != 2);
-        
-        // Clear the list and notify the adapter before loading new data
         currentList.clear();
         categoryAdapter.notifyDataSetChanged();
-
         if (tab == 0) {
             loadCategoriesFromFirestore();
+            editTextNewCategory.setHint("Nhập ngành nghề...");
         } else if (tab == 1) {
             loadSkillsFromFirestore();
+            editTextNewCategory.setHint("Nhập kỹ năng...");
         } else {
             loadLocationsFromFirestore();
+            editTextNewCategory.setHint("Nhập địa điểm...");
         }
-        etNewCategory.setHint(tab == 0 ? "Nhập ngành nghề..." : tab == 1 ? "Nhập kỹ năng..." : "Nhập địa điểm...");
+        btnTabJob.setSelected(tab == 0);
+        btnTabSkill.setSelected(tab == 1);
+        btnTabLocation.setSelected(tab == 2);
     }
 
     private String generateIdFromName(String name) {
@@ -112,12 +119,11 @@ public class AdminManageCategoriesFragment extends Fragment implements CategoryA
     }
 
     private void addCategory() {
-        String name = etNewCategory.getText().toString().trim();
+        String name = editTextNewCategory.getText().toString().trim();
         if (TextUtils.isEmpty(name)) {
             Toast.makeText(getContext(), "Vui lòng nhập tên danh mục", Toast.LENGTH_SHORT).show();
             return;
         }
-
         String collectionPath;
         switch (currentTab) {
             case 0: collectionPath = "categories"; break;
@@ -125,18 +131,15 @@ public class AdminManageCategoriesFragment extends Fragment implements CategoryA
             case 2: collectionPath = "locations"; break;
             default: return;
         }
-
         String generatedId = generateIdFromName(name);
-
         Category newCategory = new Category();
         newCategory.setName(name);
         newCategory.setId(generatedId);
-
         db.collection(collectionPath).document(generatedId).set(newCategory)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(getContext(), "Thêm thành công!", Toast.LENGTH_SHORT).show();
-                    etNewCategory.setText("");
-                    switchTab(currentTab); // Refresh list
+                    editTextNewCategory.setText("");
+                    switchTab(currentTab);
                 })
                 .addOnFailureListener(e -> Toast.makeText(getContext(), "Thêm thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
@@ -246,5 +249,37 @@ public class AdminManageCategoriesFragment extends Fragment implements CategoryA
                 })
                 .setNegativeButton("Hủy", null)
                 .show();
+    }
+
+    @Override
+    public void onEdit(Category category) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Sửa danh mục");
+        final EditText input = new EditText(getContext());
+        input.setText(category.getName());
+        builder.setView(input);
+        builder.setPositiveButton("Lưu", (dialog, which) -> {
+            String newName = input.getText().toString().trim();
+            if (TextUtils.isEmpty(newName)) {
+                Toast.makeText(getContext(), "Tên không được để trống", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            String collectionPath;
+            switch (currentTab) {
+                case 0: collectionPath = "categories"; break;
+                case 1: collectionPath = "skills"; break;
+                case 2: collectionPath = "locations"; break;
+                default: return;
+            }
+            db.collection(collectionPath).document(category.getId())
+                .update("name", newName)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(getContext(), "Đã cập nhật!", Toast.LENGTH_SHORT).show();
+                    switchTab(currentTab);
+                })
+                .addOnFailureListener(e -> Toast.makeText(getContext(), "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+        });
+        builder.setNegativeButton("Hủy", null);
+        builder.show();
     }
 }

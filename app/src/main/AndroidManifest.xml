@@ -54,29 +54,24 @@
         <activity
             android:name=".activities.JobDetailActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".activities.TrangChuActivity"
             android:theme="@style/Theme.HanoiStudentGigs.NoActionBar" />
 
         <activity
             android:name=".activities.PostJobActivity"
             android:exported="false"
-            android:parentActivityName="MainActivity" />
+            android:parentActivityName=".activities.TrangChuActivity" />
 
         <activity
             android:name=".activities.ProfileEditActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".activities.ProfileEditActivity" />
 
         <activity
             android:name=".activities.SearchActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.hanoistudentgigs.MainActivity" /> <!-- SỬA Ở ĐÂY -->
-            <meta-data
-                android:name="android.app.nav.parentActivityName"
-                android:value="com.example.hanoistudentgigs.MainActivity" /> <!-- SỬA Ở ĐÂY -->
-        </activity>
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+
         <activity
             android:name=".activities.FilterActivity"
             android:exported="false"
@@ -86,11 +81,13 @@
         <activity android:name=".activities.AllApplicantsActivity" android:exported="false" />
 
 
-<!--        <activity android:name=".activities.DangTinActivity" android:exported="false" />-->
+        <activity android:name=".activities.DangTinActivity" android:exported="false" />
         <activity android:name=".activities.DsUngVienActivity" android:exported="false" />
         <activity android:name=".activities.QLTinActivity" android:exported="false" />
         <activity android:name=".activities.XemTinActivity" android:exported="false" />
         <activity android:name=".activities.SuaTinActivity" android:exported="false" />
+
+        <activity android:name=".activities.TrangChuActivity" android:exported="false" />
 
 
     </application>
