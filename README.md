@@ -106,43 +106,4 @@ Chạy ứng dụng:
 
 Chọn một máy ảo hoặc kết nối thiết bị thật và nhấn nút Run 'app' (▶️).
 
-
-✨ Tác Giả:
-
-👨‍💻 TaDucKhang - Leader Tạo khung cho ứng dụng, đảm bảo tính dễ sử dụng và giao diện thân thiện.
-
-Trang chủ (Homepage): Thiết kế giao diện chính cho các vai trò Sinh viên 👨‍🎓, Nhà tuyển dụng 💼, và Quản trị viên 🛡️.
-
-Đăng nhập, đăng ký, quên mật khẩu: Xây dựng hệ thống đăng nhập và đăng ký người dùng, sử dụng Firebase để quản lý tài khoản.
-
-Thiết kế Firebase: Cấu hình và triển khai Firebase Authentication và Firestore cho việc lưu trữ và xác thực người dùng.
-
-Kiểm thử: Thực hiện kiểm thử chức năng của ứng dụng để đảm bảo các tính năng hoạt động như mong đợi.
-
-
-👩‍💻 NguyenKhanhDuy - Member 1 (Sinh viên) Xem Profile (CRUD): Quản lý hồ sơ của Sinh viên 📜, cho phép tạo, đọc, cập nhật và xóa thông tin cá nhân.
-
-Tìm kiếm và lọc công việc: Tính năng tìm kiếm công việc theo từ khóa 🔍, lọc công việc theo yêu cầu, và sắp xếp công việc theo tiêu chí.
-
-Xem chi tiết công việc và ứng tuyển: Xem thông tin chi tiết về công việc 💼 và gửi CV để ứng tuyển ngay từ ứng dụng.
-
-
-👨‍💻 LeThiTuyetNhung - Member 2 (Nhà tuyển dụng) Xem Profile (CRUD): Quản lý hồ sơ của Nhà tuyển dụng 🏢, cho phép tạo, đọc, cập nhật và xóa thông tin công ty.
-
-Đăng tin tuyển dụng: Cung cấp tính năng cho Nhà tuyển dụng để đăng công việc mới 📢.
-
-Quản lý tin tuyển dụng (CRUD): Quản lý các tin tuyển dụng đã đăng, cho phép chỉnh sửa hoặc xóa các tin tuyển dụng không còn phù hợp.
-
-Xem danh sách ứng viên: Quản lý danh sách ứng viên đã ứng tuyển vào công việc 📋 và xem chi tiết hồ sơ.
-
-
-👨‍💻 LeThaiHieu - Member 3 (Quản trị viên) Quản lý người dùng: Quản lý quyền và thông tin người dùng trong hệ thống 👥, đảm bảo tính bảo mật và phân quyền hợp lý.
-
-Quản lý danh mục ngành nghề/kỹ năng: Cung cấp danh mục ngành nghề và kỹ năng cho các công việc 📑, giúp sinh viên dễ dàng tìm kiếm công việc phù hợp.
-
-Kiểm duyệt tin tuyển dụng: Quản lý và kiểm duyệt các tin tuyển dụng 🔍, đảm bảo thông tin chính xác và phù hợp với tiêu chuẩn.
-
-Quản lý hệ thống: Xây dựng và duy trì hệ thống backend Firebase, bảo mật và tối ưu hiệu suất.
-
-
 Cảm ơn bạn đã xem dự án!
